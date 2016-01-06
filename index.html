@@ -120,8 +120,7 @@
                 animations:{wU_anim:[{x:0,y:112},{x:0,y:176}],
                             wD_anim:[{x:0,y:64},{x:0,y:128}],
                             wL_anim:[{x:0,y:96},{x:0,y:160}],
-                            wR_anim:[{x:0,y:80},{x:0,y:144}],
-                            aU_anim:[{x:0,y:176},{x:0,y:96},{x:0,y:96}]
+                            wR_anim:[{x:0,y:80},{x:0,y:144}]
                             },
                 anim_index:0,
                 animCounter:-1,
@@ -277,7 +276,7 @@
 									}
                                     ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
                                     for (var i=0; i<this.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.aU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
+                                        ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.wU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
                                     }
                                 } else {
                                     ctx.drawImage(playerSheet, 0,48,16,16,player.x-4, player.y-8,16,16);
