@@ -435,18 +435,18 @@
                                         var rand = Math.floor(Math.random()*3);
                                         
                                         if (rand == 0) {
-                                            this.speed = 2;
-                                            if ((this.loc.x - player.x) < 0) {
-                                                rand = 2;
-                                            } else {
+                                            this.speed = 1.5;
+                                            if ((this.loc.x - player.x) > 0) {
                                                 rand = 0;
+                                            } else {
+                                                rand = 2;
                                             }
                                         } else if (rand == 1){
-                                            this.speed = 2;
-                                            if ((this.loc.y - player.y) < 0) {
-                                                rand = 3;
-                                            } else {
+                                            this.speed = 1.5;
+                                            if ((this.loc.y - player.y) > 0) {
                                                 rand = 1;
+                                            } else {
+                                                rand = 3;
                                             }
                                         } else {
                                             this.speed  = 1;
