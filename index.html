@@ -120,7 +120,8 @@
                 animations:{wU_anim:[{x:0,y:112},{x:0,y:176}],
                             wD_anim:[{x:0,y:64},{x:0,y:128}],
                             wL_anim:[{x:0,y:96},{x:0,y:160}],
-                            wR_anim:[{x:0,y:80},{x:0,y:144}]
+                            wR_anim:[{x:0,y:80},{x:0,y:144}],
+                            aU_anim:[{x:0,y:176},{x:0,y:96},{x:0,y:96}]
                             },
                 anim_index:0,
                 animCounter:-1,
@@ -270,13 +271,19 @@
                                 }
                             }
                             if (player.dir == 0) {
-                                if (this.moving == true && paused == false) {
+                                if (this.attacking == true && paused == false) {
+                                    if (this.anim_index >== this.animations.aU_anim.length) {
+                                        this.anim_index = 0;
+                                    }
+                                    ctx.drawImage(playerSheet, this.animations.aU_anim[this.anim_index].x,this.animations.aU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
+                                    
+                                } else if (this.moving == true && paused == false) {
                                     if (player.anim_index >= player.animations.wU_anim.length) {
 										player.anim_index = 0;
 									}
                                     ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wU_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                    for (var i=0; i<this.augments.length; i++) {
+                                        ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.aU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
                                     }
                                 } else {
                                     ctx.drawImage(playerSheet, 0,48,16,16,player.x-4, player.y-8,16,16);
@@ -1634,7 +1641,7 @@
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'white';
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
-                ctx.fillText('Press Space to Retry', (screenWidth/2)-30, ((screenHeight-16)/2)-8);
+                ctx.fillText('Press Space to Retry', (screenWidth/2)-50, ((screenHeight-16)/2)+8);
                 
                 if (pressedKeys.indexOf('_') > -1) {
                     init();
