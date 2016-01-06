@@ -603,7 +603,6 @@
                         }
                         
 						pressedKeys.push('_');
-                        console.log('beep');
 					}
 					break;
       }
@@ -1635,7 +1634,7 @@
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'white';
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
-                ctx.fillText('Press Space to Retry', (screenWidth/2)-30, ((screenHeight-16)/2));
+                ctx.fillText('Press Space to Retry', (screenWidth/2)-30, ((screenHeight-16)/2)-8);
                 
                 if (pressedKeys.indexOf('_') > -1) {
                     init();
