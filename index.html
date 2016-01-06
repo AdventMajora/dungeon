@@ -271,13 +271,7 @@
                                 }
                             }
                             if (player.dir == 0) {
-                                if (this.attacking == true && paused == false) {
-                                    if (this.anim_index >= this.animations.aU_anim.length) {
-                                        this.anim_index = 0;
-                                    }
-                                    ctx.drawImage(playerSheet, this.animations.aU_anim[this.anim_index].x,this.animations.aU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
-                                    
-                                } else if (this.moving == true && paused == false) {
+                                if (this.moving == true && paused == false) {
                                     if (player.anim_index >= player.animations.wU_anim.length) {
 										player.anim_index = 0;
 									}
@@ -420,7 +414,7 @@
 	player.weapons.push(wep_test);
 	
     {//augments
-        var aug_scarf = {name: 'Scarf', drawCol: 16, onPickup: function(){player.pspeed = player.speed+.5}, action:   function(){}};
+        var aug_scarf = {name: 'Scarf', drawCol: 16, onPickup: function(){player.pspeed = player.speed+.5;}, action:   function(){}};
         var aug_heartPin = {name: 'Pin',drawCol: 32, onPickup:  function() {player.healthGen = player.healthGen+.005;}, action:    function(){}};
         var aug_bracelet = {name: 'Brace',drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, action:    function(){}};
         var aug_tabard = {name: 'Tabard',drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, action:    function(){}};
