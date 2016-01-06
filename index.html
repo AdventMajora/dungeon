@@ -436,14 +436,14 @@
                                         
                                         if (rand == 0) {
                                             this.speed = 2;
-                                            if ((this.loc.x - player.x) > 0) {
+                                            if ((this.loc.x - player.x) < 0) {
                                                 rand = 2;
                                             } else {
                                                 rand = 0;
                                             }
                                         } else if (rand == 1){
                                             this.speed = 2;
-                                            if ((this.loc.y - player.y) > 0) {
+                                            if ((this.loc.y - player.y) < 0) {
                                                 rand = 3;
                                             } else {
                                                 rand = 1;
