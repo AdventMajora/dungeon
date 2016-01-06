@@ -411,8 +411,8 @@
 					};
 					
 	player.weapons.push(wep_test);
-	//augments
-    {
+	
+    {//augments
         var aug_scarf = {name: 'Scarf', drawCol: 16, onPickup: function(){player.pspeed = player.pspeed+(60*.1)}, action:   function(){}};
         var aug_heartPin = {name: 'Pin',drawCol: 32, onPickup:  function() {player.healthGen = player.healthGen+.005;}, action:    function(){}};
         var aug_bracelet = {name: 'Brace',drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, action:    function(){}};
@@ -422,8 +422,7 @@
     }
     var augments = [aug_scarf,aug_heartPin,aug_bracelet,aug_tabard,aug_robe,aug_horns,aug_scarf];
     
-    //room items
-    {
+    {//room items
         var con_mob = {type: 'mob', sprite: [705], loc: {x: -1, y:-1}, speed: 1, health: 10, alive: true, exp_reward: 1,
                         damage: .5,
                         action:	function() {
@@ -540,9 +539,8 @@
         };
     }
 	var mobs = [con_mob];
-	
-    //base rooms
-    {
+    
+    {//base rooms
         var base_0 = {name:'base_0', config:[1,1,1,1], contents:[], obs:-1, discovered: false};
         var base_1 = {name:'base_1', config:[1,0,0,0], contents:[], obs:-1, discovered: false};
         var base_2 = {name:'base_2', config:[0,0,1,0], contents:[], obs:-1, discovered: false};
@@ -563,27 +561,6 @@
     
 	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14];
 	
-    setInterval(function() {
-        fps = frames;
-        frames = 0;
-    },1000);
-    
-    //control blinking
-    setInterval(function() {
-		//player.anim_index++;
-		
-        if (blink == true) {
-            blink = false;
-        } else {
-            blink = true;
-        }
-    },250);
-    
-    buildLevel(difficulty);
-    prevLvl = JSON.parse(JSON.stringify(currLvl));
-	//start event loop
-    //60fps => Math.floor(1000/60)
-    setInterval(mainLoop, Math.floor(1000/60));
     
     //input
 	document.addEventListener('keydown', function(event) {
@@ -626,6 +603,7 @@
                         }
                         
 						pressedKeys.push('_');
+                        console.log('beep');
 					}
 					break;
       }
@@ -650,6 +628,71 @@
                     break;			
       }
 	}, false);
+    
+    //start event loop
+    //60fps => Math.floor(1000/60)
+    setInterval(mainLoop, Math.floor(1000/60));
+    
+    //fps counter
+    setInterval(function() {
+        fps = frames;
+        frames = 0;
+    },1000);
+    
+    //control blinking
+    setInterval(function() {
+		//player.anim_index++;
+		
+        if (blink == true) {
+            blink = false;
+        } else {
+            blink = true;
+        }
+    },250);
+    
+    //kick off EVERYTHING
+    init();
+    
+    function init() {
+        
+        player.health = 10;
+        player.maxHealth = 10;
+        player.spirit = 10;
+        player.maxSpirit = 10;
+        player.curse = 0;
+        
+        player.x = 9*tileSize;
+        player.y = :8*tileSize;
+        player.dir = 2;
+        player.strafe = false;
+        player.moving = false;
+        player.attacking = false;
+        player.speed = 1;
+        player.base_damage = 1;
+        player.base_defense = 1;
+
+        player.healthGen = 0;
+        player.spiritGen = .1;
+        player.curseGen = .0001;
+        player.exp = 0;
+        player.lvl = 0;
+        
+        player.augments = [];
+        player.keys = [];
+        
+        player.anim_index = 0;
+        player.animCounter = -1;
+        
+        player.wepIndex = 0;
+        
+        buildLevel(difficulty);
+        prevLvl = JSON.parse(JSON.stringify(currLvl));
+        
+        depth = 0;
+        difficulty = 3;
+        
+        lvlComplete = true;
+    }
     
     //build room config from .tmx file
     function buildConfig(config_name) {
@@ -1296,7 +1339,7 @@
         ctx.fillStyle = 'white';
         ctx.fillText('HP[',0,screenHeight-10);
         for (var i=0; i<player.maxHealth; i++) {
-            if (i<=player.health) {
+            if (i<player.health) {
                 ctx.fillText('|',(i+5)*2,screenHeight-10);
             } else {
                 ctx.fillText(' ',(i+5)*2,screenHeight-10);
@@ -1306,7 +1349,7 @@
         
         ctx.fillText('SP[',0,screenHeight-2);
         for (var i=0; i<player.maxSpirit; i++) {
-            if (i<=player.spirit) {
+            if (i<player.spirit) {
                 ctx.fillText('|',(i+5)*2,screenHeight-2);
             } else {
                 ctx.fillText(' ',(i+5)*2,screenHeight-2);
@@ -1475,8 +1518,6 @@
                 }
             }
             
-            
-			
             //render map
 			//background
             for (var i=0; i<currLvl[0].length; i++) {
@@ -1486,6 +1527,7 @@
 					}
                 }
             }
+            
             if (rTransition != -1) {
                 for (var i=0; i<prevLvl[0].length; i++) {
                     for (var j=0; j<prevLvl[0][i].length; j++) {
@@ -1589,15 +1631,15 @@
                 }
             }
             
-            
-            
-			//ctx.fillText('keys: '+JSON.stringify(pressedKeys), screenWidth-80, screenHeight-2);
-			
         } else {
             if (player.health <=0) {
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'white';
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
+                
+                if (pressedKeys.indexOf('_') > -1) {
+                    init();
+                }
             } else {
                 
             }
