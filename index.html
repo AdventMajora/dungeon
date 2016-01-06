@@ -272,7 +272,7 @@
                             }
                             if (player.dir == 0) {
                                 if (this.attacking == true && paused == false) {
-                                    if (this.anim_index >== this.animations.aU_anim.length) {
+                                    if (this.anim_index >= this.animations.aU_anim.length) {
                                         this.anim_index = 0;
                                     }
                                     ctx.drawImage(playerSheet, this.animations.aU_anim[this.anim_index].x,this.animations.aU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
