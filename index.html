@@ -653,8 +653,6 @@
         }
     },250);
     
-    
-    
     function init() {
         
         player.health = 10;
@@ -687,13 +685,12 @@
         
         player.wepIndex = 0;
         
-        buildLevel(difficulty);
-        prevLvl = JSON.parse(JSON.stringify(currLvl));
-        
         depth = 0;
         difficulty = 3;
         
-        lvlComplete = true;
+        buildLevel(difficulty);
+        prevLvl = JSON.parse(JSON.stringify(currLvl));
+        
     }
     
     //build room config from .tmx file
