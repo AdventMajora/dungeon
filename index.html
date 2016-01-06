@@ -629,6 +629,9 @@
       }
 	}, false);
     
+    //kick off EVERYTHING
+    init();
+    
     //start event loop
     //60fps => Math.floor(1000/60)
     setInterval(mainLoop, Math.floor(1000/60));
@@ -650,8 +653,7 @@
         }
     },250);
     
-    //kick off EVERYTHING
-    init();
+    
     
     function init() {
         
