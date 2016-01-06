@@ -344,6 +344,7 @@
 	var wep_test = 	{   init_cost: 4,
                         cont: true,
                         use_cost: .1,
+                        knockback: 16,
                         aoe: [[{x: 0, y: -8, sprite: 2, dur:4, dirXadj: 0, dirYadj: 8},{x: -8, y: -8, sprite: 1, dur:4, dirXadj: 8, dirYadj: 8},{x: -8, y: 0, sprite: 33, dur:4, dirXadj: 8, dirYadj: 0}],
                               [{x: -8, y: 0, sprite: 33, dur:4, dirXadj: 8, dirYadj: 8},{x: -8, y: +8, sprite: 65, dur:4, dirXadj: 8, dirYadj: 0},{x: 0, y: +8, sprite: 66, dur:4, dirXadj: 0, dirYadj: 0}],
                               [{x: 0, y: +8, sprite: 66, dur:4, dirXadj: 8, dirYadj: 0},{x: +8, y: +8, sprite: 67, dur:4, dirXadj: 0, dirYadj: 0},{x: +8, y: 0, sprite: 35, dur:4, dirXadj: 0, dirYadj: 8}],
@@ -375,17 +376,17 @@
                                                     map[mapLoc.y][mapLoc.x].contents[i].health = map[mapLoc.y][mapLoc.x].contents[i].health-(player.base_damage+this.damage);
                                                     ctx.fillStyle = 'red';
                                                     ctx.fillRect(map[mapLoc.y][mapLoc.x].contents[i].loc.x, map[mapLoc.y][mapLoc.x].contents[i].loc.y, tileSize, tileSize);
-                                                    if (player.dir == 0 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-5)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
-                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y-5;
+                                                    if (player.dir == 0 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
+                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y-this.knockback;
                                                     }
-                                                    if (player.dir == 1 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4-5)/tileSize)] == 0) {
-                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x-5;
+                                                    if (player.dir == 1 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4-this.knockback)/tileSize)] == 0) {
+                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x-this.knockback;
                                                     }
-                                                    if (player.dir == 2 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4+5)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
-                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y+5;
+                                                    if (player.dir == 2 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4+this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
+                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y+this.knockback;
                                                     }
-                                                    if (player.dir == 3 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4+5)/tileSize)] == 0) {
-                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x+5;
+                                                    if (player.dir == 3 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4+this.knockback)/tileSize)] == 0) {
+                                                        map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x+this.knockback;
                                                     }
                                                 }
                                             }
