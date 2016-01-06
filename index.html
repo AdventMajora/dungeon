@@ -432,7 +432,24 @@
                                     }
                                     if (this.alive == true) {
                                         
-                                        var rand = Math.floor(Math.random()*4);
+                                        var rand = Math.floor(Math.random()*3);
+                                        
+                                        if (rand == 0) {
+                                            if ((this.loc.x - player.x) > 0) {
+                                                rand = 2;
+                                            } else {
+                                                rand = 0;
+                                            }
+                                        } else {
+                                            if ((this.loc.y - player.y) > 0) {
+                                                rand = 3;
+                                            } else {
+                                                rand = 1;
+                                            }
+                                        } else {
+                                            rand = Math.floor(Math.random()*4);
+                                        }
+                                        
                                         if (rand == 0) {
                                             if (this.loc.y >= 16 
                                                 && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
@@ -561,7 +578,6 @@
     
 	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14];
 	
-    
     //input
 	document.addEventListener('keydown', function(event) {
 	  switch (event.keyCode) {
@@ -628,7 +644,7 @@
       }
 	}, false);
     
-    //kick off EVERYTHING
+    
     init();
     
     //start event loop
@@ -652,6 +668,7 @@
         }
     },250);
     
+    //kick off EVERYTHING
     function init() {
         
         player.health = 10;
