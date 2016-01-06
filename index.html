@@ -512,7 +512,7 @@
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
                                 player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                 this.collected == false) {
-                                player.augments.push(augments[this.aug]);
+                                player.augments.unshift(augments[this.aug]);
                                 augments[this.aug].onPickup();
                                 this.collected = true;
                             }
