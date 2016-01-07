@@ -251,14 +251,21 @@
                                 }
                             }
                             if (dir == 3) {
+                                
                                 if (this.strafe == false) {
                                     this.dir = 3;
                                 }
-                                if (Math.floor(this.x+this.speed) <= screenWidth 
-                                    && currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0
-                                    && currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0) {
+                                var canMove = this.x+this.speed;
+                                if (this.x+this.speed > screenWidth) {
+                                    canMove = (this.x+this.speed) - screenWidth;
+                                    if (canMove < 0) {
+                                        canMove = 0;
+                                    }
+                                }
+                                if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0 &&
+                                    currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0) {
                                     
-                                    this.x+=this.speed;
+                                    this.x+=canMove;
                                 }
                             }
                         },
