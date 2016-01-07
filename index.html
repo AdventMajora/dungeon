@@ -415,7 +415,7 @@
 	player.weapons.push(wep_test);
 	
     {//augments
-        var aug_scarf = 	{name: 'Scarf', effectText: '+.5 spd', drawCol: 16, onPickup: function(){player.speed = player.speed+.5;}, 			onDrop:	function(){player.speed = player.speed-.5;}, 				action:   function(){}};
+        var aug_scarf = 	{name: 'Scarf', effectText: '+.25 spd', drawCol: 16, onPickup: function(){player.speed = player.speed+.25;}, 			onDrop:	function(){player.speed = player.speed-.5;}, 				action:   function(){}};
         var aug_heartPin = 	{name: 'Pin',	effectText: '+.005 hpr', drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
         var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
         var aug_tabard = 	{name: 'Tabard',effectText: '+1 def', drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1},	action:    function(){}};
@@ -1328,10 +1328,10 @@
             ctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+36,menuHeight+24);
             ctx.fillText('dmg: '+player.base_damage,Math.floor(screenWidth/2)+8,menuHeight+32);
             ctx.fillText('def: '+player.base_defense,Math.floor(screenWidth/2)+36,menuHeight+32);
-            ctx.fillText('spd: '+Math.ceil(player.speed),Math.floor(screenWidth/2)+8,menuHeight+40);
-            ctx.fillText('crs: '+Math.ceil(player.curse),Math.floor(screenWidth/2)+36,menuHeight+40);
-            ctx.fillText('hpr: '+Math.floor(100*player.healthGen),Math.floor(screenWidth/2)+8,menuHeight+48);
-            ctx.fillText('spr: '+Math.floor(10*player.spiritGen),Math.floor(screenWidth/2)+36,menuHeight+48);
+            ctx.fillText('spd: '+player.speed,Math.floor(screenWidth/2)+8,menuHeight+40);
+            ctx.fillText('crs: '+player.curse,Math.floor(screenWidth/2)+36,menuHeight+40);
+            ctx.fillText('hpr: '+100*player.healthGen,Math.floor(screenWidth/2)+8,menuHeight+48);
+            ctx.fillText('spr: '+10*player.spiritGen,Math.floor(screenWidth/2)+36,menuHeight+48);
             
             ctx.fillText('Augments:',Math.floor(screenWidth/2)+8,menuHeight+60);
             
@@ -1661,7 +1661,7 @@
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'white';
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
-                ctx.fillText('Press Space to Retry', (screenWidth/2)-50, ((screenHeight-16)/2)+8);
+                ctx.fillText('Press Space to Retry', (screenWidth/2)-42, ((screenHeight-16)/2)+8);
                 
                 if (pressedKeys.indexOf('_') > -1) {
                     init();
