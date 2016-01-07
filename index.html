@@ -1533,13 +1533,13 @@
                 if (rTransition == 3) {
                     player.x =  player.x -10;
                     roomDrawX = roomDrawX-10;
-                    if (player.x <= 4) {
-                        player.x = 4;
+                    if (player.x <= 9+player.speed) {
+                        player.x = 9+player.speed;
                     }
                     if (roomDrawX <= 0) {
                         roomDrawX = 0;
                     }
-                    if (roomDrawX == 0 && player.x == 4) {
+                    if (roomDrawX == 0 && player.x == 9+player.speed) {
                         rTransition = -1;
                     }
                 }
