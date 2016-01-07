@@ -269,6 +269,8 @@
                                     currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0) {
                                     
                                     this.x+=canMove;
+                                } else {
+                                    console.log('stopped');
                                 }
                             }
                         },
