@@ -1464,7 +1464,7 @@
         if (lvlComplete == false) {
             
             //check for room transitions
-            if (Math.floor(player.y) <= 1 && mapLoc.y-1 > 0) {
+            if (Math.floor(player.y-player.speed) <= 1 && mapLoc.y-1 > 0) {
                 rTransition = 0;
                 roomDrawY = 0-screenHeight+16;
                 mapLoc.y--;
