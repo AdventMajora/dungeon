@@ -254,7 +254,7 @@
                                 if (this.strafe == false) {
                                     this.dir = 3;
                                 }
-                                if (Math.ceil(this.x+this.speed) <= screenWidth 
+                                if (Math.floor(this.x+this.speed) <= screenWidth 
                                     && currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0
                                     && currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0) {
                                     
