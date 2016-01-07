@@ -415,7 +415,7 @@
 	player.weapons.push(wep_test);
 	
     {//augments
-        var aug_scarf = 	{name: 'Scarf', effectText: '+.25 spd', drawCol: 16, onPickup: function(){player.speed = player.speed+.25;}, 			onDrop:	function(){player.speed = player.speed-.5;}, 				action:   function(){}};
+        var aug_scarf = 	{name: 'Scarf', effectText: '+.25 spd', drawCol: 16, onPickup: function(){player.speed = player.speed+.25;}, 			onDrop:	function(){player.speed = player.speed-.25;}, 				action:   function(){}};
         var aug_heartPin = 	{name: 'Pin',	effectText: '+.005 hpr', drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
         var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
         var aug_tabard = 	{name: 'Tabard',effectText: '+1 def', drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1},	action:    function(){}};
@@ -1324,20 +1324,20 @@
             //spd crs
             //hp  sp
             ctx.fillStyle = 'white';
-            ctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+8,menuHeight+24);
-            ctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+36,menuHeight+24);
-            ctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+8,menuHeight+32);
-            ctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+36,menuHeight+32);
-            ctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+8,menuHeight+40);
-            ctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+36,menuHeight+40);
-            ctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+8,menuHeight+48);
-            ctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+36,menuHeight+48);
+            ctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+4,menuHeight+24);
+            ctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+40,menuHeight+24);
+            ctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+32);
+            ctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+32);
+            ctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+40);
+            ctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+40);
+            ctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+48);
+            ctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+48);
             
-            ctx.fillText('Augments:',Math.floor(screenWidth/2)+8,menuHeight+60);
+            ctx.fillText('Augments:',Math.floor(screenWidth/2)+4,menuHeight+60);
             
             for (var i=0; i<player.augments.length; i++) {
-                ctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+8,menuHeight+68+(i*8));
-				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+48,menuHeight+68+(i*8));
+                ctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+4,menuHeight+68+(i*8));
+				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+44,menuHeight+68+(i*8));
             }
         
             //minimap
@@ -1481,7 +1481,6 @@
                         rTransition = -1;
                     }
                 }
-                
                 if (rTransition == 2) {
                     player.y =  player.y -10;
                     roomDrawY = roomDrawY-10;
