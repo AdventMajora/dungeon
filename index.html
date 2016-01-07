@@ -233,8 +233,8 @@
                                     this.dir = 1;
                                 }
                                 var canMove = this.speed;
-                                if (this.x+this.speed <= 0) {
-                                    canMove = (this.x+this.speed) - 0;
+                                if (this.x-this.speed <= 0) {
+                                    canMove = (this.x-this.speed) - 0;
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
