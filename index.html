@@ -1472,7 +1472,7 @@
                 buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
                 minimap.update();
             }
-            if (Math.floor(player.x) <= 1 && mapLoc.x-1 > 0) {
+            if (Math.floor(player.x-player.speed) <= 1 && mapLoc.x-1 > 0) {
                 rTransition = 1;
                 roomDrawX = 0-screenWidth;
                 mapLoc.x--;
