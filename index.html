@@ -222,8 +222,8 @@
                                     this.dir = 0;
                                 }
                                 if (player.y > 0 
-                                    && currLvl[1][Math.floor((Math.floor(player.y)-.5)/8)][Math.floor(Math.floor(player.x)/8)] ==0
-                                    && currLvl[1][Math.floor((Math.floor(player.y)-.5)/8)][Math.ceil(Math.ceil(player.x)/8)] ==0) {
+                                    && currLvl[1][Math.floor((Math.floor(player.y)-player.speed)/8)][Math.floor(Math.floor(player.x)/8)] ==0
+                                    && currLvl[1][Math.floor((Math.floor(player.y)-player.speed)/8)][Math.ceil(Math.ceil(player.x)/8)] ==0) {
                                     
                                     player.y-=player.speed;
                                 }
@@ -233,8 +233,8 @@
                                     this.dir = 1;
                                 }
                                 if (player.x >= 0 
-                                    && currLvl[1][Math.floor((Math.floor(player.y))/8)][Math.floor((Math.floor(player.x)-.5)/8)] == 0
-                                    && currLvl[1][Math.ceil(((Math.ceil(player.y)))/8)][Math.floor((Math.floor(player.x)-.5)/8)] == 0) {
+                                    && currLvl[1][Math.floor((Math.floor(player.y))/8)][Math.floor((Math.floor(player.x)-player.speed)/8)] == 0
+                                    && currLvl[1][Math.ceil(((Math.ceil(player.y)))/8)][Math.floor((Math.floor(player.x)-.player.speed)/8)] == 0) {
                                     
                                     player.x-=player.speed;
                                 }
@@ -244,8 +244,8 @@
                                     this.dir = 2;
                                 }
                                 if (player.y+8 < screenHeight 
-                                    && currLvl[1][Math.ceil((Math.ceil(player.y)+.5)/8)][Math.floor(Math.floor(player.x)/8)] == 0
-                                    && currLvl[1][Math.ceil((Math.ceil(player.y)+.5)/8)][Math.ceil(Math.ceil(player.x)/8)] == 0) {
+                                    && currLvl[1][Math.ceil((Math.ceil(player.y)+player.speed)/8)][Math.floor(Math.floor(player.x)/8)] == 0
+                                    && currLvl[1][Math.ceil((Math.ceil(player.y)+player.speed)/8)][Math.ceil(Math.ceil(player.x)/8)] == 0) {
                                     
                                     player.y+=player.speed;
                                 }
@@ -255,8 +255,8 @@
                                     this.dir = 3;
                                 }
                                 if (player.x+8 < screenWidth 
-                                    && currLvl[1][Math.ceil(Math.ceil(player.y)/8)][Math.ceil((Math.ceil(player.x)+.5)/8)] == 0
-                                    && currLvl[1][Math.floor(Math.floor(player.y)/8)][Math.ceil((Math.ceil(player.x)+.5)/8)] == 0) {
+                                    && currLvl[1][Math.ceil(Math.ceil(player.y)/8)][Math.ceil((Math.ceil(player.x)+player.speed)/8)] == 0
+                                    && currLvl[1][Math.floor(Math.floor(player.y)/8)][Math.ceil((Math.ceil(player.x)+player.speed)/8)] == 0) {
                                     
                                     player.x+=player.speed;
                                 }
@@ -1337,7 +1337,7 @@
             
             for (var i=0; i<player.augments.length; i++) {
                 ctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+4,menuHeight+68+(i*8));
-				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+44,menuHeight+68+(i*8));
+				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+40,menuHeight+68+(i*8));
             }
         
             //minimap
@@ -1660,7 +1660,7 @@
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'white';
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
-                ctx.fillText('Press Space to Retry', (screenWidth/2)-42, ((screenHeight-16)/2)+8);
+                ctx.fillText('Press Space to Retry', (screenWidth/2)-40, ((screenHeight-16)/2)+8);
                 
                 if (pressedKeys.indexOf('_') > -1) {
                     init();
