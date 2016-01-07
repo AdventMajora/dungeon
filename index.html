@@ -1511,13 +1511,13 @@
                 if (rTransition == 2) {
                     player.y =  player.y -10;
                     roomDrawY = roomDrawY-10;
-                    if (player.y <= 4) {
-                        player.y = 4;
+                    if (player.y <= 9+player.speed) {
+                        player.y = 9+player.speed;
                     }
                     if (roomDrawY <=0) {
                         roomDrawY = 0;
                     }
-                    if (roomDrawY == 0 && player.y == 4){
+                    if (roomDrawY == 0 && player.y == 9+player.speed){
                         rTransition = -1;
                     }
                 }
