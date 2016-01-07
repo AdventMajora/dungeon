@@ -117,6 +117,7 @@
                 lvl:0,
                 newLvl:10,
                 augments:[],
+				maxAugs: 5,
                 animations:{wU_anim:[{x:0,y:112},{x:0,y:176}],
                             wD_anim:[{x:0,y:64},{x:0,y:128}],
                             wL_anim:[{x:0,y:96},{x:0,y:160}],
@@ -414,12 +415,12 @@
 	player.weapons.push(wep_test);
 	
     {//augments
-        var aug_scarf = {name: 'Scarf', drawCol: 16, onPickup: function(){player.pspeed = player.speed+.5;}, action:   function(){}};
-        var aug_heartPin = {name: 'Pin',drawCol: 32, onPickup:  function() {player.healthGen = player.healthGen+.005;}, action:    function(){}};
-        var aug_bracelet = {name: 'Brace',drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, action:    function(){}};
-        var aug_tabard = {name: 'Tabard',drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, action:    function(){}};
-        var aug_robe = {name: 'Robe',drawCol: 80, onPickup: function(){player.speed = player.speed+.5; player.base_defense = player.base_defense+1}, action:    function(){}};
-        var aug_horns = {name: 'Horns',drawCol: 96, onPickup: function(){player.base_damage = player.base_damage+1}, action:    function(){}};
+        var aug_scarf = 	{name: 'Scarf', drawCol: 16, onPickup: function(){player.pspeed = player.speed+.5;}, 			onDrop:	function(){player.pspeed = player.speed-.5;}, 				action:   function(){}};
+        var aug_heartPin = 	{name: 'Pin',	drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
+        var aug_bracelet = 	{name: 'Brace',	drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
+        var aug_tabard = 	{name: 'Tabard',drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1},	action:    function(){}};
+        var aug_robe = 		{name: 'Robe',	drawCol: 80, onPickup: function(){player.speed = player.speed+.5; player.base_defense = player.base_defense+1}, onDrop:	function(){player.speed = player.speed-.5; player.base_defense = player.base_defense-1}, action:    function(){}};
+        var aug_horns = 	{name: 'Horns',	drawCol: 96, onPickup: function(){player.base_damage = player.base_damage+1}, 	onDrop:	function(){player.base_damage = player.base_damage-1}, 		action:    function(){}};
     }
     var augments = [aug_scarf,aug_heartPin,aug_bracelet,aug_tabard,aug_robe,aug_horns,aug_scarf];
     
@@ -513,6 +514,10 @@
                                 player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                 this.collected == false) {
                                 player.augments.unshift(augments[this.aug]);
+								if (player.augments.length > player.maxAugs) {
+									player.augments[player.augments.length-1].onDrop();
+									player.augments.pop();
+								}
                                 augments[this.aug].onPickup();
                                 this.collected = true;
                             }
