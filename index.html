@@ -98,6 +98,7 @@
                 strafe: false,
                 moving: false,
                 attacking: false,
+                moveWhileAttacking: false,
                 speed: 1,//60/fps,
                 base_damage:1,
                 base_defense:1,
@@ -182,7 +183,9 @@
                             
                             //use weapon of regen spirit
                             if (this.attacking == true) {
-                                this.moving  = false;
+                                if (this.moveWhileAttacking == false) {
+                                    this.moving  = false;
+                                }
                                 this.weapons[this.wepIndex].action();
                             } else {
                                 this.spirit = this.spirit+this.spiritGen;
@@ -455,7 +458,7 @@
         var aug_scarf = 	{name: 'Scarf', effectText: '+.25 spd', drawCol: 16, onPickup: function(){player.speed = player.speed+.25;}, 			onDrop:	function(){player.speed = player.speed-.25;}, 				action:   function(){}};
         var aug_heartPin = 	{name: 'Pin',	effectText: '+.005 hpr', drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
         var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
-        var aug_tabard = 	{name: 'Tabard',effectText: '+1 def', drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1},	action:    function(){}};
+        var aug_tabard = 	{name: 'Tabard',effectText: '+move+atk', drawCol: 64, onPickup: function(){player.moveWhileAttacking = true;}, onDrop:	function(){player.moveWhileAttacking = false;},	action:    function(){}};
         var aug_robe = 		{name: 'Robe',	effectText: '+3 def', drawCol: 80, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1}, action:    function(){}};
         var aug_horns = 	{name: 'Horns',	effectText: '+1 dmg', drawCol: 96, onPickup: function(){player.base_damage = player.base_damage+1}, 	onDrop:	function(){player.base_damage = player.base_damage-1}, 		action:    function(){}};
     }
