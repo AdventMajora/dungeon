@@ -1487,13 +1487,13 @@
                 if (rTransition == 0) {
                     player.y =  player.y +10;
                     roomDrawY = roomDrawY+10;
-                    if (player.y >= screenHeight-26) {
-                        player.y = screenHeight-26;
+                    if (player.y >= screenHeight-28) {
+                        player.y = screenHeight-28;
                     }
                     if (roomDrawY >=0) {
                         roomDrawY = 0;
                     }
-                    if (roomDrawY == 0 && player.y == screenHeight-26){
+                    if (roomDrawY == 0 && player.y == screenHeight-28){
                         rTransition = -1;
                     }
                 }
