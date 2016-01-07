@@ -101,7 +101,7 @@
                 speed: 1,//60/fps,
                 base_damage:1,
                 base_defense:1,
-                pspeed: 60,
+                speedLimit: 4,
                 health:10,
                 healthGen:0,
                 maxHealth:10,
@@ -126,8 +126,10 @@
                 anim_index:0,
                 animCounter:-1,
                 update: function (){
-                            //update the player movement
-                            //this.speed = this.pspeed/fps;
+                            
+                            if (this.speed > 4) {
+                                this.speed = 4;
+                            }
                             
                             //regen(?) health
                             this.health+=this.healthGen;
@@ -222,14 +224,12 @@
                                     this.dir = 0;
                                 }
                                 var canMove = this.speed;
-                                console.log(this.y-this.speed);
                                 if (this.y-this.speed <= 0) {
                                     canMove = 0 - (this.y-this.speed);
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
                                 }
-                                console.log(canMove);
                                 if (currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
                                     currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
                                     
