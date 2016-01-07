@@ -287,7 +287,7 @@
                                     if (player.anim_index >= player.animations.wU_anim.length) {
 										player.anim_index = 0;
 									}
-                                    ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y,16,16,player.x-4c+++, player.y-8,16,16);
+                                    ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
                                     for (var i=0; i<this.augments.length; i++) {
                                         ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.wU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
                                     }
