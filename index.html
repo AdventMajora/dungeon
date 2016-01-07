@@ -232,11 +232,17 @@
                                 if (this.strafe == false) {
                                     this.dir = 1;
                                 }
-                                if (player.x >= 0 
-                                    && currLvl[1][Math.floor((Math.floor(player.y))/8)][Math.floor((Math.floor(player.x)-this.speed)/8)] == 0
-                                    && currLvl[1][Math.ceil(((Math.ceil(player.y)))/8)][Math.floor((Math.floor(player.x)-this.speed)/8)] == 0) {
+                                var canMove = this.speed;
+                                if (this.x+this.speed <= 0) {
+                                    canMove = (this.x+this.speed) - 0;
+                                    if (canMove < 0) {
+                                        canMove = 0;
+                                    }
+                                }
+                                if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0 &&
+                                    currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0) {
                                     
-                                    player.x-=player.speed;
+                                    this.x-=canMove;
                                 }
                             }
                             if (dir == 2) {
@@ -244,9 +250,7 @@
                                     this.dir = 2;
                                 }
                                 var canMove = this.speed;
-                                console.log((this.y+this.speed+8));
                                 if (this.y+this.speed+8 >= screenHeight-16) {
-                                    
                                     canMove = (this.y+this.speed) - screenHeight-16;
                                     if (canMove < 0) {
                                         canMove = 0;
@@ -255,17 +259,15 @@
                                 if (currLvl[1][Math.ceil((Math.ceil(this.y)+this.speed)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
                                     currLvl[1][Math.ceil((Math.ceil(this.y)+this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
                                     
-                                    player.y+=canMove;
+                                    this.y+=canMove;
                                 }
                             }
                             if (dir == 3) {
-                                
                                 if (this.strafe == false) {
                                     this.dir = 3;
                                 }
                                 var canMove = this.speed;
                                 if (this.x+this.speed+8 >= screenWidth) {
-                                    
                                     canMove = (this.x+this.speed) - screenWidth;
                                     if (canMove < 0) {
                                         canMove = 0;
