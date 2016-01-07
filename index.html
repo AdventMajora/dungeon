@@ -221,11 +221,19 @@
                                 if (this.strafe == false) {
                                     this.dir = 0;
                                 }
-                                if (player.y > 0 
-                                    && currLvl[1][Math.floor((Math.floor(player.y)-this.speed)/8)][Math.floor(Math.floor(player.x)/8)] ==0
-                                    && currLvl[1][Math.floor((Math.floor(player.y)-this.speed)/8)][Math.ceil(Math.ceil(player.x)/8)] ==0) {
+                                var canMove = this.speed;
+                                console.log(this.y-this.speed);
+                                if (this.y-this.speed <= 0) {
+                                    canMove = 0 - (this.y-this.speed);
+                                    if (canMove < 0) {
+                                        canMove = 0;
+                                    }
+                                }
+                                console.log(canMove);
+                                if (currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
+                                    currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
                                     
-                                    player.y-=player.speed;
+                                    this.y-=canMove;
                                 }
                             }
                             if (dir == 1) {
@@ -233,14 +241,12 @@
                                     this.dir = 1;
                                 }
                                 var canMove = this.speed;
-                                console.log(this.x-this.speed);
                                 if (this.x-this.speed <= 0) {
                                     canMove = 0 - (this.x-this.speed);
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
                                 }
-                                console.log(canMove);
                                 if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0 &&
                                     currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0) {
                                     
