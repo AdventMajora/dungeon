@@ -1326,12 +1326,12 @@
             ctx.fillStyle = 'white';
             ctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+8,menuHeight+24);
             ctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+36,menuHeight+24);
-            ctx.fillText('dmg: '+player.base_damage,Math.floor(screenWidth/2)+8,menuHeight+32);
-            ctx.fillText('def: '+player.base_defense,Math.floor(screenWidth/2)+36,menuHeight+32);
-            ctx.fillText('spd: '+player.speed,Math.floor(screenWidth/2)+8,menuHeight+40);
-            ctx.fillText('crs: '+player.curse,Math.floor(screenWidth/2)+36,menuHeight+40);
-            ctx.fillText('hpr: '+100*player.healthGen,Math.floor(screenWidth/2)+8,menuHeight+48);
-            ctx.fillText('spr: '+10*player.spiritGen,Math.floor(screenWidth/2)+36,menuHeight+48);
+            ctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+8,menuHeight+32);
+            ctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+36,menuHeight+32);
+            ctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+8,menuHeight+40);
+            ctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+36,menuHeight+40);
+            ctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+8,menuHeight+48);
+            ctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+36,menuHeight+48);
             
             ctx.fillText('Augments:',Math.floor(screenWidth/2)+8,menuHeight+60);
             
