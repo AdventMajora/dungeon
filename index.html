@@ -243,7 +243,7 @@
                                 if (this.strafe == false) {
                                     this.dir = 2;
                                 }
-                                if (player.y+8 < screenHeight 
+                                if (player.y+this.speed < screenHeight 
                                     && currLvl[1][Math.ceil((Math.ceil(player.y)+this.speed)/8)][Math.floor(Math.floor(player.x)/8)] == 0
                                     && currLvl[1][Math.ceil((Math.ceil(player.y)+this.speed)/8)][Math.ceil(Math.ceil(player.x)/8)] == 0) {
                                     
@@ -254,7 +254,7 @@
                                 if (this.strafe == false) {
                                     this.dir = 3;
                                 }
-                                if (this.x+4 < screenWidth 
+                                if (this.x+this.speed < screenWidth 
                                     && currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0
                                     && currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0) {
                                     
