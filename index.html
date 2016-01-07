@@ -233,12 +233,14 @@
                                     this.dir = 1;
                                 }
                                 var canMove = this.speed;
+                                cansole.log(this.x-this.speed);
                                 if (this.x-this.speed <= 0) {
                                     canMove = 0 - (this.x-this.speed);
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
                                 }
+                                
                                 if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0 &&
                                     currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0) {
                                     
