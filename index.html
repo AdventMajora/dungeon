@@ -256,7 +256,7 @@
                                     this.dir = 3;
                                 }
                                 var canMove = this.speed;
-                                if (this.x+this.speed > screenWidth) {
+                                if (this.x+this.speed >= screenWidth) {
                                     canMove = (this.x+this.speed) - screenWidth;
                                     if (canMove < 0) {
                                         canMove = 0;
