@@ -1493,6 +1493,7 @@
                         rTransition = -1;
                     }
                 }
+                
                 if (rTransition == 2) {
                     player.y =  player.y -10;
                     roomDrawY = roomDrawY-10;
@@ -1510,13 +1511,13 @@
                 if (rTransition == 1) {
                     player.x =  player.x +10;
                     roomDrawX = roomDrawX+10;
-                    if (player.x >= screenWidth-9) {
-                        player.x = screenWidth-9;
+                    if (player.x >= screenWidth-9-player.speed) {
+                        player.x = screenWidth-9-player.speed;
                     }
                     if (roomDrawX >= 0) {
                         roomDrawX = 0;
                     }
-                    if (roomDrawX == 0 && player.x == screenWidth-9) {
+                    if (roomDrawX == 0 && player.x == screenWidth-9-player.speed) {
                         rTransition = -1;
                     }
                 }
