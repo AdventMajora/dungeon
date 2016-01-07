@@ -1471,7 +1471,7 @@
                 buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
                 minimap.update();
             }
-            if (player.x+8+player.speed >= screenWidth && mapLoc.x+1 < map[mapLoc.y].length-1) {
+            if (Math.ceil(player.x+8+player.speed) >= screenWidth && mapLoc.x+1 < map[mapLoc.y].length-1) {
                 rTransition = 3;
                 roomDrawX = screenWidth;
                 mapLoc.x++;
