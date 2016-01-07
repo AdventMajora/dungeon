@@ -419,7 +419,7 @@
         var aug_heartPin = 	{name: 'Pin',	effectText: '+.005 hpr', drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
         var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
         var aug_tabard = 	{name: 'Tabard',effectText: '+1 def', drawCol: 64, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1},	action:    function(){}};
-        var aug_robe = 		{name: 'Robe',	effectText: '+.5 spd,+1 def', drawCol: 80, onPickup: function(){player.speed = player.speed+.5; player.base_defense = player.base_defense+1}, onDrop:	function(){player.speed = player.speed-.5; player.base_defense = player.base_defense-1}, action:    function(){}};
+        var aug_robe = 		{name: 'Robe',	effectText: '+3 def', drawCol: 80, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1}, action:    function(){}};
         var aug_horns = 	{name: 'Horns',	effectText: '+1 dmg', drawCol: 96, onPickup: function(){player.base_damage = player.base_damage+1}, 	onDrop:	function(){player.base_damage = player.base_damage-1}, 		action:    function(){}};
     }
     var augments = [aug_scarf,aug_heartPin,aug_bracelet,aug_tabard,aug_robe,aug_horns,aug_scarf];
@@ -1337,7 +1337,7 @@
             
             for (var i=0; i<player.augments.length; i++) {
                 ctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+8,menuHeight+68+(i*8));
-				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+32,menuHeight+68+(i*8));
+				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+40,menuHeight+68+(i*8));
             }
         
             //minimap
