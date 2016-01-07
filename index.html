@@ -254,11 +254,11 @@
                                 if (this.strafe == false) {
                                     this.dir = 3;
                                 }
-                                if (player.x+8 < screenWidth 
-                                    && currLvl[1][Math.ceil(Math.ceil(player.y)/8)][Math.ceil((Math.ceil(player.x)+this.speed)/8)] == 0
-                                    && currLvl[1][Math.floor(Math.floor(player.y)/8)][Math.ceil((Math.ceil(player.x)+this.speed)/8)] == 0) {
+                                if (this.x+4 < screenWidth 
+                                    && currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0
+                                    && currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+this.speed)/8)] == 0) {
                                     
-                                    player.x+=player.speed;
+                                    this.x+=this.speed;
                                 }
                             }
                         },
