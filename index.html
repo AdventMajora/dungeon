@@ -243,11 +243,19 @@
                                 if (this.strafe == false) {
                                     this.dir = 2;
                                 }
-                                if (player.y+this.speed <= screenHeight 
-                                    && currLvl[1][Math.ceil((Math.ceil(player.y)+this.speed)/8)][Math.floor(Math.floor(player.x)/8)] == 0
-                                    && currLvl[1][Math.ceil((Math.ceil(player.y)+this.speed)/8)][Math.ceil(Math.ceil(player.x)/8)] == 0) {
+                                var canMove = this.speed;
+                                console.log((this.y+this.speed+8));
+                                if (this.y+this.speed+8 >= screenHeight-16) {
                                     
-                                    player.y+=player.speed;
+                                    canMove = (this.y+this.speed) - screenHeight-16;
+                                    if (canMove < 0) {
+                                        canMove = 0;
+                                    }
+                                }
+                                if (currLvl[1][Math.ceil((Math.ceil(this.y)+this.speed)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
+                                    currLvl[1][Math.ceil((Math.ceil(this.y)+this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
+                                    
+                                    player.y+=canMove;
                                 }
                             }
                             if (dir == 3) {
@@ -256,7 +264,6 @@
                                     this.dir = 3;
                                 }
                                 var canMove = this.speed;
-                                console.log((this.x+this.speed+8));
                                 if (this.x+this.speed+8 >= screenWidth) {
                                     
                                     canMove = (this.x+this.speed) - screenWidth;
@@ -264,13 +271,10 @@
                                         canMove = 0;
                                     }
                                 }
-                                console.log(canMove);
                                 if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0 &&
                                     currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0) {
                                     
                                     this.x+=canMove;
-                                } else {
-                                    console.log('stopped');
                                 }
                             }
                         },
@@ -1457,7 +1461,7 @@
                 buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
                 minimap.update();
             }
-            if (Math.ceil(player.y) >= screenHeight-24 && mapLoc.y+1 < map.length-1) {
+            if (Math.ceil(player.y+8+player.speed) >= screenHeight-16 && mapLoc.y+1 < map.length-1) {
                 rTransition = 2;
                 roomDrawY = screenHeight-16;
                 mapLoc.y++;
@@ -1483,13 +1487,13 @@
                 if (rTransition == 0) {
                     player.y =  player.y +10;
                     roomDrawY = roomDrawY+10;
-                    if (player.y >= screenHeight-28) {
-                        player.y = screenHeight-28;
+                    if (player.y >= screenHeight-25) {
+                        player.y = screenHeight-25;
                     }
                     if (roomDrawY >=0) {
                         roomDrawY = 0;
                     }
-                    if (roomDrawY == 0 && player.y == screenHeight-28){
+                    if (roomDrawY == 0 && player.y == screenHeight-25){
                         rTransition = -1;
                     }
                 }
