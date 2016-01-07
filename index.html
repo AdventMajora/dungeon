@@ -114,6 +114,7 @@
                 curseGen:.0001,
                 maxCurse:10,
                 exp:0,
+                lvlUp: 5,
                 lvl:0,
                 newLvl:10,
                 augments:[],
@@ -147,15 +148,17 @@
                             if (this.exp == this.newLvl) {
                                 this.lvl++;
                                 this.exp = 0;
-                                this.maxHealth++;
+                                this.maxHealth = this.maxHealth+this.lvlUp;
                                 if (this.maxHealth > this.healthLimit) {
                                     this.maxHealth = this.healthLimit;
                                 }
                                 this.health = this.maxHealth;
-                                this.maxSpirit++;
+                                this.maxSpirit = this.maxSpirit+this.lvlUp;
                                 if (this.maxSpirit > this.spiritLimit) {
                                     this.maxSpirit = this.spiritLimit;
                                 }
+                                //diminishing returns of level ups
+                                this.lvlUp = Math.ceil(this.lvl/2);
                             }
                             
                             //check if player should be moving
@@ -179,7 +182,7 @@
                             
                             //use weapon of regen spirit
                             if (this.attacking == true) {
-                                //this.spirit = this.spirit-player.weapons[this.wepIndex].use_cost;
+                                this.moving  = false;
                                 this.weapons[this.wepIndex].action();
                             } else {
                                 this.spirit = this.spirit+this.spiritGen;
@@ -194,13 +197,21 @@
                             
                             for (var i=0; i<pressedKeys.length; i++) {
                                 switch (pressedKeys[i]) {
-                                    case    'W':    player.move(0);
+                                    case    'W':    if (this.moving == true) {
+                                                        player.move(0);
+                                                    }
                                                     break;
-                                    case    'A':    player.move(1);
+                                    case    'A':    if (this.moving == true) {
+                                                        player.move(1);
+                                                    }
                                                     break;
-                                    case    'S':    player.move(2);
+                                    case    'S':    if (this.moving == true) {
+                                                        player.move(2);
+                                                    }
                                                     break;
-                                    case    'D':    player.move(3);
+                                    case    'D':    if (this.moving == true) {
+                                                        player.move(3);
+                                                    }
                                                     break;
 									case	'_':	if (this.attacking == false && this.spirit>=this.weapons[this.wepIndex].init_cost) {
                                                         player.attacking = true;
@@ -453,9 +464,11 @@
     {//room items
         var con_mob = {type: 'mob', sprite: [705], loc: {x: -1, y:-1}, speed: 1, health: 10, alive: true, exp_reward: 1,
                         damage: .5,
+                        cursePenalty: 1,
                         action:	function() {
                                     if (this.health <= 0 && this.alive == true) {
                                         player.exp = player.exp+this.exp_reward;
+                                        player.curse = player.curse + this.cursePenalty;
                                         this.alive = false;
                                     }
                                     if (this.alive == true) {
