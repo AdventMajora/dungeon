@@ -591,7 +591,7 @@
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 
                                 && (player.keys.length >= this.diff)) {
                                 lvlComplete = true;
-                                player.curse = player.curse*(3/4);
+                                player.curse = player.curse*(.25);
                                 console.log(lvlComplete);
                                 rTransition = 4;
                                 roomDrawY = 0-(2*screenHeight+16);
