@@ -70,22 +70,22 @@
                             },
                     convert:    function(config) {
                                     switch (config) {
-                                        case    '[1,1,1,1]' :   return 565; break;
-                                        case    '[1,0,0,0]' :   return 566; break;
-                                        case    '[0,0,1,0]' :   return 567; break;
-                                        case    '[0,1,0,0]' :   return 568; break;
-                                        case    '[0,0,0,1]' :   return 597; break;
-                                        case    '[0,1,0,1]' :   return 598; break;
-                                        case    '[1,0,1,0]' :   return 599; break;
-                                        case    '[0,0,1,1]' :   return 560; break;
-                                        case    '[0,1,1,0]' :   return 629; break;
-                                        case    '[1,1,0,0]' :   return 630; break;
-                                        case    '[1,0,0,1]' :   return 631; break;
-                                        case    '[1,1,0,1]' :   return 632; break;
-                                        case    '[0,1,1,1]' :   return 661; break;
-                                        case    '[1,1,1,0]' :   return 662; break;
-                                        case    '[1,0,1,1]' :   return 663; break;
-                                        default             :   return 664; break;
+                                        case    '[1,1,1,1]' :   return 925; break;
+                                        case    '[1,0,0,0]' :   return 926; break;
+                                        case    '[0,0,1,0]' :   return 927; break;
+                                        case    '[0,1,0,0]' :   return 928; break;
+                                        case    '[0,0,0,1]' :   return 957; break;
+                                        case    '[0,1,0,1]' :   return 958; break;
+                                        case    '[1,0,1,0]' :   return 959; break;
+                                        case    '[0,0,1,1]' :   return 960; break;
+                                        case    '[0,1,1,0]' :   return 989; break;
+                                        case    '[1,1,0,0]' :   return 990; break;
+                                        case    '[1,0,0,1]' :   return 991; break;
+                                        case    '[1,1,0,1]' :   return 992; break;
+                                        case    '[0,1,1,1]' :   return 1021; break;
+                                        case    '[1,1,1,0]' :   return 1022; break;
+                                        case    '[1,0,1,1]' :   return 1023; break;
+                                        default             :   return 1024; break;
                                         
                                     }
                                 } 
@@ -1401,10 +1401,10 @@
                     if (map[i][j].discovered == true) {
                         drawSprite(minimap.map[i][j],(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         if (i == goalTile.y && j == goalTile.x) {
-                            drawSprite(563, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
+                            drawSprite(1019, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         }
                         if (i == mapLoc.y && j == mapLoc.x) {
-                            drawSprite(564, 4*8,menuHeight+(8*8));
+                            drawSprite(1020, 4*8,menuHeight+(8*8));
                         }
                     }
                 }
