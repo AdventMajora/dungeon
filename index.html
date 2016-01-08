@@ -696,11 +696,21 @@
       }
 	}, false);
     
-    
+	
+	
+	
+	
+	
+	
+	
+	//-----------------------------------------------------------------------------
+	//-
+	//-								  START
+	//-
+	//-----------------------------------------------------------------------------
     init();
     
     //start event loop
-    //60fps => Math.floor(1000/60)
     setInterval(mainLoop, Math.floor(1000/60));
     
     //fps counter
@@ -1524,7 +1534,6 @@
                         rTransition = -1;
                     }
                 }
-                
                 if (rTransition == 2) {
                     player.y =  player.y -10;
                     roomDrawY = roomDrawY-10;
@@ -1538,7 +1547,6 @@
                         rTransition = -1;
                     }
                 }
-                
                 if (rTransition == 1) {
                     player.x =  player.x +10;
                     roomDrawX = roomDrawX+10;
@@ -1552,7 +1560,6 @@
                         rTransition = -1;
                     }
                 }
-                
                 if (rTransition == 3) {
                     player.x =  player.x -10;
                     roomDrawX = roomDrawX-10;
@@ -1566,7 +1573,6 @@
                         rTransition = -1;
                     }
                 }
-                
                 if (rTransition == 4) {
                     player.y =  player.y +10;
                     roomDrawY = roomDrawY+10;
@@ -1587,7 +1593,7 @@
             }
             
             //render map
-			//background
+			//curr room background
             for (var i=0; i<currLvl[0].length; i++) {
                 for (var j=0; j<currLvl[0][i].length; j++) {
                     if (currLvl[0][i][j] !=0) {
@@ -1595,7 +1601,7 @@
 					}
                 }
             }
-            
+            //prev room background
             if (rTransition != -1) {
                 for (var i=0; i<prevLvl[0].length; i++) {
                     for (var j=0; j<prevLvl[0][i].length; j++) {
@@ -1617,7 +1623,7 @@
                 }
             }
 			
-			//collision
+			//curr room collision
             for (var i=0; i<currLvl[1].length; i++) {
                 for (var j=0; j<currLvl[1][i].length; j++) {
                     if (currLvl[1][i][j] !=0) {
@@ -1625,7 +1631,7 @@
 					}
                 }
             }
-            
+            //prev room collision
             if (rTransition != -1) {
                 for (var i=0; i<prevLvl[1].length; i++) {
                     for (var j=0; j<prevLvl[1][i].length; j++) {
@@ -1646,8 +1652,7 @@
                     }
                 }
             }
-            //draw player
-            
+
 			//update the player and room contents
 			if (paused == false && rTransition == -1) {	
                 //update contents of room
@@ -1669,7 +1674,7 @@
 			//ctx.fillRect(player.x,player.y,8,8);
             player.draw();
             
-            //overlap
+            //curr room overlap
             for (var i=0; i<currLvl[2].length; i++) {
                 for (var j=0; j<currLvl[2][i].length; j++) {
                     if (currLvl[2][i][j] !=0) {
@@ -1677,7 +1682,7 @@
 					}
                 }
             }
-            
+            //prev room overlap
             if (rTransition != -1) {
                 for (var i=0; i<prevLvl[2].length; i++) {
                     for (var j=0; j<prevLvl[2][i].length; j++) {
@@ -1700,6 +1705,7 @@
             }
             
         } else {
+			//render game over screen
             if (player.health <=0) {
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'white';
@@ -1713,6 +1719,7 @@
                 
             }
         }
+		//update/render menu
         menuSystem();
         ctx.scale((1/scaleFactor),(1/scaleFactor));
 	}
