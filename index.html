@@ -1309,7 +1309,7 @@
         if (sprite == 224 && blink == true) {
             sprite = 256;
         }
-		sprite = sprite - spriteSet;
+		//sprite = sprite - spriteSet;
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         if (sprite == 560) {    //hardcoded for now b/c fuck everything
@@ -1598,7 +1598,7 @@
             for (var i=0; i<currLvl[0].length; i++) {
                 for (var j=0; j<currLvl[0][i].length; j++) {
                     if (currLvl[0][i][j] !=0) {
-						drawSprite(currLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+						drawSprite(currLvl[0][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
@@ -1608,16 +1608,16 @@
                     for (var j=0; j<prevLvl[0][i].length; j++) {
                         if (prevLvl[0][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[0][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j]-spriteSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j]-spriteSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -1628,7 +1628,7 @@
             for (var i=0; i<currLvl[1].length; i++) {
                 for (var j=0; j<currLvl[1][i].length; j++) {
                     if (currLvl[1][i][j] !=0) {
-						drawSprite(currLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+						drawSprite(currLvl[1][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
@@ -1638,16 +1638,16 @@
                     for (var j=0; j<prevLvl[1][i].length; j++) {
                         if (prevLvl[1][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[1][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j]-spriteSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j]-spriteSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -1679,7 +1679,7 @@
             for (var i=0; i<currLvl[2].length; i++) {
                 for (var j=0; j<currLvl[2][i].length; j++) {
                     if (currLvl[2][i][j] !=0) {
-						drawSprite(currLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+						drawSprite(currLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
@@ -1689,16 +1689,16 @@
                     for (var j=0; j<prevLvl[2][i].length; j++) {
                         if (prevLvl[2][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
