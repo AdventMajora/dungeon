@@ -1309,6 +1309,7 @@
         if (sprite == 224 && blink == true) {
             sprite = 256;
         }
+		sprite = sprite - spriteSet;
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         if (sprite == 560) {    //hardcoded for now b/c fuck everything
