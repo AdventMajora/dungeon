@@ -1007,7 +1007,8 @@
         } 
         
         for (i=0; i<size; i++) {
-            //build list of empty rooms
+			console.log('Expansion round: '+i);
+            //build list of expandable rooms
             for (j=0; j<map.length; j++) {
                 for (k=0; k<map[j].length; k++) {
                     if (JSON.stringify(map[j][k]) == JSON.stringify(empty)
@@ -1020,6 +1021,8 @@
                 }
             }
             
+			console.log('expansion points: '+emptList.length);
+			
             //expand every empty room in list
             for (j=0; j<emptList.length; j++) {
                 //check configs of surrounding rooms;
@@ -1093,6 +1096,8 @@
                         appList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
+				
+				console.log('Matchable rooms: '+appList.length);
                 
                 //pick a room
                 if (gen) {
