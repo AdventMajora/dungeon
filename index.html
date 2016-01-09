@@ -775,7 +775,7 @@
         player.wepIndex = 0;
         
         depth = -1;
-        difficulty = 3;
+        difficulty = 8;
         
         buildLevel(difficulty);
         prevLvl = JSON.parse(JSON.stringify(currLvl));
@@ -1007,7 +1007,6 @@
         } 
         
         for (i=0; i<size; i++) {
-			console.log('Expansion round: '+i);
             //build list of expandable rooms
             for (j=0; j<map.length; j++) {
                 for (k=0; k<map[j].length; k++) {
@@ -1020,8 +1019,6 @@
                     }
                 }
             }
-            
-			console.log('expansion points: '+emptList.length);
 			
             //expand every empty room in list
             for (j=0; j<emptList.length; j++) {
@@ -1096,8 +1093,6 @@
                         appList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
-				
-				console.log('Matchable rooms: '+appList.length);
                 
                 //pick a room
                 if (gen) {
