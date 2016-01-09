@@ -28,7 +28,7 @@
     var fps = 60;					//count of frames per second
 	var pressedKeys = [];		//list of accepted key presses at a given time
     var hasAug = -1;
-    var difficulty = 3;
+    var difficulty = 8;
 	var paused = false;
     var depth = -1;
     var menuHeight = screenHeight-16;
@@ -608,7 +608,7 @@
                                 roomDrawY = 0-(2*screenHeight+16);
                                 console.log('loading');
                                 player.keys = [];
-                                difficulty++;
+                                //difficulty++;
                                 buildLevel(difficulty);
                             }
                         },
@@ -1409,7 +1409,7 @@
             for (var i=0; i<minimap.map.length; i++) {
                 for(var j=0; j<minimap.map[i].length; j++) {
                     
-                    if (map[i][j].discovered == true) {
+                    //if (map[i][j].discovered == true) {
                         drawSprite(minimap.map[i][j],(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         if (i == goalTile.y && j == goalTile.x) {
                             drawSprite(1019, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
@@ -1417,7 +1417,7 @@
                         if (i == mapLoc.y && j == mapLoc.x) {
                             drawSprite(1020, 4*8,menuHeight+(8*8));
                         }
-                    }
+                    //}
                 }
             }
         }
