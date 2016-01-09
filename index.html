@@ -591,6 +591,15 @@
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 
                                 && (player.keys.length >= this.diff)) {
                                 lvlComplete = true;
+								var rand = Math.floor(Math.random()*5) {
+									if (rand == 0) {
+										spriteSet = 6;
+									}else if (rand == 1) {
+										spriteSet = 12;
+									}else {
+										spriteSet = 0;
+									}
+								}
                                 player.curse = player.curse*(.25);
                                 console.log(lvlComplete);
                                 rTransition = 4;
