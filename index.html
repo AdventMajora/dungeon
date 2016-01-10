@@ -256,7 +256,7 @@
                                     }
                                     this.y-=canMove;
                                 } else {
-                                    canMove =  0;
+                                    canMove =  .25;
                                     while (canMove < this.speed) {
                                         if (currLvl[1][Math.floor((Math.floor(this.y)-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
                                             currLvl[1][Math.floor((Math.floor(this.y)-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
@@ -1730,8 +1730,8 @@
                 }
             }
                         
-            //ctx.fillStyle = 'red';
-			//ctx.fillRect(player.x,player.y,8,8);
+            ctx.fillStyle = 'red';
+			ctx.fillRect(player.x,player.y,8,8);
             player.draw();
             
             //curr room overlap
