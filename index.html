@@ -1068,6 +1068,7 @@
                     rand = Math.floor(Math.random()*appList.length);
                 }
                 seed+=rand;
+                console.log(appList[rand]);
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
                 numRooms++;
 
