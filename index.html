@@ -63,6 +63,7 @@
                                 for (var i=0; i<map.length; i++) {
                                     newRow = [];
                                     for (var j=0; j<map[i].length; j++) {
+                                        console.log(map[i][j]);
                                         newRow.push(minimap.convert(map[i][j].config));
                                     }
                                     minimap.map.push(newRow);
