@@ -283,8 +283,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-this.speed)/8)] == 0 &&
-                                            currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-this.speed)/8)] == 0) {
+                                        if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
+                                            currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
                                             
                                             this.x-=.25;
                                         } else {
@@ -309,8 +309,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.ceil((this.y+this.speed)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
-                                            currLvl[1][Math.ceil((this.y+this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
+                                        if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
+                                            currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
                                             
                                             this.y+=.25;
                                         } else {
