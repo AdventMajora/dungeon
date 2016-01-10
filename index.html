@@ -1138,10 +1138,10 @@
                 var capList = [];
                 for (k=0; k<rooms.length; k++) {
                     //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
-                    if ((rooms[k].config[0] == capConfig[0] || capConfig[0] == 2) &&
-                        (rooms[k].config[1] == capConfig[1] || capConfig[1] == 2) &&
-                        (rooms[k].config[2] == capConfig[2] || capConfig[2] == 2) &&
-                        (rooms[k].config[3] == capConfig[3] || capConfig[3] == 2)) {
+					if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(capConfig[0]) || capConfig[0] == 2) &&
+						(JSON.stringify(rooms[k].config[1]) == JSON.stringify(capConfig[1]) || capConfig[1] == 2) &&
+						(JSON.stringify(rooms[k].config[2]) == JSON.stringify(capConfig[2]) || capConfig[2] == 2) &&
+						(JSON.stringify(rooms[k].config[3]) == JSON.stringify(capConfig[3]) || capConfig[3] == 2)) {
                         capList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
