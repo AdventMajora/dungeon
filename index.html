@@ -621,21 +621,21 @@
 	var mobs = [con_mob];
     
     {//base rooms
-        var base_0 = {name:'base_0', config:[1,1,1,1], contents:[], obs:-1, discovered: false};
-        var base_1 = {name:'base_1', config:[1,0,0,0], contents:[], obs:-1, discovered: false};
-        var base_2 = {name:'base_2', config:[0,0,1,0], contents:[], obs:-1, discovered: false};
-        var base_3 = {name:'base_3', config:[0,1,0,0], contents:[], obs:-1, discovered: false};
-        var base_4 = {name:'base_4', config:[0,0,0,1], contents:[], obs:-1, discovered: false};
-        var base_5 = {name:'base_5', config:[0,1,0,1], contents:[], obs:-1, discovered: false};
-        var base_6 = {name:'base_6', config:[1,0,1,0], contents:[], obs:-1, discovered: false};
-        var base_7 = {name:'base_7', config:[0,0,1,1], contents:[], obs:-1, discovered: false};
-        var base_8 = {name:'base_8', config:[0,1,1,0], contents:[], obs:-1, discovered: false};
-        var base_9 = {name:'base_9', config:[1,1,0,0], contents:[], obs:-1, discovered: false};
-        var base_10 = {name:'base_10', config:[1,0,0,1], contents:[], obs:-1, discovered: false};
-        var base_11 = {name:'base_11', config:[1,1,0,1], contents:[], obs:-1, discovered: false};
-        var base_12 = {name:'base_12', config:[0,1,1,1], contents:[], obs:-1, discovered: false};
-        var base_13 = {name:'base_13', config:[1,1,1,0], contents:[], obs:-1, discovered: false};
-        var base_14 = {name:'base_14', config:[1,0,1,1], contents:[], obs:-1, discovered: false};
+        var base_0 = {name:'base_0', config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_1 = {name:'base_1', config:[[9,10],[],[],[]], contents:[], obs:-1, discovered: false};
+        var base_2 = {name:'base_2', config:[[],[],[9,10],[]], contents:[], obs:-1, discovered: false};
+        var base_3 = {name:'base_3', config:[[],[7,8],[],[]], contents:[], obs:-1, discovered: false};
+        var base_4 = {name:'base_4', config:[[],[],[],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_5 = {name:'base_5', config:[[],[7,8],[],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_6 = {name:'base_6', config:[[9,10],[],[9,10],[]], contents:[], obs:-1, discovered: false};
+        var base_7 = {name:'base_7', config:[[],[],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_8 = {name:'base_8', config:[[],[7,8],[9,10],[]], contents:[], obs:-1, discovered: false};
+        var base_9 = {name:'base_9', config:[[9,10],[7,8],[],[]], contents:[], obs:-1, discovered: false};
+        var base_10 = {name:'base_10', config:[[9,10],[],[],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_11 = {name:'base_11', config:[[9,10],[7,8],[],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_12 = {name:'base_12', config:[[],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_13 = {name:'base_13', config:[[9,10],[7,8],[9,10],[]], contents:[], obs:-1, discovered: false};
+        var base_14 = {name:'base_14', config:[[9,10],[],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
     }
     var empty = {name:'empty', config:[1,1,1,1], contents:[], obs:[], discovered: false};
     
@@ -1072,41 +1072,23 @@
                 numRooms++;
 
                 //create new empty's
-                /*if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
-                    map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(base_2));
-                    expandMap(emptList[j].y-1, emptList[j].x);
-                }
-                if (appList[rand].config[1] == 1 && map[emptList[j].y][emptList[j].x-1] == 0) {
-                    map[emptList[j].y][emptList[j].x-1] = JSON.parse(JSON.stringify(base_4));
-                    expandMap(emptList[j].y, emptList[j].x-1);
-                }
-                if (appList[rand].config[2] == 1 && map[emptList[j].y+1][emptList[j].x] == 0) {
-                    map[emptList[j].y+1][emptList[j].x] = JSON.parse(JSON.stringify(base_1));
-                    expandMap(emptList[j].y+1, emptList[j].x);
-                }
-                if (appList[rand].config[3] == 1 && map[emptList[j].y][emptList[j].x+1] == 0) {
-                    map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(base_3));
-                    expandMap(emptList[j].y, emptList[j].x+1);
-                }*/
-                
-                if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
+                if (appList[rand].config[0].length >0 && map[emptList[j].y-1][emptList[j].x] == 0) {
                     map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y-1, emptList[j].x);
                 }
-                if (appList[rand].config[1] == 1 && map[emptList[j].y][emptList[j].x-1] == 0) {
+                if (appList[rand].config[1].length >0 && map[emptList[j].y][emptList[j].x-1] == 0) {
                     map[emptList[j].y][emptList[j].x-1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x-1);
                 }
-                if (appList[rand].config[2] == 1 && map[emptList[j].y+1][emptList[j].x] == 0) {
+                if (appList[rand].config[2].length >0 && map[emptList[j].y+1][emptList[j].x] == 0) {
                     map[emptList[j].y+1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y+1, emptList[j].x);
                 }
-                if (appList[rand].config[3] == 1 && map[emptList[j].y][emptList[j].x+1] == 0) {
+                if (appList[rand].config[3].length >0 && map[emptList[j].y][emptList[j].x+1] == 0) {
                     map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x+1);
                 }
-             
-                
+              
             }
             emptList = [];
             if (numRooms < minRooms) {
@@ -1114,7 +1096,7 @@
             }
         }
         
-        console.log('capping');
+        //cap off the remaining empties
         //build list of remaining empties
         for (j=0; j<map.length; j++) {
             for (k=0; k<map[j].length; k++) {
@@ -1173,7 +1155,6 @@
                 numRooms++;
             }
         }
-        
         
         //put goal in map
         var rList = [];
