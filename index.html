@@ -1072,7 +1072,7 @@
                 numRooms++;
 
                 //create new empty's
-                if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
+                /*if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
                     map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(base_2));
                     expandMap(emptList[j].y-1, emptList[j].x);
                 }
@@ -1086,6 +1086,23 @@
                 }
                 if (appList[rand].config[3] == 1 && map[emptList[j].y][emptList[j].x+1] == 0) {
                     map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(base_3));
+                    expandMap(emptList[j].y, emptList[j].x+1);
+                }*/
+                
+                if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
+                    map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
+                    expandMap(emptList[j].y-1, emptList[j].x);
+                }
+                if (appList[rand].config[1] == 1 && map[emptList[j].y][emptList[j].x-1] == 0) {
+                    map[emptList[j].y][emptList[j].x-1] = JSON.parse(JSON.stringify(empty));
+                    expandMap(emptList[j].y, emptList[j].x-1);
+                }
+                if (appList[rand].config[2] == 1 && map[emptList[j].y+1][emptList[j].x] == 0) {
+                    map[emptList[j].y+1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
+                    expandMap(emptList[j].y+1, emptList[j].x);
+                }
+                if (appList[rand].config[3] == 1 && map[emptList[j].y][emptList[j].x+1] == 0) {
+                    map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x+1);
                 }
              
