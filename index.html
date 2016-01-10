@@ -333,16 +333,17 @@
                                     }
                                     this.x+=canMove;
                                 } else {
-                                    if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+canMove)/8)] == 0 &&
-                                        currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+canMove)/8)] == 0) {
+                                    while (canMove <= this.speed) {
+                                        if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+canMove)/8)] == 0 &&
+                                            currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+canMove)/8)] == 0) {
                                         
-                                        this.x+=.25;
-                                    } else {
-                                        break;
-                                    }
+                                            this.x+=.25;
+                                        } else {
+                                            break;
+                                        }
                                     canMove+=.25;
+                                    }
                                 }
-                                
                             }
                         },
                 draw:   function(){
