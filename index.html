@@ -621,23 +621,23 @@
 	var mobs = [con_mob];
     
     {//base rooms
-        var base_0 = {name:'base_0', config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_1 = {name:'base_1', config:[[9,10],[],[],[]], contents:[], obs:-1, discovered: false};
-        var base_2 = {name:'base_2', config:[[],[],[9,10],[]], contents:[], obs:-1, discovered: false};
-        var base_3 = {name:'base_3', config:[[],[7,8],[],[]], contents:[], obs:-1, discovered: false};
-        var base_4 = {name:'base_4', config:[[],[],[],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_5 = {name:'base_5', config:[[],[7,8],[],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_6 = {name:'base_6', config:[[9,10],[],[9,10],[]], contents:[], obs:-1, discovered: false};
-        var base_7 = {name:'base_7', config:[[],[],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_8 = {name:'base_8', config:[[],[7,8],[9,10],[]], contents:[], obs:-1, discovered: false};
-        var base_9 = {name:'base_9', config:[[9,10],[7,8],[],[]], contents:[], obs:-1, discovered: false};
-        var base_10 = {name:'base_10', config:[[9,10],[],[],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_11 = {name:'base_11', config:[[9,10],[7,8],[],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_12 = {name:'base_12', config:[[],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_13 = {name:'base_13', config:[[9,10],[7,8],[9,10],[]], contents:[], obs:-1, discovered: false};
-        var base_14 = {name:'base_14', config:[[9,10],[],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_0 = {name:'base_0',    config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_1 = {name:'base_1',    config:[[9,10],[],[],[]],           contents:[], obs:-1, discovered: false};
+        var base_2 = {name:'base_2',    config:[[],[],[9,10],[]],           contents:[], obs:-1, discovered: false};
+        var base_3 = {name:'base_3',    config:[[],[7,8],[],[]],            contents:[], obs:-1, discovered: false};
+        var base_4 = {name:'base_4',    config:[[],[],[],[7,8]],            contents:[], obs:-1, discovered: false};
+        var base_5 = {name:'base_5',    config:[[],[7,8],[],[7,8]],         contents:[], obs:-1, discovered: false};
+        var base_6 = {name:'base_6',    config:[[9,10],[],[9,10],[]],       contents:[], obs:-1, discovered: false};
+        var base_7 = {name:'base_7',    config:[[],[],[9,10],[7,8]],        contents:[], obs:-1, discovered: false};
+        var base_8 = {name:'base_8',    config:[[],[7,8],[9,10],[]],        contents:[], obs:-1, discovered: false};
+        var base_9 = {name:'base_9',    config:[[9,10],[7,8],[],[]],        contents:[], obs:-1, discovered: false};
+        var base_10 = {name:'base_10',  config:[[9,10],[],[],[7,8]],        contents:[], obs:-1, discovered: false};
+        var base_11 = {name:'base_11',  config:[[9,10],[7,8],[],[7,8]],     contents:[], obs:-1, discovered: false};
+        var base_12 = {name:'base_12',  config:[[],[7,8],[9,10],[7,8]],     contents:[], obs:-1, discovered: false};
+        var base_13 = {name:'base_13',  config:[[9,10],[7,8],[9,10],[]],    contents:[], obs:-1, discovered: false};
+        var base_14 = {name:'base_14',  config:[[9,10],[],[9,10],[7,8]],    contents:[], obs:-1, discovered: false};
     }
-    var empty = {name:'empty', config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:[], discovered: false};
+    var empty = {name:'empty',          config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:[], discovered: false};
     
 	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14];
 	
@@ -1072,19 +1072,19 @@
                 numRooms++;
 
                 //create new empty's
-                if (appList[rand].config[0].length >0 && map[emptList[j].y-1][emptList[j].x] == 0) {
+                if (appList[rand].config[0].length > 0 && map[emptList[j].y-1][emptList[j].x] == 0) {
                     map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y-1, emptList[j].x);
                 }
-                if (appList[rand].config[1].length >0 && map[emptList[j].y][emptList[j].x-1] == 0) {
+                if (appList[rand].config[1].length > 0 && map[emptList[j].y][emptList[j].x-1] == 0) {
                     map[emptList[j].y][emptList[j].x-1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x-1);
                 }
-                if (appList[rand].config[2].length >0 && map[emptList[j].y+1][emptList[j].x] == 0) {
+                if (appList[rand].config[2].length > 0 && map[emptList[j].y+1][emptList[j].x] == 0) {
                     map[emptList[j].y+1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y+1, emptList[j].x);
                 }
-                if (appList[rand].config[3].length >0 && map[emptList[j].y][emptList[j].x+1] == 0) {
+                if (appList[rand].config[3].length > 0 && map[emptList[j].y][emptList[j].x+1] == 0) {
                     map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x+1);
                 }
