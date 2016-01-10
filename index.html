@@ -256,7 +256,7 @@
                                     }
                                     this.y-=canMove;
                                 } else {
-                                    canMove =   .25;
+                                    canMove =  0;
                                     while (canMove < this.speed) {
                                         if (currLvl[1][Math.floor((Math.floor(this.y)-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
                                             currLvl[1][Math.floor((Math.floor(this.y)-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
