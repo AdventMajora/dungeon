@@ -1011,11 +1011,11 @@
             //build list of expandable rooms
             for (j=0; j<map.length; j++) {
                 for (k=0; k<map[j].length; k++) {
-                    if (JSON.stringify(map[j][k]) == JSON.stringify(empty)
-                        || JSON.stringify(map[j][k]) == JSON.stringify(base_1)
-                        || JSON.stringify(map[j][k]) == JSON.stringify(base_2)
-                        || JSON.stringify(map[j][k]) == JSON.stringify(base_3)
-                        || JSON.stringify(map[j][k]) == JSON.stringify(base_4)) {
+                    if (JSON.stringify(map[j][k]) == JSON.stringify(empty) ||
+                        JSON.stringify(map[j][k]) == JSON.stringify(base_1) ||
+                        JSON.stringify(map[j][k]) == JSON.stringify(base_2) ||
+                        JSON.stringify(map[j][k]) == JSON.stringify(base_3) ||
+                        JSON.stringify(map[j][k]) == JSON.stringify(base_4)) {
                         emptList.push({x:k, y:j});
                     }
                 }
@@ -1024,34 +1024,31 @@
 			console.log('Expansion points: '+emptList.length);
             //expand every empty room in list
             for (j=0; j<emptList.length; j++) {
+				console.log(i);
                 //check configs of surrounding rooms;
                 var matchConfig = [];
                 
                 if (map[emptList[j].y-1][emptList[j].x] == 0) {   //above
-                    
                     matchConfig.push(2);
                 } else {
                     matchConfig.push(map[emptList[j].y-1][emptList[j].x].config[2]);
                 }
                 if (map[emptList[j].y][emptList[j].x-1] == 0) {   //left
-                    
                     matchConfig.push(2);
                 } else {
                     matchConfig.push(map[emptList[j].y][emptList[j].x-1].config[3]);
                 }
                 if (map[emptList[j].y+1][emptList[j].x] == 0) {   //below
-                    
                     matchConfig.push(2);
                 } else {
                     matchConfig.push(map[emptList[j].y+1][emptList[j].x].config[0]);
                 }
                 if (map[emptList[j].y][emptList[j].x+1] == 0) {   //right
-                    
                     matchConfig.push(2);
                 } else {
                     matchConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
-                
+                console.log(i);
                 //ensure a traversable room
                 if (matchConfig.indexOf(1) < 0) {
                     if (gen) {
@@ -1063,7 +1060,7 @@
                     seed+=rand;
                     matchConfig[rand] = 1;
                 }
-
+				console.log(i);
                 //build list of applicable rooms
                 var appList = [];
                 for (k=0; k<rooms.length; k++) {
@@ -1075,7 +1072,7 @@
                         appList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
-                
+                console.log(i);
                 //pick a room
                 if (gen) {
                     rand = parseInt(gen.charAt(genIndex));
@@ -1087,7 +1084,7 @@
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
 				console.log('Expanded');
                 
-                
+                console.log(i);
                 //create new empty's
                 if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
                     map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(base_2));
