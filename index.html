@@ -1108,7 +1108,62 @@
              
                 
             }
-            emptList = [];
+            //if last round, cap the remaining empties
+            if (i+1 == size && numRooms => minRooms) {
+                for (j=0; j<emptList.length; j++) {
+                    if (JSON.stringify(map[emptList[j].y][emptList[j].x]) == JSON.stringify(empty)) {
+                        var capConfig = [];
+                
+                        if (map[emptList[j].y-1][emptList[j].x] == 0) {   //above
+                            capConfig.push(0);
+                        } else {
+                            capConfig.push(map[emptList[j].y-1][emptList[j].x].config[2]);
+                        }
+                        if (map[emptList[j].y][emptList[j].x-1] == 0) {   //left
+                            capConfig.push(0);
+                        } else {
+                            capConfig.push(map[emptList[j].y][emptList[j].x-1].config[3]);
+                        }
+                        if (map[emptList[j].y+1][emptList[j].x] == 0) {   //below
+                            capConfig.push(0);
+                        } else {
+                            capConfig.push(map[emptList[j].y+1][emptList[j].x].config[0]);
+                        }
+                        if (map[emptList[j].y][emptList[j].x+1] == 0) {   //right
+                            capConfig.push(0);
+                        } else {
+                            capConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
+                        }
+                        
+                        //build list of applicable rooms
+                        appList = [];
+                        for (k=0; k<rooms.length; k++) {
+                            //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
+                            if ((rooms[k].config[0] == matchConfig[0] || matchConfig[0] == 2) &&
+                                (rooms[k].config[1] == matchConfig[1] || matchConfig[1] == 2) &&
+                                (rooms[k].config[2] == matchConfig[2] || matchConfig[2] == 2) &&
+                                (rooms[k].config[3] == matchConfig[3] || matchConfig[3] == 2)) {
+                                appList.push(JSON.parse(JSON.stringify(rooms[k])));
+                            }
+                        }
+
+                        //pick a room
+                        if (gen) {
+                            rand = parseInt(gen.charAt(genIndex));
+                            genIndex++;
+                        } else {
+                            rand = Math.floor(Math.random()*appList.length);
+                        }
+                        seed+=rand;
+                        map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
+                        numRooms++;
+                        
+                    }
+                }
+            } else {
+                emptList = [];
+            }
+            
             if (numRooms < minRooms) {
                 i--;
             }
