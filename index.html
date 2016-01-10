@@ -1110,6 +1110,7 @@
             }
             //if last round, cap the remaining empties
             if (((i) == size-1) && (numRooms => minRooms)) {
+                console.log('capping');
                 for (j=0; j<emptList.length; j++) {
                     if (JSON.stringify(map[emptList[j].y][emptList[j].x]) == JSON.stringify(empty)) {
                         var capConfig = [];
