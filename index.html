@@ -78,7 +78,6 @@
                                                 config[i] = 0;
                                             }
                                         }
-                                        console.log(config);
                                     }
                                     config = JSON.stringify(config);
                                     switch (config) {
@@ -1123,22 +1122,22 @@
                 var capConfig = [];
         
                 if (map[emptList[j].y-1][emptList[j].x] == 0) {   //above
-                    capConfig.push(2);
+                    capConfig.push([]);
                 } else {
                     capConfig.push(map[emptList[j].y-1][emptList[j].x].config[2]);
                 }
                 if (map[emptList[j].y][emptList[j].x-1] == 0) {   //left
-                    capConfig.push(2);
+                    capConfig.push([]);
                 } else {
                     capConfig.push(map[emptList[j].y][emptList[j].x-1].config[3]);
                 }
                 if (map[emptList[j].y+1][emptList[j].x] == 0) {   //below
-                    capConfig.push(2);
+                    capConfig.push([]);
                 } else {
                     capConfig.push(map[emptList[j].y+1][emptList[j].x].config[0]);
                 }
                 if (map[emptList[j].y][emptList[j].x+1] == 0) {   //right
-                    capConfig.push(2);
+                    capConfig.push([]);
                 } else {
                     capConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
@@ -1147,10 +1146,10 @@
                 var capList = [];
                 for (k=0; k<rooms.length; k++) {
                     //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
-					if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(capConfig[0]) || capConfig[0] == 2) &&
-						(JSON.stringify(rooms[k].config[1]) == JSON.stringify(capConfig[1]) || capConfig[1] == 2) &&
-						(JSON.stringify(rooms[k].config[2]) == JSON.stringify(capConfig[2]) || capConfig[2] == 2) &&
-						(JSON.stringify(rooms[k].config[3]) == JSON.stringify(capConfig[3]) || capConfig[3] == 2)) {
+					if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(capConfig[0])) &&
+						(JSON.stringify(rooms[k].config[1]) == JSON.stringify(capConfig[1])) &&
+						(JSON.stringify(rooms[k].config[2]) == JSON.stringify(capConfig[2])) &&
+						(JSON.stringify(rooms[k].config[3]) == JSON.stringify(capConfig[3]))) {
                         capList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
