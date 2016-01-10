@@ -63,12 +63,21 @@
                                 for (var i=0; i<map.length; i++) {
                                     newRow = [];
                                     for (var j=0; j<map[i].length; j++) {
-                                        newRow.push(minimap.convert(JSON.stringify(map[i][j].config)));
+                                        newRow.push(minimap.convert(JSON.pares(JSON.stringify(map[i][j].config))));
                                     }
                                     minimap.map.push(newRow);
                                 }
                             },
-                    convert:    function(config) {
+                    convert:    function(rawConfig) {
+                                    var config = [];
+                                    for (var i=0; i<rawConfig.length; i++) {
+                                        if (rawConfig[i].length > 0) {
+                                            config[i] = 1;
+                                        } else {
+                                            config[i] = 0;
+                                        }
+                                    }
+                                    
                                     switch (config) {
                                         case    '[1,1,1,1]' :   return 925; break;
                                         case    '[1,0,0,0]' :   return 926; break;
