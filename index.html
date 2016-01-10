@@ -964,6 +964,8 @@
         var seed = '';
         var genIndex = 0;
         var config;
+        var minRooms = 4+size;
+        var numRooms = 0;
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
@@ -1067,6 +1069,7 @@
                 }
                 seed+=rand;
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
+                numRooms++;
 
                 //create new empty's
                 if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
@@ -1089,6 +1092,9 @@
                 
             }
             emptList = [];
+            if (numRooms < minRooms) {
+                i--;
+            }
         }
         
         
