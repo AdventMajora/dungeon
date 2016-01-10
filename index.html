@@ -260,14 +260,12 @@
                                     while (canMove < this.speed) {
                                         if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
                                             currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
-                                            console.log('.25');
                                             this.y-=.25;
                                         } else {
                                             break;
                                         }
                                         canMove+=.25;
                                     }
-                                    console.log(canMove);
                                 }
                                 
                             }
