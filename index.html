@@ -974,34 +974,34 @@
             //expand map if needed
             if (y == 0) {
                 var newRow = [];
-                for (i=0; i<map[0].length; i++) {
+                for (c=0; c<map[0].length; c++) {
                     newRow.push(0);
                 }
                 map.unshift(newRow);
                 mapLoc.y++;
-                for (i=0; i<emptList.length; i++) {
-                    emptList[i].y++;
+                for (c=0; c<emptList.length; c++) {
+                    emptList[c].y++;
                 }
             }
             if (x == 0) {
-                for (i=0; i<map.length; i++) {
-                    map[i].unshift(0);
+                for (c=0; c<map.length; c++) {
+                    map[c].unshift(0);
                 }
                 mapLoc.x++;
-                for (i=0; i<emptList.length; i++) {
-                    emptList[i].x++;
+                for (c=0; c<emptList.length; c++) {
+                    emptList[c].x++;
                 }
             }
             if (y == map.length-1) {
                 var newRow = [];
-                for (i=0; i<map[0].length; i++) {
+                for (c=0; c<map[0].length; c++) {
                     newRow.push(0);
                 }
                 map.push(newRow);
             }
             if (x == map[emptList[j].y].length-1) {
-                for (i=0; i<map.length; i++) {
-                    map[i].push(0);
+                for (c=0; c<map.length; c++) {
+                    map[c].push(0);
                 }
             }
         } 
