@@ -647,10 +647,13 @@
         var base_12 = {name:'base_12',  config:[[],[7,8],[9,10],[7,8]],     contents:[], obs:-1, discovered: false};
         var base_13 = {name:'base_13',  config:[[9,10],[7,8],[9,10],[]],    contents:[], obs:-1, discovered: false};
         var base_14 = {name:'base_14',  config:[[9,10],[],[9,10],[7,8]],    contents:[], obs:-1, discovered: false};
+        
+        var open_0 = {name:'open_0',    config:[[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var open_1 = {name:'open_1',    config:[[9,10],[7,8],[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],[7,8]], contents:[], obs:-1, discovered: false};
     }
     var empty = {name:'empty',          config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:[], discovered: false};
     
-	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14];
+	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14,open_0,open_1];
 	
     //input
 	document.addEventListener('keydown', function(event) {
@@ -1282,7 +1285,6 @@
         
         buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
         lvlComplete = false;
-        printMap();
 	}
 	
     //loads a level
