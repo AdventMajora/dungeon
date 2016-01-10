@@ -1053,10 +1053,10 @@
                 var appList = [];
                 for (k=0; k<rooms.length; k++) {
                     //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
-					if ((rooms[k].config[0] == matchConfig[0] || matchConfig[0] == 2) &&
-						(rooms[k].config[1] == matchConfig[1] || matchConfig[1] == 2) &&
-						(rooms[k].config[2] == matchConfig[2] || matchConfig[2] == 2) &&
-						(rooms[k].config[3] == matchConfig[3] || matchConfig[3] == 2)) {
+					if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(matchConfig[0]) || matchConfig[0] == 2) &&
+						(JSON.stringify(rooms[k].config[1]) == JSON.stringify(matchConfig[1]) || matchConfig[1] == 2) &&
+						(JSON.stringify(rooms[k].config[2]) == JSON.stringify(matchConfig[2]) || matchConfig[2] == 2) &&
+						(JSON.stringify(rooms[k].config[3]) == JSON.stringify(matchConfig[3]) || matchConfig[3] == 2)) {
                         appList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
