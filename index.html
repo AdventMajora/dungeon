@@ -1108,10 +1108,7 @@
              
                 
             }
-            
             emptList = [];
-            
-            
             if (numRooms < minRooms) {
                 i--;
             }
@@ -1174,6 +1171,7 @@
                 seed+=rand;
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
                 numRooms++;
+        }
         
         
         //put goal in map
