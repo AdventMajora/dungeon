@@ -1045,18 +1045,6 @@
                 } else {
                     matchConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
-				
-                //ensure a traversable room
-                /*if (matchConfig.indexOf(1) < 0) {
-                    if (gen) {
-                        rand = parseInt(gen.charAt(genIndex));
-                        genIndex++;
-                    } else {
-                        rand = Math.floor(Math.random()*matchConfig.length);
-                    }
-                    seed+=rand;
-                    matchConfig[rand] = 1;
-                }*/
 
                 //build list of applicable rooms
                 var appList = [];
