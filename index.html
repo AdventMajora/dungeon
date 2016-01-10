@@ -1142,7 +1142,6 @@
                 }
                 
                 //build list of applicable rooms
-                console.log(capConfig);
                 var capList = [];
                 for (k=0; k<rooms.length; k++) {
                     //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
@@ -1153,7 +1152,6 @@
                         capList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
-                console.log(capList);
                 //pick a room
                 if (gen) {
                     rand = parseInt(gen.charAt(genIndex));
