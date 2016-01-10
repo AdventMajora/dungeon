@@ -1111,22 +1111,22 @@
                 var capConfig = [];
         
                 if (map[emptList[j].y-1][emptList[j].x] == 0) {   //above
-                    capConfig.push(0);
+                    capConfig.push(2);
                 } else {
                     capConfig.push(map[emptList[j].y-1][emptList[j].x].config[2]);
                 }
                 if (map[emptList[j].y][emptList[j].x-1] == 0) {   //left
-                    capConfig.push(0);
+                    capConfig.push(2);
                 } else {
                     capConfig.push(map[emptList[j].y][emptList[j].x-1].config[3]);
                 }
                 if (map[emptList[j].y+1][emptList[j].x] == 0) {   //below
-                    capConfig.push(0);
+                    capConfig.push(2);
                 } else {
                     capConfig.push(map[emptList[j].y+1][emptList[j].x].config[0]);
                 }
                 if (map[emptList[j].y][emptList[j].x+1] == 0) {   //right
-                    capConfig.push(0);
+                    capConfig.push(2);
                 } else {
                     capConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
