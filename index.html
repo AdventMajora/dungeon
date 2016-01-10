@@ -111,9 +111,9 @@
                 attacking: false,
                 moveWhileAttacking: false,
                 speed: 1,//60/fps,
+                speedLimit: 4,
                 base_damage:1,
                 base_defense:1,
-                speedLimit: 4,
                 health:10,
                 healthGen:0,
                 maxHealth:10,
@@ -254,14 +254,18 @@
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
-                                }
-                                if (currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
-                                    currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
-                                    
                                     this.y-=canMove;
                                 } else {
-									
-								}
+                                    canMove = 0;
+                                    while (canMove <= this.speed) {
+                                        canMove+=.25;
+                                        if (currLvl[1][Math.floor((Math.floor(this.y)-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
+                                            currLvl[1][Math.floor((Math.floor(this.y)-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
+                                            this.y-=canMove;
+                                        }
+                                    }
+                                }
+                                
                             }
                             if (dir == 1) {
                                 if (this.strafe == false) {
@@ -978,7 +982,7 @@
         var seed = '';
         var genIndex = 0;
         var config;
-        var minRooms = 4+size;
+        var minRooms = 3+size;
         var numRooms = 0;
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
