@@ -70,11 +70,13 @@
                             },
                     convert:    function(rawConfig) {
                                     var config = [];
-                                    for (var i=0; i<rawConfig.length; i++) {
-                                        if (rawConfig[i].length > 0) {
-                                            config[i] = 1;
-                                        } else {
-                                            config[i] = 0;
+                                    if (rawConfig ! null) {
+                                        for (var i=0; i<rawConfig.length; i++) {
+                                            if (rawConfig[i].length > 0) {
+                                                config[i] = 1;
+                                            } else {
+                                                config[i] = 0;
+                                            }
                                         }
                                     }
                                     
