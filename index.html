@@ -63,8 +63,12 @@
                                 for (var i=0; i<map.length; i++) {
                                     newRow = [];
                                     for (var j=0; j<map[i].length; j++) {
-                                        console.log(map[i][j].config);
-                                        newRow.push(minimap.convert(JSON.parse(JSON.stringify(map[i][j].config))));
+                                        if (map[i][j] !=0) {
+                                            newRow.push(minimap.convert(JSON.parse(JSON.stringify(map[i][j].config))));
+                                        } else {
+                                            newRow.push([[],[],[],[]]);
+                                        }
+                                        
                                     }
                                     minimap.map.push(newRow);
                                 }
