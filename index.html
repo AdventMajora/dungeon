@@ -1133,14 +1133,14 @@
                 }
                 
                 //build list of applicable rooms
-                var appList = [];
+                var capList = [];
                 for (k=0; k<rooms.length; k++) {
                     //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
                     if ((rooms[k].config[0] == capConfig[0] || capConfig[0] == 2) &&
                         (rooms[k].config[1] == capConfig[1] || capConfig[1] == 2) &&
                         (rooms[k].config[2] == capConfig[2] || capConfig[2] == 2) &&
                         (rooms[k].config[3] == capConfig[3] || capConfig[3] == 2)) {
-                        appList.push(JSON.parse(JSON.stringify(rooms[k])));
+                        capList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
 
@@ -1149,10 +1149,10 @@
                     rand = parseInt(gen.charAt(genIndex));
                     genIndex++;
                 } else {
-                    rand = Math.floor(Math.random()*appList.length);
+                    rand = Math.floor(Math.random()*capList.length);
                 }
                 seed+=rand;
-                map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
+                map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
                 numRooms++;
             }
         }
