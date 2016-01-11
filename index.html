@@ -47,6 +47,9 @@
     var playerSheet = new Image();
     playerSheet.src = 'assets/player_sheet.png';
     
+    var testSheet = new Image();
+    testSheet.src = 'assets/test.png';
+    
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
@@ -756,11 +759,10 @@
 	
 	
 	
-	var testSheet = new Image();
-    testSheet.src = 'assets/test.png';
+	
     ctx.fillStyle = 'black';
     ctx.fillRect(0,0,screenWidth,screenHeight);
-    ctx.drawImage(testSheet,0,0,16,16,0,0,16,16);
+    ctx.drawImage(testSheet,0,0);
     var imgData = ctx.getImageData(0,0,16,16);
     var rowstring = '';
     for (var i=0; i<16; i++) {
