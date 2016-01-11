@@ -759,7 +759,7 @@
 	
 	
 	
-	ctx.drawImage(testSheet,0,0);
+	ctx.drawImage(testSheet,16,16);
     var imgData = ctx.getImageData(0,0,16,16);
     var rowstring = '';
     for (var i=0; i<16; i++) {
@@ -1814,19 +1814,7 @@
                     init();
                 }
             } else {
-                ctx.drawImage(testSheet,0,0);
-                var imgData = ctx.getImageData(0,0,16,16);
-                var rowstring = '';
-                for (var i=0; i<16; i++) {
-                    rowstring = '';
-                    
-                    for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-                        rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
-                    }
-                    console.log(rowstring);
-                }
-                console.log(imgData.data);
-            }
+                
         }
 		//update/render menu
         menuSystem();
