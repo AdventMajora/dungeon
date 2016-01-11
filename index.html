@@ -755,23 +755,6 @@
     
 	
 	
-	
-	var testSheet = new Image();
-    testSheet.src = 'assets/test.png';
-    ctx.drawImage(testSheet,0,0,16,160,0,0,16,16);
-    var imgData = ctx.getImageData(0,0,16,16);
-    var rowstring = '';
-    for (var i=0; i<16; i++) {
-        rowstring = '';
-        
-        for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-            rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
-        }
-        console.log(rowstring);
-    }
-	console.log(imgData.data);
-	
-	/*
 	//-----------------------------------------------------------------------------
 	//-
 	//-								  START
@@ -1560,6 +1543,17 @@
     
     //main loop
 	function mainLoop() {
+        var imgData = ctx.getImageData(0,0,16,16);
+        var rowstring = '';
+        for (var i=0; i<16; i++) {
+            rowstring = '';
+            
+            for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
+                rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+            }
+            console.log(rowstring);
+        }
+        console.log(imgData.data);
         //console.log(lvlComplete);
         frames++;
         //update screen dimensions
@@ -1818,6 +1812,6 @@
 		//update/render menu
         menuSystem();
         ctx.scale((1/scaleFactor),(1/scaleFactor));
-	}*/
+	}
 </script>
 </html>
