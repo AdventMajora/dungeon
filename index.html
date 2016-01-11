@@ -758,7 +758,9 @@
 	
 	var testSheet = new Image();
     testSheet.src = 'assets/test.bmp';
-	console.log(testSheet);
+    ctx.drawImage(testSheet,0,0);
+    var imgData = canvas.toDataURL('image/bmp');
+	console.log(imgData);
 	
 	
 	//-----------------------------------------------------------------------------
