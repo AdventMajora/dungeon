@@ -763,7 +763,7 @@
     for (var i=0; i<16; i++) {
         var rowstring = '';
         for (var j=i*16; j<(i+1)*16*4; j+=4) {
-            rowstring=(imgData.data[j]+''+imgData.data[j]+''+imgData.data[j]+''+imgData.data[j]+' ');
+            rowstring+=(imgData.data[j]+''+imgData.data[j]+''+imgData.data[j]+''+imgData.data[j]+' ');
         }
         console.log(rowstring);
         
