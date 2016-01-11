@@ -760,7 +760,7 @@
     testSheet.src = 'assets/test.png';
     ctx.drawImage(testSheet,0,0,16,16);
     var imgData = ctx.getImageData(0,0,16,16);
-	console.log(imgData);
+	console.log(JSON.stringify(imgData.data));
 	
 	
 	//-----------------------------------------------------------------------------
