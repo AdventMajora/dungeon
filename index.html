@@ -758,6 +758,8 @@
 	
 	var testSheet = new Image();
     testSheet.src = 'assets/test.png';
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0,0,screenWidth,screenHeight);
     ctx.drawImage(testSheet,0,0,16,16,0,0,16,16);
     var imgData = ctx.getImageData(0,0,16,16);
     var rowstring = '';
