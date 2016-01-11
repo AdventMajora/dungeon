@@ -758,7 +758,7 @@
 	
 	var testSheet = new Image();
     testSheet.src = 'assets/test.png';
-    ctx.drawImage(testSheet,0,0,16,16,0,0,16,16);
+    ctx.drawImage(testSheet,0,0,16,16,16,16);
     var imgData = ctx.getImageData(0,0,16,16);
     var rowstring = '';
     for (var i=0; i<16; i++) {
@@ -771,7 +771,7 @@
     }
 	console.log(imgData.data);
 	
-	
+	/*
 	//-----------------------------------------------------------------------------
 	//-
 	//-								  START
@@ -1818,6 +1818,6 @@
 		//update/render menu
         menuSystem();
         ctx.scale((1/scaleFactor),(1/scaleFactor));
-	}
+	}*/
 </script>
 </html>
