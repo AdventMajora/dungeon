@@ -759,7 +759,7 @@
 	var testSheet = new Image();
     testSheet.src = 'assets/test.png';
     ctx.drawImage(testSheet,0,0);
-    var imgData = ctx.toImageData('image/png');
+    var imgData = ctx.toImageData(0,0,16,16);
 	console.log(imgData);
 	
 	
