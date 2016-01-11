@@ -762,19 +762,22 @@
 	//delay start for loading
     setTimeout(function() {
         ctx.drawImage(testSheet,0,0);
-        var imgData = ctx.getImageData(0,0,16,16);
-        var rowstring = '';
-        for (var i=0; i<16; i++) {
-            rowstring = '';
-            
-            for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-                rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+        setTimeout(function(){
+            var imgData = ctx.getImageData(0,0,16,16);
+            var rowstring = '';
+            for (var i=0; i<16; i++) {
+                rowstring = '';
+                
+                for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
+                    rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+                }
+                console.log(rowstring);
             }
-            console.log(rowstring);
-        }
-        console.log(imgData.data);
-        init();
-        setInterval(mainLoop, Math.floor(1000/60));
+            console.log(imgData.data);
+            init();
+            setInterval(mainLoop, Math.floor(1000/60));
+        },1000);
+        
     },1000);
     
     
