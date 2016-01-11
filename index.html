@@ -759,7 +759,7 @@
 	
 	
 	
-	ctx.drawImage(testSheet,16,16);
+	//delay start for loading
     setTimeout(function() {
         ctx.drawImage(testSheet,16,16);
         var imgData = ctx.getImageData(0,0,16,16);
@@ -774,6 +774,7 @@
         }
         console.log(imgData.data);
         init();
+        setInterval(mainLoop, Math.floor(1000/60));
     },1000);
     
     
@@ -785,7 +786,7 @@
     //init();
     
     //start event loop
-    setInterval(mainLoop, Math.floor(1000/60));
+    
     
     //fps counter
     setInterval(function() {
