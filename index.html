@@ -1452,50 +1452,7 @@
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-        if (palette == true) {
-            var imgData = ctx.getImageData(sY,sX,8,8);
-            var origData = [];
-            var row = [];
-            for (var i=0; i<16; i++) {
-                row = [];
-                for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-                    var pix = [];
-                    pix.push(imgData.data[j]);
-                    pix.push(imgData.data[j+1]);
-                    pix.push(imgData.data[j+2]);
-                    pix.push(imgData.data[j+3]);
-                    row.push(pix);
-                }
-                origData.push(row);
-            }
-            for (var i=0; i<origData.length; i++) {
-                for (var j=0; j<origData[i].length; j++) {
-                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[0])) {
-                        origData[i][j] = pal_g[0]
-                    }
-                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[1])) {
-                        origData[i][j] = pal_g[1]
-                    }
-                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[2])) {
-                        origData[i][j] = pal_g[2]
-                    }
-                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[3])) {
-                        origData[i][j] = pal_g[3]
-                    }
-                }
-            }
-            var colorized = [];
-            for (var i=0; i<origData.length; i++) {
-                for (var j=0; j<origData[i].length; j++) {
-                    for (var k=0; k<origData[i][j].length; k++) {
-                        colorized.push(origData[i][j][k]);
-                    }
-                }
-            }
-            console.log(colorized);
-            imgData.data = colorized;
-            //ctx.putImageData(imgData, sY, sX);
-        }
+        
         
 	}
 	
@@ -1883,6 +1840,52 @@
                         }
                     }
                 }
+            }
+            
+            
+            if (palette == true) {
+                var imgData = ctx.getImageData(0,0,screenWidth,scree-16);
+                var origData = [];
+                var row = [];
+                for (var i=0; i<16; i++) {
+                    row = [];
+                    for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
+                        var pix = [];
+                        pix.push(imgData.data[j]);
+                        pix.push(imgData.data[j+1]);
+                        pix.push(imgData.data[j+2]);
+                        pix.push(imgData.data[j+3]);
+                        row.push(pix);
+                    }
+                    origData.push(row);
+                }
+                for (var i=0; i<origData.length; i++) {
+                    for (var j=0; j<origData[i].length; j++) {
+                        if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[0])) {
+                            origData[i][j] = pal_g[0]
+                        }
+                        if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[1])) {
+                            origData[i][j] = pal_g[1]
+                        }
+                        if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[2])) {
+                            origData[i][j] = pal_g[2]
+                        }
+                        if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[3])) {
+                            origData[i][j] = pal_g[3]
+                        }
+                    }
+                }
+                var colorized = [];
+                for (var i=0; i<origData.length; i++) {
+                    for (var j=0; j<origData[i].length; j++) {
+                        for (var k=0; k<origData[i][j].length; k++) {
+                            colorized.push(origData[i][j][k]);
+                        }
+                    }
+                }
+                //console.log(colorized);
+                imgData.data = colorized;
+                ctx.putImageData(imgData, 0, 0);
             }
             
         } else {
