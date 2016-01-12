@@ -1849,8 +1849,8 @@
                 var row = [];
                 for(var i = 0, l = imgData.data.length; i < l; i += 4) {
                 
-                    if (imgData.data[i] = pal_0[0][0] || imgData.data[i+1] = pal_0[0][1] || 
-                        imgData.data[i+2] = pal_0[0][2] || imgData.data[i+3] = pal_0[0][3]) {
+                    if (imgData.data[i] == pal_0[0][0] && imgData.data[i+1] == pal_0[0][1] &&
+                        imgData.data[i+2] == pal_0[0][2] && imgData.data[i+3] == pal_0[0][3]) {
                     
                         imgData.data[i] = pal_g[0][0];
                         imgData.data[i+1] = pal_g[0][1];
