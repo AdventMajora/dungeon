@@ -47,6 +47,9 @@
     var playerSheet = new Image();
     playerSheet.src = 'assets/player_sheet.png';
     
+    var pal_0 = [[241,241,241,255],[178,178,178,255],[108,108,108,255],[26,26,26,255]];
+    var pal_g = [[184,248,216,255],[88,216,84,255],[0,168,68,255],[0,88,0,255]];
+    
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
@@ -1442,19 +1445,48 @@
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-        if (palette) {
-            var imgData = ctx.getImageData(0,0,16,16);
-            var rowstring = '';
+        //if (palette) {
+            var imgData = ctx.getImageData(sY,sX,8,8);
+            var origData = [];
+            var row = [];
             for (var i=0; i<16; i++) {
-                rowstring = '';
-                
+                row = [];
                 for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-                    rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+                    var pix = [];
+                    pix.push(imgData.data[j]);
+                    pix.push(imgData.data[j+1]);
+                    pix.push(imgData.data[j+2]);
+                    pix.push(imgData.data[j+3]);
+                    row.push(pix);
                 }
-                console.log(rowstring);
+                origData.push(row);
             }
-            console.log(imgData.data);
-        }
+            for (var i=0; i<origData.length; i++) {
+                for (var j=0; j<origData[i].length; j++) {
+                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[0])) {
+                        origData[i][j] = pal_g[0]
+                    }
+                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[1])) {
+                        origData[i][j] = pal_g[1]
+                    }
+                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[2])) {
+                        origData[i][j] = pal_g[2]
+                    }
+                    if (JSON.stringify(origData[i][j]) == JSON.stringify(pal_0[3])) {
+                        origData[i][j] = pal_g[3]
+                    }
+                }
+            }
+            var colorized = [];
+            for (var i=0; i<origData.length; i++) {
+                for (var j=0; j<origData[i].length; j++) {
+                    for (var k=0; k<origData[i][j].length; k++) {
+                        colorized.push(origData[i][j][k]);
+                    }
+                }
+            }
+            ctx.putImageData(currentPixels, sY, sX);
+        //}
         
 	}
 	
