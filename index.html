@@ -789,19 +789,22 @@
 	}, false);
     
 	
-            
-    //for getting color values
-    /*var imgData = ctx.getImageData(0,0,16,16);
-    var rowstring = '';
+    var imgData = ctx.getImageData(0,0,16,16);
+    var origData = [];
+    var row = [];
     for (var i=0; i<16; i++) {
-        rowstring = '';
-        
+        row = [];
         for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-            rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+            var pix = [];
+            pix.push(imgData.data[j]);
+            pix.push(imgData.data[j+1]);
+            pix.push(imgData.data[j+2]);
+            pix.push(imgData.data[j+3]);
+            row.push(pix));
         }
-        console.log(rowstring);
+        origData.push(row);
     }
-    console.log(imgData.data);*/
+    console.log(origData);
     
 	//-----------------------------------------------------------------------------
 	//-
@@ -1419,7 +1422,7 @@
     }
     
     //draw a sprite
-	function drawSprite(sprite,x,y) {
+	function drawSprite(sprite,x,y,palette) {
         if (sprite+spriteSet == 28 && blink == true) {
             sprite = 60-spriteSet;
         }
@@ -1438,11 +1441,21 @@
 		//sprite = sprite - spriteSet;
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
-        if (sprite == 560) {    //hardcoded for now b/c fuck everything
-            ctx.drawImage(spriteSheet, 184,144,8,8,x,y,8,8);
-        } else {
-            ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+        ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+        if (palette) {
+            var imgData = ctx.getImageData(0,0,16,16);
+            var rowstring = '';
+            for (var i=0; i<16; i++) {
+                rowstring = '';
+                
+                for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
+                    rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+                }
+                console.log(rowstring);
+            }
+            console.log(imgData.data);
         }
+        
 	}
 	
     //game window management
