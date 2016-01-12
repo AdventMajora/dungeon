@@ -42,6 +42,7 @@
     var spriteSet = 12;
     var bannerCounter = 0;
     var palette = false;
+    var rendScreen;
     
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -1883,6 +1884,11 @@
         }
 		//update/render menu
         menuSystem();
+        
+        rctx.scale(scaleFactor,scaleFactor);
+        rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
+        rctx.putImageData(rendScreen,0,0);
+        rctx.scale(1/scaleFactor,1/scaleFactor);
 	}
 </script>
 </html>
