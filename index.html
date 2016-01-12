@@ -1884,7 +1884,8 @@
         }
 		//update/render menu
         menuSystem();
-        
+        rctx.fillStyle = 'black';
+        rctx.fillRect(0,0,screenWidth,screenHeigth);
         rctx.scale(scaleFactor,scaleFactor);
         rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
         console.log(rendScreen);
