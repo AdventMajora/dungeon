@@ -63,7 +63,7 @@
     
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
-	var ctx = canvas.getContext("2d");
+	var ctx = canvas.getContext("2d", {alpha: false});
 	ctx.imageSmoothingEnabled = false;
     
     var rendCanvas = document.getElementById("rendCanvas");
