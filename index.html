@@ -47,6 +47,9 @@
     var playerSheet = new Image();
     playerSheet.src = 'assets/player_sheet.png';
     
+    var testSheet = new Image();
+    testSheet.src = 'assets/test.png';
+    
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
@@ -63,12 +66,23 @@
                                 for (var i=0; i<map.length; i++) {
                                     newRow = [];
                                     for (var j=0; j<map[i].length; j++) {
-                                        newRow.push(minimap.convert(JSON.stringify(map[i][j].config)));
+                                        newRow.push(minimap.convert(map[i][j].config));
                                     }
                                     minimap.map.push(newRow);
                                 }
                             },
-                    convert:    function(config) {
+                    convert:    function(rawConfig) {
+                                    var config = [];
+                                    if (rawConfig != null) {
+                                        for (var i=0; i<rawConfig.length; i++) {
+                                            if (rawConfig[i].length > 0) {
+                                                config[i] = 1;
+                                            } else {
+                                                config[i] = 0;
+                                            }
+                                        }
+                                    }
+                                    config = JSON.stringify(config);
                                     switch (config) {
                                         case    '[1,1,1,1]' :   return 925; break;
                                         case    '[1,0,0,0]' :   return 926; break;
@@ -100,9 +114,9 @@
                 attacking: false,
                 moveWhileAttacking: false,
                 speed: 1,//60/fps,
+                speedLimit: 4,
                 base_damage:1,
                 base_defense:1,
-                speedLimit: 4,
                 health:10,
                 healthGen:0,
                 maxHealth:10,
@@ -243,14 +257,20 @@
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
-                                }
-                                if (currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
-                                    currLvl[1][Math.floor((Math.floor(this.y)-this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
-                                    
                                     this.y-=canMove;
                                 } else {
-									
-								}
+                                    canMove =  .25;
+                                    while (canMove <= this.speed) {
+                                        if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
+                                            currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
+                                            this.y-=.25;
+                                        } else {
+                                            break;
+                                        }
+                                        canMove+=.25;
+                                    }
+                                }
+                                
                             }
                             if (dir == 1) {
                                 if (this.strafe == false) {
@@ -262,12 +282,21 @@
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
-                                }
-                                if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0 &&
-                                    currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((Math.floor(this.x)-this.speed)/8)] == 0) {
-                                    
                                     this.x-=canMove;
+                                } else {
+                                    canMove = .25;
+                                    while (canMove <= this.speed) {
+                                        if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
+                                            currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
+                                            
+                                            this.x-=.25;
+                                        } else {
+                                            break;
+                                        }
+                                        canMove+=.25;
+                                    }
                                 }
+                                
                             }
                             if (dir == 2) {
                                 if (this.strafe == false) {
@@ -279,12 +308,21 @@
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
-                                }
-                                if (currLvl[1][Math.ceil((Math.ceil(this.y)+this.speed)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
-                                    currLvl[1][Math.ceil((Math.ceil(this.y)+this.speed)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
-                                    
                                     this.y+=canMove;
+                                } else {
+                                    canMove = .25;
+                                    while (canMove <= this.speed) {
+                                        if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
+                                            currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
+                                            
+                                            this.y+=.25;
+                                        } else {
+                                            break;
+                                        }
+                                        canMove+=.25;
+                                    }
                                 }
+                                
                             }
                             if (dir == 3) {
                                 if (this.strafe == false) {
@@ -296,11 +334,19 @@
                                     if (canMove < 0) {
                                         canMove = 0;
                                     }
-                                }
-                                if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0 &&
-                                    currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((Math.ceil(this.x)+canMove)/8)] == 0) {
-                                    
                                     this.x+=canMove;
+                                } else {
+                                    canMove = .25;
+                                    while (canMove <= this.speed) {
+                                        if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
+                                            currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
+                                        
+                                            this.x+=.25;
+                                        } else {
+                                            break;
+                                        }
+                                        canMove+=.25;
+                                    }
                                 }
                             }
                         },
@@ -621,23 +667,26 @@
 	var mobs = [con_mob];
     
     {//base rooms
-        var base_0 = {name:'base_0', config:[1,1,1,1], contents:[], obs:-1, discovered: false};
-        var base_1 = {name:'base_1', config:[1,0,0,0], contents:[], obs:-1, discovered: false};
-        var base_2 = {name:'base_2', config:[0,0,1,0], contents:[], obs:-1, discovered: false};
-        var base_3 = {name:'base_3', config:[0,1,0,0], contents:[], obs:-1, discovered: false};
-        var base_4 = {name:'base_4', config:[0,0,0,1], contents:[], obs:-1, discovered: false};
-        var base_5 = {name:'base_5', config:[0,1,0,1], contents:[], obs:-1, discovered: false};
-        var base_6 = {name:'base_6', config:[1,0,1,0], contents:[], obs:-1, discovered: false};
-        var base_7 = {name:'base_7', config:[0,0,1,1], contents:[], obs:-1, discovered: false};
-        var base_8 = {name:'base_8', config:[0,1,1,0], contents:[], obs:-1, discovered: false};
-        var base_9 = {name:'base_9', config:[1,1,0,0], contents:[], obs:-1, discovered: false};
-        var base_10 = {name:'base_10', config:[1,0,0,1], contents:[], obs:-1, discovered: false};
-        var base_11 = {name:'base_11', config:[1,1,0,1], contents:[], obs:-1, discovered: false};
-        var base_12 = {name:'base_12', config:[0,1,1,1], contents:[], obs:-1, discovered: false};
-        var base_13 = {name:'base_13', config:[1,1,1,0], contents:[], obs:-1, discovered: false};
-        var base_14 = {name:'base_14', config:[1,0,1,1], contents:[], obs:-1, discovered: false};
+        var base_0 = {name:'base_0',    config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_1 = {name:'base_1',    config:[[9,10],[],[],[]],           contents:[], obs:-1, discovered: false};
+        var base_2 = {name:'base_2',    config:[[],[],[9,10],[]],           contents:[], obs:-1, discovered: false};
+        var base_3 = {name:'base_3',    config:[[],[7,8],[],[]],            contents:[], obs:-1, discovered: false};
+        var base_4 = {name:'base_4',    config:[[],[],[],[7,8]],            contents:[], obs:-1, discovered: false};
+        var base_5 = {name:'base_5',    config:[[],[7,8],[],[7,8]],         contents:[], obs:-1, discovered: false};
+        var base_6 = {name:'base_6',    config:[[9,10],[],[9,10],[]],       contents:[], obs:-1, discovered: false};
+        var base_7 = {name:'base_7',    config:[[],[],[9,10],[7,8]],        contents:[], obs:-1, discovered: false};
+        var base_8 = {name:'base_8',    config:[[],[7,8],[9,10],[]],        contents:[], obs:-1, discovered: false};
+        var base_9 = {name:'base_9',    config:[[9,10],[7,8],[],[]],        contents:[], obs:-1, discovered: false};
+        var base_10 = {name:'base_10',  config:[[9,10],[],[],[7,8]],        contents:[], obs:-1, discovered: false};
+        var base_11 = {name:'base_11',  config:[[9,10],[7,8],[],[7,8]],     contents:[], obs:-1, discovered: false};
+        var base_12 = {name:'base_12',  config:[[],[7,8],[9,10],[7,8]],     contents:[], obs:-1, discovered: false};
+        var base_13 = {name:'base_13',  config:[[9,10],[7,8],[9,10],[]],    contents:[], obs:-1, discovered: false};
+        var base_14 = {name:'base_14',  config:[[9,10],[],[9,10],[7,8]],    contents:[], obs:-1, discovered: false};
+        
+        var open_0 = {name:'open_0',    config:[[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var open_1 = {name:'open_1',    config:[[9,10],[7,8],[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],[7,8]], contents:[], obs:-1, discovered: false};
     }
-    var empty = {name:'empty', config:[1,1,1,1], contents:[], obs:[], discovered: false};
+    var empty = {name:'empty',          config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:[], discovered: false};
     
 	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14];
 	
@@ -708,21 +757,41 @@
 	}, false);
     
 	
+	ctx.font="7px monospace";
+    ctx.fillStyle = 'white';
+    ctx.fillText('LOADING', (screenWidth/2)-20, ((screenHeight-16)/2));
 	
-	
-	
-	
-	
-	
+	//delay start for loading
+    setTimeout(function() {
+        ctx.drawImage(testSheet,0,0);
+        setTimeout(function(){
+            var imgData = ctx.getImageData(0,0,16,16);
+            var rowstring = '';
+            for (var i=0; i<16; i++) {
+                rowstring = '';
+                
+                for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
+                    rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+                }
+                console.log(rowstring);
+            }
+            console.log(imgData.data);
+            init();
+            setInterval(mainLoop, Math.floor(1000/60));
+        },1000);
+        
+    },1000);
+    
+    
 	//-----------------------------------------------------------------------------
 	//-
 	//-								  START
 	//-
 	//-----------------------------------------------------------------------------
-    init();
+    //init();
     
     //start event loop
-    setInterval(mainLoop, Math.floor(1000/60));
+    
     
     //fps counter
     setInterval(function() {
@@ -964,6 +1033,8 @@
         var seed = '';
         var genIndex = 0;
         var config;
+        var minRooms = 3+size;
+        var numRooms = 0;
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
@@ -1050,10 +1121,10 @@
                 var appList = [];
                 for (k=0; k<rooms.length; k++) {
                     //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
-					if ((rooms[k].config[0] == matchConfig[0] || matchConfig[0] == 2) &&
-						(rooms[k].config[1] == matchConfig[1] || matchConfig[1] == 2) &&
-						(rooms[k].config[2] == matchConfig[2] || matchConfig[2] == 2) &&
-						(rooms[k].config[3] == matchConfig[3] || matchConfig[3] == 2)) {
+					if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(matchConfig[0]) || matchConfig[0] == 2) &&
+						(JSON.stringify(rooms[k].config[1]) == JSON.stringify(matchConfig[1]) || matchConfig[1] == 2) &&
+						(JSON.stringify(rooms[k].config[2]) == JSON.stringify(matchConfig[2]) || matchConfig[2] == 2) &&
+						(JSON.stringify(rooms[k].config[3]) == JSON.stringify(matchConfig[3]) || matchConfig[3] == 2)) {
                         appList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
@@ -1067,30 +1138,91 @@
                 }
                 seed+=rand;
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
+                numRooms++;
 
                 //create new empty's
-                if (appList[rand].config[0] == 1 && map[emptList[j].y-1][emptList[j].x] == 0) {
-                    map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(base_2));
+                if (appList[rand].config[0].length > 0 && map[emptList[j].y-1][emptList[j].x] == 0) {
+                    map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y-1, emptList[j].x);
                 }
-                if (appList[rand].config[1] == 1 && map[emptList[j].y][emptList[j].x-1] == 0) {
-                    map[emptList[j].y][emptList[j].x-1] = JSON.parse(JSON.stringify(base_4));
+                if (appList[rand].config[1].length > 0 && map[emptList[j].y][emptList[j].x-1] == 0) {
+                    map[emptList[j].y][emptList[j].x-1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x-1);
                 }
-                if (appList[rand].config[2] == 1 && map[emptList[j].y+1][emptList[j].x] == 0) {
-                    map[emptList[j].y+1][emptList[j].x] = JSON.parse(JSON.stringify(base_1));
+                if (appList[rand].config[2].length > 0 && map[emptList[j].y+1][emptList[j].x] == 0) {
+                    map[emptList[j].y+1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y+1, emptList[j].x);
                 }
-                if (appList[rand].config[3] == 1 && map[emptList[j].y][emptList[j].x+1] == 0) {
-                    map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(base_3));
+                if (appList[rand].config[3].length > 0 && map[emptList[j].y][emptList[j].x+1] == 0) {
+                    map[emptList[j].y][emptList[j].x+1] = JSON.parse(JSON.stringify(empty));
                     expandMap(emptList[j].y, emptList[j].x+1);
                 }
-             
-                
+              
             }
             emptList = [];
+            if (numRooms < minRooms) {
+                i--;
+            }
         }
         
+        //cap off the remaining empties
+        //build list of remaining empties
+        for (j=0; j<map.length; j++) {
+            for (k=0; k<map[j].length; k++) {
+                if (JSON.stringify(map[j][k]) == JSON.stringify(empty)) {
+                    emptList.push({x:k, y:j});
+                }
+            }
+        }
+        
+        for (j=0; j<emptList.length; j++) {
+            if (JSON.stringify(map[emptList[j].y][emptList[j].x]) == JSON.stringify(empty)) {
+                var capConfig = [];
+        
+                if (map[emptList[j].y-1][emptList[j].x] == 0) {   //above
+                    capConfig.push([]);
+                } else {
+                    capConfig.push(map[emptList[j].y-1][emptList[j].x].config[2]);
+                }
+                if (map[emptList[j].y][emptList[j].x-1] == 0) {   //left
+                    capConfig.push([]);
+                } else {
+                    capConfig.push(map[emptList[j].y][emptList[j].x-1].config[3]);
+                }
+                if (map[emptList[j].y+1][emptList[j].x] == 0) {   //below
+                    capConfig.push([]);
+                } else {
+                    capConfig.push(map[emptList[j].y+1][emptList[j].x].config[0]);
+                }
+                if (map[emptList[j].y][emptList[j].x+1] == 0) {   //right
+                    capConfig.push([]);
+                } else {
+                    capConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
+                }
+                
+                //build list of applicable rooms
+                var capList = [];
+                for (k=0; k<rooms.length; k++) {
+                    //if (JSON.stringify(rooms[k].config) == JSON.stringify(matchConfig)) {
+					if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(capConfig[0])) &&
+						(JSON.stringify(rooms[k].config[1]) == JSON.stringify(capConfig[1])) &&
+						(JSON.stringify(rooms[k].config[2]) == JSON.stringify(capConfig[2])) &&
+						(JSON.stringify(rooms[k].config[3]) == JSON.stringify(capConfig[3]))) {
+                        capList.push(JSON.parse(JSON.stringify(rooms[k])));
+                    }
+                }
+                //pick a room
+                if (gen) {
+                    rand = parseInt(gen.charAt(genIndex));
+                    genIndex++;
+                } else {
+                    rand = Math.floor(Math.random()*capList.length);
+                }
+                seed+=rand;
+                map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
+                numRooms++;
+            }
+        }
         
         //put goal in map
         var rList = [];
@@ -1645,8 +1777,8 @@
                 }
             }
                         
-            //ctx.fillStyle = 'red';
-			//ctx.fillRect(player.x,player.y,8,8);
+            ctx.fillStyle = 'red';
+			ctx.fillRect(player.x,player.y,8,8);
             player.draw();
             
             //curr room overlap
@@ -1687,12 +1819,14 @@
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
                 ctx.fillText('Press Space to Retry', (screenWidth/2)-40, ((screenHeight-16)/2)+8);
                 
+                ctx.drawImage(testSheet,0,0,16,16,0,0,16,16);
+                
                 if (pressedKeys.indexOf('_') > -1) {
                     init();
                 }
             } else {
-                
             }
+                
         }
 		//update/render menu
         menuSystem();
