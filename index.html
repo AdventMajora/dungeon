@@ -1887,6 +1887,7 @@
         
         rctx.scale(scaleFactor,scaleFactor);
         rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
+        console.log(rendScreen);
         rctx.putImageData(rendScreen,0,0);
         rctx.scale(1/scaleFactor,1/scaleFactor);
 	}
