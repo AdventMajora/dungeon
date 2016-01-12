@@ -1590,8 +1590,7 @@
         //update screen dimensions
         manageScreen();
         
-        //scale game to canvas size
-        //ctx.scale(scaleFactor,scaleFactor);
+        ctx.scale((1/scaleFactor),(1/scaleFactor));
         
         //clear the screen
         //ctx.fillStyle = 'black';
@@ -1866,6 +1865,7 @@
                     
                 }
                 ctx.putImageData(imgData, 0, 0);
+            }
             
         } else {
 			//render game over screen
@@ -1884,11 +1884,11 @@
         }
 		//update/render menu
         menuSystem();
-        //ctx.scale((1/scaleFactor),(1/scaleFactor));
         
-
+        
+        ctx.scale(scaleFactor,scaleFactor);
             
-        }
+        
 	}
 </script>
 </html>
