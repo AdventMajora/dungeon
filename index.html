@@ -1453,12 +1453,12 @@
 			canvasHeight = $(window).height();
 			canvasWidth = Math.floor((160/144)*($(window).height()));
 		}
-		canvas.style.top = JSON.stringify(($(window).height()/2)-(canvasHeight/2))+'px';
-		canvas.style.left = JSON.stringify(($(window).width()/2)-(canvasWidth/2))+'px';
-		canvas.height = JSON.stringify(canvasHeight);
-		canvas.width = JSON.stringify(canvasWidth);
-		canvas.style.position = 'absolute';
-		ctx.imageSmoothingEnabled = false;
+		rendCanvas.style.top = JSON.stringify(($(window).height()/2)-(canvasHeight/2))+'px';
+		rendCanvas.style.left = JSON.stringify(($(window).width()/2)-(canvasWidth/2))+'px';
+		rendCanvas.height = JSON.stringify(canvasHeight);
+		rendCanvas.width = JSON.stringify(canvasWidth);
+		rendCanvas.style.position = 'absolute';
+		rctx.imageSmoothingEnabled = false;
         scaleFactor = (canvasWidth/160);
     }
     
