@@ -50,8 +50,12 @@
     var playerSheet = new Image();
     playerSheet.src = 'assets/player_sheet.png';
     
+    var currPal;
     var pal_0 = [[241,241,241,255],[178,178,178,255],[108,108,108,255],[26,26,26,255]];
     var pal_g = [[241,241,241,255],[88,216,84,255],[0,88,0,255],[26,26,26,255]];
+    var pal_r = [[241,241,241,255],[252,160,68,255],[228,92,16,255],[26,26,26,255]];
+    
+    currPal = pal_r;
     
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
@@ -1835,30 +1839,30 @@
                         if (imgData.data[i] == pal_0[0][0] && imgData.data[i+1] == pal_0[0][1] &&
                             imgData.data[i+2] == pal_0[0][2]) {
                         
-                            imgData.data[i] = pal_g[0][0];
-                            imgData.data[i+1] = pal_g[0][1];
-                            imgData.data[i+2] = pal_g[0][2];
+                            imgData.data[i] = currPal[0][0];
+                            imgData.data[i+1] = currPal[0][1];
+                            imgData.data[i+2] = currPal[0][2];
                         }
                         if (imgData.data[i] == pal_0[1][0] && imgData.data[i+1] == pal_0[1][1] &&
                             imgData.data[i+2] == pal_0[1][2]) {
                         
-                            imgData.data[i] = pal_g[1][0];
-                            imgData.data[i+1] = pal_g[1][1];
-                            imgData.data[i+2] = pal_g[1][2];
+                            imgData.data[i] = currPal[1][0];
+                            imgData.data[i+1] = currPal[1][1];
+                            imgData.data[i+2] = currPal[1][2];
                         }
                         if (imgData.data[i] == pal_0[2][0] && imgData.data[i+1] == pal_0[2][1] &&
                             imgData.data[i+2] == pal_0[2][2]) {
                         
-                            imgData.data[i] = pal_g[2][0];
-                            imgData.data[i+1] = pal_g[2][1];
-                            imgData.data[i+2] = pal_g[2][2];
+                            imgData.data[i] = currPal[2][0];
+                            imgData.data[i+1] = currPal[2][1];
+                            imgData.data[i+2] = currPal[2][2];
                         }
                         if (imgData.data[i] == pal_0[3][0] && imgData.data[i+1] == pal_0[3][1] &&
                             imgData.data[i+2] == pal_0[3][2]) {
                         
-                            imgData.data[i] = pal_g[3][0];
-                            imgData.data[i+1] = pal_g[3][1];
-                            imgData.data[i+2] = pal_g[3][2];
+                            imgData.data[i] = currPal[3][0];
+                            imgData.data[i+1] = currPal[3][1];
+                            imgData.data[i+2] = currPal[3][2];
                         }
                     }
                     
