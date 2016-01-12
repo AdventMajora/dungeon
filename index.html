@@ -1827,7 +1827,8 @@
             }
             
             paletteCounter++;
-            if (palette == true && paletteCounter == 2) {
+            if (palette == true && paletteCounter >= 2) {
+                console.log('palette');
                 paletteCounter = 0;
                 var imgData = ctx.getImageData(0,0,screenWidth*scaleFactor,(screenHeight-16)*scaleFactor);
                 var origData = [];
