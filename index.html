@@ -5,6 +5,7 @@
 </head>
 <body bgcolor="#787878">
 <canvas id="myCanvas" height="720" width="800" style="border:1px solid black;"></canvas>
+<canvas id="rendCanvas" height="720" width="800" style="border:1px solid black;display:none"></canvas>
 
 
 <script type="text/javascript">
@@ -55,6 +56,8 @@
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	ctx.imageSmoothingEnabled = false;
+    
+    var renCanvas = 
     
     var map = [[]];
     var mapLoc = {x:0, y:0};
@@ -1590,12 +1593,6 @@
         //update screen dimensions
         manageScreen();
         
-        
-        
-        //clear the screen
-        //ctx.fillStyle = 'black';
-        //ctx.fillRect(0,0,screenWidth,screenHeight);
-        
         if (player.health <=0 || player.curse >=10) {
             lvlComplete = true;
             player.health = 0;
@@ -1884,11 +1881,6 @@
         }
 		//update/render menu
         menuSystem();
-        
-        
-        ctx.scale(scaleFactor,scaleFactor);
-        
-        
 	}
 </script>
 </html>
