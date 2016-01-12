@@ -47,9 +47,6 @@
     var playerSheet = new Image();
     playerSheet.src = 'assets/player_sheet.png';
     
-    var testSheet = new Image();
-    testSheet.src = 'assets/test.png';
-    
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
@@ -70,40 +67,7 @@
                                     }
                                     minimap.map.push(newRow);
                                 }
-                            },
-                    convert:    function(rawConfig) {
-                                    var config = [];
-                                    if (rawConfig != null) {
-                                        for (var i=0; i<rawConfig.length; i++) {
-                                            if (rawConfig[i].length > 0) {
-                                                config[i] = 1;
-                                            } else {
-                                                config[i] = 0;
-                                            }
-                                        }
-                                    }
-                                    config = JSON.stringify(config);
-                                    switch (config) {
-                                        case    '[1,1,1,1]' :   return 925; break;
-                                        case    '[1,0,0,0]' :   return 926; break;
-                                        case    '[0,0,1,0]' :   return 927; break;
-                                        case    '[0,1,0,0]' :   return 928; break;
-                                        case    '[0,0,0,1]' :   return 957; break;
-                                        case    '[0,1,0,1]' :   return 958; break;
-                                        case    '[1,0,1,0]' :   return 959; break;
-                                        case    '[0,0,1,1]' :   return 960; break;
-                                        case    '[0,1,1,0]' :   return 989; break;
-                                        case    '[1,1,0,0]' :   return 990; break;
-                                        case    '[1,0,0,1]' :   return 991; break;
-                                        case    '[1,1,0,1]' :   return 992; break;
-                                        case    '[0,1,1,1]' :   return 1021; break;
-                                        case    '[1,1,1,0]' :   return 1022; break;
-                                        case    '[1,0,1,1]' :   return 1023; break;
-                                        default             :   return 1024; break;
-                                        
-                                    }
-                                } 
-                  
+                            }   
     };
     
     var player={x:9*tileSize,
@@ -825,40 +789,29 @@
 	}, false);
     
 	
-	ctx.font="7px monospace";
-    ctx.fillStyle = 'white';
-    ctx.fillText('LOADING', (screenWidth/2)-20, ((screenHeight-16)/2));
-	
-	//delay start for loading
-    setTimeout(function() {
-        ctx.drawImage(testSheet,0,0);
-        setTimeout(function(){
-            var imgData = ctx.getImageData(0,0,16,16);
-            var rowstring = '';
-            for (var i=0; i<16; i++) {
-                rowstring = '';
-                
-                for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-                    rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
-                }
-                console.log(rowstring);
-            }
-            console.log(imgData.data);
-            init();
-            setInterval(mainLoop, Math.floor(1000/60));
-        },1000);
-    },1000);
-    
+            
+    //for getting color values
+    /*var imgData = ctx.getImageData(0,0,16,16);
+    var rowstring = '';
+    for (var i=0; i<16; i++) {
+        rowstring = '';
+        
+        for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
+            rowstring+=(imgData.data[j]+''+imgData.data[j+1]+''+imgData.data[j+2]+''+imgData.data[j+3]+' ');
+        }
+        console.log(rowstring);
+    }
+    console.log(imgData.data);*/
     
 	//-----------------------------------------------------------------------------
 	//-
 	//-								  START
 	//-
 	//-----------------------------------------------------------------------------
-    //init();
+    init();
     
     //start event loop
-    
+    setInterval(mainLoop, Math.floor(1000/60));
     
     //fps counter
     setInterval(function() {
