@@ -1827,50 +1827,7 @@
                 }
             }
             
-            paletteCounter++;
-            if (palette == true && paletteCounter >= paletteLimit) {
-                console.log('palette');
-                paletteCounter = 0;
-                var imgData = ctx.getImageData(0,0,screenWidth*scaleFactor,(screenHeight-16)*scaleFactor);
-                var origData = [];
-                var row = [];
-                for(var i = 0, l = imgData.data.length; i < l; i += 4) {
-                    if (imgData.data[i+3] > 0) {
-                        if (imgData.data[i] == pal_0[0][0] && imgData.data[i+1] == pal_0[0][1] &&
-                            imgData.data[i+2] == pal_0[0][2]) {
-                        
-                            imgData.data[i] = pal_g[0][0];
-                            imgData.data[i+1] = pal_g[0][1];
-                            imgData.data[i+2] = pal_g[0][2];
-                        }
-                        if (imgData.data[i] == pal_0[1][0] && imgData.data[i+1] == pal_0[1][1] &&
-                            imgData.data[i+2] == pal_0[1][2]) {
-                        
-                            imgData.data[i] = pal_g[1][0];
-                            imgData.data[i+1] = pal_g[1][1];
-                            imgData.data[i+2] = pal_g[1][2];
-                        }
-                        if (imgData.data[i] == pal_0[2][0] && imgData.data[i+1] == pal_0[2][1] &&
-                            imgData.data[i+2] == pal_0[2][2]) {
-                        
-                            imgData.data[i] = pal_g[2][0];
-                            imgData.data[i+1] = pal_g[2][1];
-                            imgData.data[i+2] = pal_g[2][2];
-                        }
-                        if (imgData.data[i] == pal_0[3][0] && imgData.data[i+1] == pal_0[3][1] &&
-                            imgData.data[i+2] == pal_0[3][2]) {
-                        
-                            imgData.data[i] = pal_g[3][0];
-                            imgData.data[i+1] = pal_g[3][1];
-                            imgData.data[i+2] = pal_g[3][2];
-                        }
-                    }
-                    
-                    
-                }
-
-                ctx.putImageData(imgData, 0, 0);
-            }
+            
             
         } else {
 			//render game over screen
@@ -1890,6 +1847,50 @@
 		//update/render menu
         menuSystem();
         ctx.scale((1/scaleFactor),(1/scaleFactor));
+        paletteCounter++;
+        if (palette == true && paletteCounter >= paletteLimit) {
+            console.log('palette');
+            paletteCounter = 0;
+            var imgData = ctx.getImageData(0,0,screenWidth,(screenHeight-16));
+            var origData = [];
+            var row = [];
+            for(var i = 0, l = imgData.data.length; i < l; i += 4) {
+                if (imgData.data[i+3] > 0) {
+                    if (imgData.data[i] == pal_0[0][0] && imgData.data[i+1] == pal_0[0][1] &&
+                        imgData.data[i+2] == pal_0[0][2]) {
+                    
+                        imgData.data[i] = pal_g[0][0];
+                        imgData.data[i+1] = pal_g[0][1];
+                        imgData.data[i+2] = pal_g[0][2];
+                    }
+                    if (imgData.data[i] == pal_0[1][0] && imgData.data[i+1] == pal_0[1][1] &&
+                        imgData.data[i+2] == pal_0[1][2]) {
+                    
+                        imgData.data[i] = pal_g[1][0];
+                        imgData.data[i+1] = pal_g[1][1];
+                        imgData.data[i+2] = pal_g[1][2];
+                    }
+                    if (imgData.data[i] == pal_0[2][0] && imgData.data[i+1] == pal_0[2][1] &&
+                        imgData.data[i+2] == pal_0[2][2]) {
+                    
+                        imgData.data[i] = pal_g[2][0];
+                        imgData.data[i+1] = pal_g[2][1];
+                        imgData.data[i+2] = pal_g[2][2];
+                    }
+                    if (imgData.data[i] == pal_0[3][0] && imgData.data[i+1] == pal_0[3][1] &&
+                        imgData.data[i+2] == pal_0[3][2]) {
+                    
+                        imgData.data[i] = pal_g[3][0];
+                        imgData.data[i+1] = pal_g[3][1];
+                        imgData.data[i+2] = pal_g[3][2];
+                    }
+                }
+                
+                
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+        }
 	}
 </script>
 </html>
