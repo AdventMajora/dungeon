@@ -40,6 +40,7 @@
     var prevLvl;
     var spriteSet = 12;
     var bannerCounter = 0;
+    var palette = false;
     
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -766,6 +767,12 @@
                         }
                         
 						pressedKeys.push('_');
+                        
+                        if (palette == true) {
+                            palette = false;
+                        } else {
+                            palette = true;
+                        }
 					}
 					break;
       }
@@ -1425,7 +1432,7 @@
     }
     
     //draw a sprite
-	function drawSprite(sprite,x,y,palette) {
+	function drawSprite(sprite,x,y) {
         if (sprite+spriteSet == 28 && blink == true) {
             sprite = 60-spriteSet;
         }
@@ -1445,7 +1452,7 @@
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-        //if (palette) {
+        if (palette == true) {
             var imgData = ctx.getImageData(sY,sX,8,8);
             var origData = [];
             var row = [];
@@ -1485,9 +1492,10 @@
                     }
                 }
             }
+            console.log(colorized);
             imgData.data = colorized;
-            ctx.putImageData(imgData, sY, sX);
-        //}
+            //ctx.putImageData(imgData, sY, sX);
+        }
         
 	}
 	
