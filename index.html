@@ -66,7 +66,7 @@
                                 for (var i=0; i<map.length; i++) {
                                     newRow = [];
                                     for (var j=0; j<map[i].length; j++) {
-                                        newRow.push(minimap.convert(map[i][j].config));
+                                        newRow.push(map[i][j].mini);
                                     }
                                     minimap.map.push(newRow);
                                 }
@@ -667,87 +667,87 @@
 	var mobs = [con_mob];
     
     {//base rooms
-        var base_0 = {name:'base_0',    config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
-        var base_1 = {name:'base_1',    config:[[9,10],[],[],[]],           contents:[], obs:-1, discovered: false};
-        var base_2 = {name:'base_2',    config:[[],[],[9,10],[]],           contents:[], obs:-1, discovered: false};
-        var base_3 = {name:'base_3',    config:[[],[7,8],[],[]],            contents:[], obs:-1, discovered: false};
-        var base_4 = {name:'base_4',    config:[[],[],[],[7,8]],            contents:[], obs:-1, discovered: false};
-        var base_5 = {name:'base_5',    config:[[],[7,8],[],[7,8]],         contents:[], obs:-1, discovered: false};
-        var base_6 = {name:'base_6',    config:[[9,10],[],[9,10],[]],       contents:[], obs:-1, discovered: false};
-        var base_7 = {name:'base_7',    config:[[],[],[9,10],[7,8]],        contents:[], obs:-1, discovered: false};
-        var base_8 = {name:'base_8',    config:[[],[7,8],[9,10],[]],        contents:[], obs:-1, discovered: false};
-        var base_9 = {name:'base_9',    config:[[9,10],[7,8],[],[]],        contents:[], obs:-1, discovered: false};
-        var base_10 = {name:'base_10',  config:[[9,10],[],[],[7,8]],        contents:[], obs:-1, discovered: false};
-        var base_11 = {name:'base_11',  config:[[9,10],[7,8],[],[7,8]],     contents:[], obs:-1, discovered: false};
-        var base_12 = {name:'base_12',  config:[[],[7,8],[9,10],[7,8]],     contents:[], obs:-1, discovered: false};
-        var base_13 = {name:'base_13',  config:[[9,10],[7,8],[9,10],[]],    contents:[], obs:-1, discovered: false};
-        var base_14 = {name:'base_14',  config:[[9,10],[],[9,10],[7,8]],    contents:[], obs:-1, discovered: false};
+        var base_0 = {name:'base_0',    mini: 925, config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
+        var base_1 = {name:'base_1',    mini: 926, config:[[9,10],[],[],[]],           contents:[], obs:-1, discovered: false};
+        var base_2 = {name:'base_2',    mini: 927, config:[[],[],[9,10],[]],           contents:[], obs:-1, discovered: false};
+        var base_3 = {name:'base_3',    mini: 928, config:[[],[7,8],[],[]],            contents:[], obs:-1, discovered: false};
+        var base_4 = {name:'base_4',    mini: 957, config:[[],[],[],[7,8]],            contents:[], obs:-1, discovered: false};
+        var base_5 = {name:'base_5',    mini: 958, config:[[],[7,8],[],[7,8]],         contents:[], obs:-1, discovered: false};
+        var base_6 = {name:'base_6',    mini: 959, config:[[9,10],[],[9,10],[]],       contents:[], obs:-1, discovered: false};
+        var base_7 = {name:'base_7',    mini: 960, config:[[],[],[9,10],[7,8]],        contents:[], obs:-1, discovered: false};
+        var base_8 = {name:'base_8',    mini: 989, config:[[],[7,8],[9,10],[]],        contents:[], obs:-1, discovered: false};
+        var base_9 = {name:'base_9',    mini: 990, config:[[9,10],[7,8],[],[]],        contents:[], obs:-1, discovered: false};
+        var base_10 = {name:'base_10',  mini: 991, config:[[9,10],[],[],[7,8]],        contents:[], obs:-1, discovered: false};
+        var base_11 = {name:'base_11',  mini: 992, config:[[9,10],[7,8],[],[7,8]],     contents:[], obs:-1, discovered: false};
+        var base_12 = {name:'base_12',  mini: 1021, config:[[],[7,8],[9,10],[7,8]],     contents:[], obs:-1, discovered: false};
+        var base_13 = {name:'base_13',  mini: 1022, config:[[9,10],[7,8],[9,10],[]],    contents:[], obs:-1, discovered: false};
+        var base_14 = {name:'base_14',  mini: 1023, config:[[9,10],[],[9,10],[7,8]],    contents:[], obs:-1, discovered: false};
         
-        var open_0 = {name:'open_0',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],contents:[], obs:-1, discovered: false};
-        var open_1 = {name:'open_1',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],contents:[], obs:-1, discovered: false};
-        var open_2 = {name:'open_2',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],contents:[], obs:-1, discovered: false};
-        var open_3 = {name:'open_3',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_4 = {name:'open_4',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_5 = {name:'open_5',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_6 = {name:'open_6',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_7 = {name:'open_7',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_8 = {name:'open_8',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_9 = {name:'open_9',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_10 = {name:'open_10',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_11 = {name:'open_11',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_12 = {name:'open_12',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_13 = {name:'open_13',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_14 = {name:'open_14',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_15 = {name:'open_15',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_16 = {name:'open_16',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_17 = {name:'open_17',    config:[[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_18 = {name:'open_18',    config:[[],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_19 = {name:'open_19',    config:[[9,10],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_20 = {name:'open_20',    config:[[9,10],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_21 = {name:'open_21',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_22 = {name:'open_22',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_23 = {name:'open_23',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_24 = {name:'open_24',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_25 = {name:'open_25',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_26 = {name:'open_26',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_27 = {name:'open_27',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_28 = {name:'open_28',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_29 = {name:'open_29',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_30 = {name:'open_30',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
-        var open_31 = {name:'open_31',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_32 = {name:'open_32',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[]],               contents:[], obs:-1, discovered: false};
-        var open_33 = {name:'open_33',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_34 = {name:'open_34',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_35 = {name:'open_35',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
-        var open_36 = {name:'open_36',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_37 = {name:'open_37',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
-        var open_38 = {name:'open_38',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_39 = {name:'open_39',    config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[]],               contents:[], obs:-1, discovered: false};
-        var open_40 = {name:'open_40',    config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[]],               contents:[], obs:-1, discovered: false};
-        var open_41 = {name:'open_41',    config:[[9,10],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_42 = {name:'open_42',    config:[[9,10],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_43 = {name:'open_43',    config:[[9,10],[],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_44 = {name:'open_44',    config:[[],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_45 = {name:'open_45',    config:[[9,10],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_46 = {name:'open_46',    config:[[],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_47 = {name:'open_47',    config:[[],[],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_48 = {name:'open_48',    config:[[],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_49 = {name:'open_49',    config:[[9,10],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_50 = {name:'open_50',    config:[[9,10],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_51 = {name:'open_51',    config:[[],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_52 = {name:'open_52',    config:[[9,10],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_53 = {name:'open_53',    config:[[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_54 = {name:'open_54',    config:[[9,10],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_55 = {name:'open_55',    config:[[],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_56 = {name:'open_56',    config:[[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
-        var open_57 = {name:'open_57',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_58 = {name:'open_58',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_59 = {name:'open_59',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_60 = {name:'open_60',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[]],               contents:[], obs:-1, discovered: false};
-        var open_61 = {name:'open_61',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[7,8]],               contents:[], obs:-1, discovered: false};
-        var open_62 = {name:'open_62',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[9,10],[]],               contents:[], obs:-1, discovered: false};
-        var open_63 = {name:'open_63',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[]],               contents:[], obs:-1, discovered: false};
-        var open_64 = {name:'open_64',    config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[]],               contents:[], obs:-1, discovered: false};
+        var open_0 = {name:'open_0',    mini: 764, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],contents:[], obs:-1, discovered: false};
+        var open_1 = {name:'open_1',    mini: 789, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],contents:[], obs:-1, discovered: false};
+        var open_2 = {name:'open_2',    mini: 790, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],contents:[], obs:-1, discovered: false};
+        var open_3 = {name:'open_3',    mini: 791, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_4 = {name:'open_4',    mini: 792, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_5 = {name:'open_5',    mini: 793, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_6 = {name:'open_6',    mini: 794, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_7 = {name:'open_7',    mini: 795, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_8 = {name:'open_8',    mini: 796, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_9 = {name:'open_9',    mini: 821, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_10 = {name:'open_10',    mini: 822, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_11 = {name:'open_11',    mini: 823, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_12 = {name:'open_12',    mini: 824, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_13 = {name:'open_13',    mini: 825, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_14 = {name:'open_14',    mini: 826, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_15 = {name:'open_15',    mini: 827, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_16 = {name:'open_16',    mini: 828, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_17 = {name:'open_17',    mini: 853, config:[[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_18 = {name:'open_18',    mini: 854, config:[[],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_19 = {name:'open_19',    mini: 855, config:[[9,10],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_20 = {name:'open_20',    mini: 856, config:[[9,10],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_21 = {name:'open_21',    mini: 857, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_22 = {name:'open_22',    mini: 858, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_23 = {name:'open_23',    mini: 859, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_24 = {name:'open_24',    mini: 860, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_25 = {name:'open_25',    mini: 885, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_26 = {name:'open_26',    mini: 886, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_27 = {name:'open_27',    mini: 887, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_28 = {name:'open_28',    mini: 888, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_29 = {name:'open_29',    mini: 889, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_30 = {name:'open_30',    mini: 890, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
+        var open_31 = {name:'open_31',    mini: 891, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_32 = {name:'open_32',    mini: 892, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[]],               contents:[], obs:-1, discovered: false};
+        var open_33 = {name:'open_33',    mini: 917, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_34 = {name:'open_34',    mini: 918, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_35 = {name:'open_35',    mini: 919, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
+        var open_36 = {name:'open_36',    mini: 920, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_37 = {name:'open_37',    mini: 921, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
+        var open_38 = {name:'open_38',    mini: 922, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_39 = {name:'open_39',    mini: 923, config:[[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[]],               contents:[], obs:-1, discovered: false};
+        var open_40 = {name:'open_40',    mini: 924, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[],[]],               contents:[], obs:-1, discovered: false};
+        var open_41 = {name:'open_41',    mini: 949, config:[[9,10],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_42 = {name:'open_42',    mini: 950, config:[[9,10],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_43 = {name:'open_43',    mini: 951, config:[[9,10],[],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_44 = {name:'open_44',    mini: 952, config:[[],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_45 = {name:'open_45',    mini: 953, config:[[9,10],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_46 = {name:'open_46',    mini: 954, config:[[],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_47 = {name:'open_47',    mini: 955, config:[[],[],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_48 = {name:'open_48',    mini: 956, config:[[],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_49 = {name:'open_49',    mini: 981, config:[[9,10],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_50 = {name:'open_50',    mini: 982, config:[[9,10],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_51 = {name:'open_51',    mini: 983, config:[[],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_52 = {name:'open_52',    mini: 984, config:[[9,10],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_53 = {name:'open_53',    mini: 985, config:[[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_54 = {name:'open_54',    mini: 986, config:[[9,10],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_55 = {name:'open_55',    mini: 987, config:[[],[7,8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_56 = {name:'open_56',    mini: 988, config:[[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
+        var open_57 = {name:'open_57',    mini: 1013, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_58 = {name:'open_58',    mini: 1014, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_59 = {name:'open_59',    mini: 1015, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_60 = {name:'open_60',    mini: 1016, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[]],               contents:[], obs:-1, discovered: false};
+        var open_61 = {name:'open_61',    mini: 1017, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[7,8]],               contents:[], obs:-1, discovered: false};
+        var open_62 = {name:'open_62',    mini: 1018, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[9,10],[]],               contents:[], obs:-1, discovered: false};
+        var open_63 = {name:'open_63',    mini: 1019, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[]],               contents:[], obs:-1, discovered: false};
+        var open_64 = {name:'open_64',    mini: 1020, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[]],               contents:[], obs:-1, discovered: false};
     }
     var empty = {name:'empty',          config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:[], discovered: false};
     
@@ -1574,10 +1574,10 @@
                     //if (map[i][j].discovered == true) {
                         drawSprite(minimap.map[i][j],(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         if (i == goalTile.y && j == goalTile.x) {
-                            drawSprite(1019, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
+                            drawSprite(757, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         }
                         if (i == mapLoc.y && j == mapLoc.x) {
-                            drawSprite(1020, 4*8,menuHeight+(8*8));
+                            drawSprite(758, 4*8,menuHeight+(8*8));
                         }
                     //}
                 }
