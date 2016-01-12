@@ -41,6 +41,7 @@
     var spriteSet = 12;
     var bannerCounter = 0;
     var palette = false;
+    var paletteCounter = 0;
     
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -1842,8 +1843,9 @@
                 }
             }
             
-            
-            if (palette == true) {
+            paletteCounter++:
+            if (palette == true && paletteCounter == 2) {
+                paletteCounter = 0;
                 var imgData = ctx.getImageData(0,0,screenWidth*scaleFactor,(screenHeight-16)*scaleFactor);
                 var origData = [];
                 var row = [];
