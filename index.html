@@ -732,6 +732,11 @@
 	  switch (event.keyCode) {
         case	74:	if (pressedKeys.indexOf('J')<0) {
 						pressedKeys.push('J');
+                        if (palette == true) {
+                            palette = false;
+                        } else {
+                            palette = true;
+                        }
 					}
 					break;
         case    65: if (pressedKeys.indexOf('A')<0) {
@@ -768,12 +773,6 @@
                         }
                         
 						pressedKeys.push('_');
-                        
-                        if (palette == true) {
-                            palette = false;
-                        } else {
-                            palette = true;
-                        }
 					}
 					break;
       }
@@ -800,22 +799,6 @@
 	}, false);
     
 	
-    var imgData = ctx.getImageData(0,0,16,16);
-    var origData = [];
-    var row = [];
-    for (var i=0; i<16; i++) {
-        row = [];
-        for (var j=i*16*4; j<(i+1)*16*4; j+=4) {
-            var pix = [];
-            pix.push(imgData.data[j]);
-            pix.push(imgData.data[j+1]);
-            pix.push(imgData.data[j+2]);
-            pix.push(imgData.data[j+3]);
-            row.push(pix);
-        }
-        origData.push(row);
-    }
-    console.log(origData);
     
 	//-----------------------------------------------------------------------------
 	//-
