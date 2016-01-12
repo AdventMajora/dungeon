@@ -1485,7 +1485,8 @@
                     }
                 }
             }
-            ctx.putImageData(colorized, sY, sX);
+            imgData.data = colorized;
+            ctx.putImageData(imgData, sY, sX);
         //}
         
 	}
