@@ -78,7 +78,7 @@
     var lctx = loadCanvas.getContext("2d");
     lctx.imageSmoothingEnabled = false;
     
-    lctx.fillStyle = '583800';
+    lctx.fillStyle = 'black';
     lctx.fillRect(0,0,256,256);
     
     var rendCanvas = document.getElementById("rendCanvas");
@@ -1487,7 +1487,7 @@
                     img.data[i+3] = curimg[i+3];
                 }     
             }
-            ctx.putImageData(img,x,y);
+            ctx.putImageData(curimg,x,y);
         } else {
             //console.log('skipping');
         }
