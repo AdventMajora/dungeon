@@ -10,7 +10,7 @@
     }
 </style>
 <body bgcolor="#787878">
-<canvas id="myCanvas" height="160" width="144" style="border:1px solid black; display:none;"></canvas>
+<canvas id="myCanvas" height="144" width="160" style="border:1px solid black; display:none;"></canvas>
 <canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none;"></canvas>
 <canvas id="rendCanvas" height="720" width="800" style="border:1px solid black;"></canvas>
 
@@ -1462,9 +1462,20 @@
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         console.log(sX+','+sY);
         var img = lctx.getImageData(sY,sX,8,8);
-        ctx.putImageData(img,x,y);
-        
-        
+        //fix transparency
+        for(var i = 0, l = imgData.data.length; i < l; i += 4) {
+            if (imgData.data[i+3] > 0) {
+                if (imgData.data[i] == 120 && imgData.data[i+1] == 120 &&
+                    imgData.data[i+2] == 120) {
+
+                    imgData.data[i+3] = 0;
+                }
+                
+            }   
+        }
+        if (JSON.stringify(img.data) != JSON.stringify(ctx.getImageData(x,y,8,8))) {
+            ctx.putImageData(img,x,y);
+        } 
 	}
 	
     //game window management
