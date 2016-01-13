@@ -13,6 +13,7 @@
 <canvas id="myCanvas" height="144" width="160" style="border:1px solid black;"></canvas>
 <canvas id="rendCanvas" height="144" width="160" style="border:1px solid black;"></canvas>
 <canvas id="loadCanvas" height="256" width="256" style="border:1px solid black;"></canvas>
+<canvas id="tempCanvas" height="8" width="8" style="border:1px solid black;"></canvas>
 
 
 
@@ -85,6 +86,10 @@
     var rendCanvas = document.getElementById("rendCanvas");
 	var rctx = rendCanvas.getContext("2d");
 	rctx.imageSmoothingEnabled = false;
+    
+    var tempCanvas = document.getElementById("tempCanvas");
+    var tctx = tempCanvas.getContext('2d');
+    tctx.imageSmoothingEnabled = false;
     
     var map = [[]];
     var mapLoc = {x:0, y:0};
@@ -1467,6 +1472,8 @@
         //console.log(sX+','+sY);
         var img = lctx.getImageData(sY,sX,8,8);
         var curimg = ctx.getImageData(x,y,8,8);
+        
+        tctx.putImageData(curimg,0,0);
         
         //colorize and fix transparency
         for(var i = 0, l = img.data.length; i < l; i += 4) {
