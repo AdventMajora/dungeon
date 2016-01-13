@@ -1471,21 +1471,21 @@
                 break;
             }
         }
-        //fix transparency
-        for(var i = 0, l = img.data.length; i < l; i += 4) {
-            if (img.data[i+3] > 0) {
-                if (img.data[i] == 120 && img.data[i+1] == 120 &&
-                    img.data[i+2] == 120) {
-                    //console.log('fixing');
-                    img.data[i] = 248;
-                    img.data[i+1] = 56;
-                    img.data[i+2] = 0;
-                    img.data[i+3] = 255;
-                }
-                
-            }   
-        }
+        
         if (equals == false) {
+            //fix transparency
+            for(var i = 0, l = img.data.length; i < l; i += 4) {
+                if (img.data[i+3] > 0) {
+                    if (img.data[i] == 120 && img.data[i+1] == 120 && img.data[i+2] == 120) {
+                        //console.log('fixing');
+                        img.data[i] = 248;
+                        img.data[i+1] = 56;
+                        img.data[i+2] = 0;
+                        img.data[i+3] = 255;
+                    }
+                    
+                }   
+            }
             ctx.putImageData(img,x,y);
         } else {
             //console.log('skipping');
