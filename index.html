@@ -1487,7 +1487,12 @@
                     img.data[i+3] = curimg[i+3];
                 }     
             }
-            ctx.putImageData(curimg,x,y);
+            if (frames > 59) {
+                ctx.putImageData(curimg,x,y);
+            } else {
+                ctx.putImageData(img,x,y);
+            }
+            
         } else {
             //console.log('skipping');
         }
