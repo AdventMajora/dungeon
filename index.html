@@ -78,6 +78,9 @@
     var lctx = loadCanvas.getContext("2d");
     lctx.imageSmoothingEnabled = false;
     
+    lctx.fillStyle = 'red';
+    lctx.fillRect(0,0,256,256);
+    
     var rendCanvas = document.getElementById("rendCanvas");
 	var rctx = rendCanvas.getContext("2d");
 	rctx.imageSmoothingEnabled = false;
