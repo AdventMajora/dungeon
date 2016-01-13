@@ -1462,6 +1462,15 @@
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         //console.log(sX+','+sY);
         var img = lctx.getImageData(sY,sX,8,8);
+        var curimg = ctx.getImageData(x,y,8,8);
+        
+        var equals = true;
+        for (var i=0; i<img.data.length; i++) {
+            if (img.data[i] != currimg.data[i]) {
+                equals = false;
+                break;
+            }
+        }
         //fix transparency
         /*for(var i = 0, l = img.data.length; i < l; i += 4) {
             if (img.data[i+3] > 0) {
@@ -1475,7 +1484,7 @@
                 
             }   
         }*/
-        if (JSON.stringify(img.data) != JSON.stringify(ctx.getImageData(x,y,8,8).data)) {
+        if (equals == true) {
             ctx.putImageData(img,x,y);
         } else {
             //console.log('skipping');
