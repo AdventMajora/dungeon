@@ -824,10 +824,17 @@
 	//-								  START
 	//-
 	//-----------------------------------------------------------------------------
-    init();
+    
     lctx.drawImage(spriteSheet,0,0);
-    //start event loop
-    setInterval(mainLoop, Math.floor(1000/60));
+    setTimeout(function() {
+        init();
+        //start event loop
+        setInterval(mainLoop, Math.floor(1000/60));
+    },1000)
+    
+    
+    
+    
     
     //fps counter
     setInterval(function() {
