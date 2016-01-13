@@ -1457,8 +1457,9 @@
 		//sprite = sprite - spriteSet;
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
-        
-        ctx.putImageData(lctx.getImageData(sY,sX,8,8),0,0,8,8,x,y,8,8);
+        var img = lctx.getImageData(sY,sX,8,8);
+        console.log(img.data);
+        ctx.putImageData(img,0,0,8,8,x,y,8,8);
         
         
 	}
