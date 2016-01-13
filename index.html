@@ -3,8 +3,15 @@
 <head>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
+<style>
+    @font-face {
+        font-family: visitor;
+        src: url("assets/visitor1.ttf");
+    }
+</style>
 <body bgcolor="#787878">
-<canvas id="myCanvas" height="720" width="800" style="border:1px solid black; display:none;"></canvas>
+<canvas id="myCanvas" height="160" width="144" style="border:1px solid black; display:none;"></canvas>
+<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none;"></canvas>
 <canvas id="rendCanvas" height="720" width="800" style="border:1px solid black;"></canvas>
 
 
@@ -44,6 +51,7 @@
     var palette = false;
     var rendScreen;
     var imgData;
+    var spriteMap = [];
     
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -65,6 +73,10 @@
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	ctx.imageSmoothingEnabled = false;
+    
+    var loadCanvas = document.getElementById('loadCanvas');
+    var lctx = loadCanvas.getContext("2d");
+    lctx.imageSmoothingEnabled = false;
     
     var rendCanvas = document.getElementById("rendCanvas");
 	var rctx = rendCanvas.getContext("2d");
@@ -686,7 +698,7 @@
         var open_24 = {name:'open_24',    mini: 860, config:[[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[]],               contents:[], obs:-1, discovered: false};
         var open_25 = {name:'open_25',    mini: 885, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
         var open_26 = {name:'open_26',    mini: 886, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
-        var open_27 = {name:'open_27',    mini: 887, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
+        var open_27 = {name:'open_27',    mini: 887, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
         var open_28 = {name:'open_28',    mini: 888, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[7,8],[9,10],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]],               contents:[], obs:-1, discovered: false};
         var open_29 = {name:'open_29',    mini: 889, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[7,8]],               contents:[], obs:-1, discovered: false};
         var open_30 = {name:'open_30',    mini: 890, config:[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,4,5,6,7,8,9,10,11,12,13,14],[9,10],[]],               contents:[], obs:-1, discovered: false};
@@ -813,7 +825,7 @@
 	//-
 	//-----------------------------------------------------------------------------
     init();
-    
+    lctx.drawImage(spriteSheet,0,0);
     //start event loop
     setInterval(mainLoop, Math.floor(1000/60));
     
@@ -872,6 +884,9 @@
         
         buildLevel(difficulty);
         prevLvl = JSON.parse(JSON.stringify(currLvl));
+        
+        //init sprite map
+        
         
     }
     
@@ -1442,7 +1457,8 @@
 		//sprite = sprite - spriteSet;
 		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
-        ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+        
+        ctx.putImageData(lctx., sY,sX,8,8,x,y,8,8);
         
         
 	}
@@ -1467,7 +1483,7 @@
     
     //manage status bar and menu
     function menuSystem() {
-        ctx.font="7px monospace";
+        ctx.font="7px visitor";
         if (bannerCounter > -1) {
             bannerCounter++;
             if (bannerCounter > 120) {
