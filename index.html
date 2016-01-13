@@ -10,9 +10,8 @@
     }
 </style>
 <body bgcolor="#787878">
-<canvas id="myCanvas" height="144" width="160" style="border:1px solid black; display:none"></canvas>
+<canvas id="myCanvas" height="144" width="160" style="border:1px solid black;"></canvas>
 <canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none;"></canvas>
-<canvas id="rendCanvas" height="720" width="800" style="border:1px solid black;"></canvas>
 
 
 <script type="text/javascript">
@@ -80,10 +79,6 @@
     
     lctx.fillStyle = 'black';
     lctx.fillRect(0,0,256,256);
-    
-    var rendCanvas = document.getElementById("rendCanvas");
-	var rctx = rendCanvas.getContext("2d");
-	rctx.imageSmoothingEnabled = false;
     
     var map = [[]];
     var mapLoc = {x:0, y:0};
@@ -1532,12 +1527,12 @@
 			canvasHeight = $(window).height();
 			canvasWidth = Math.floor((160/144)*($(window).height()));
 		}
-		rendCanvas.style.top = JSON.stringify(($(window).height()/2)-(canvasHeight/2))+'px';
-		rendCanvas.style.left = JSON.stringify(($(window).width()/2)-(canvasWidth/2))+'px';
-		rendCanvas.height = JSON.stringify(canvasHeight);
-		rendCanvas.width = JSON.stringify(canvasWidth);
-		rendCanvas.style.position = 'absolute';
-		rctx.imageSmoothingEnabled = false;
+		canvas.style.top = JSON.stringify(($(window).height()/2)-(canvasHeight/2))+'px';
+		canvas.style.left = JSON.stringify(($(window).width()/2)-(canvasWidth/2))+'px';
+		canvas.height = JSON.stringify(canvasHeight);
+		canvas.width = JSON.stringify(canvasWidth);
+		canvas.style.position = 'absolute';
+		ctx.imageSmoothingEnabled = false;
         scaleFactor = (canvasWidth/160);
     }
     
@@ -1902,14 +1897,6 @@
                 }
             }
             
-                
-            imgData = ctx.getImageData(0,0,screenWidth,(screenHeight-16));
-            for(var i = 0, l = imgData.data.length; i < l; i += 4) {
-                  
-            }
-            ctx.putImageData(imgData, 0, 0);
-            
-            
         } else {
 			//render game over screen
             if (player.health <=0) {
@@ -1928,11 +1915,6 @@
         }
 		//update/render menu
         menuSystem();
-        rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
-        rctx.putImageData(rendScreen,0,0);
-        rctx.scale(scaleFactor,scaleFactor);
-        rctx.drawImage(rendCanvas,0,0);
-        rctx.scale(1/scaleFactor,1/scaleFactor);
 	}
 </script>
 </html>
