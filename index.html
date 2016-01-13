@@ -11,7 +11,7 @@
 </style>
 <body bgcolor="#787878">
 <canvas id="myCanvas" height="160" width="144" style="border:1px solid black; display:none;"></canvas>
-<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black;"></canvas>
+<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none;"></canvas>
 <canvas id="rendCanvas" height="720" width="800" style="border:1px solid black;"></canvas>
 
 
@@ -1486,7 +1486,7 @@
     
     //manage status bar and menu
     function menuSystem() {
-        ctx.font="7px visitor";
+        ctx.font="7px monospace";
         if (bannerCounter > -1) {
             bannerCounter++;
             if (bannerCounter > 120) {
