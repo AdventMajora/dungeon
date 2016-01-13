@@ -89,6 +89,9 @@
     var tctx = tempCanvas.getContext('2d');
     tctx.imageSmoothingEnabled = false;
     
+    tctx.fillStyle = 'black';
+    tctx.fillRect(0,0,256,256);
+    
     var map = [[]];
     var mapLoc = {x:0, y:0};
     
