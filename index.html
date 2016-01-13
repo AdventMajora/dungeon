@@ -1477,19 +1477,16 @@
                 if (img.data[i] == 120 && img.data[i+1] == 120 &&
                     img.data[i+2] == 120) {
                     //console.log('fixing');
-                    img.data[i] = 0;
-                    img.data[i+1] = 0;
-                    img.data[i+2] = 0;
-                    img.data[i+3] = 0;
+                    img.data[i] = curimg.data[i];
+                    img.data[i+1] = curimg.data[i+1];
+                    img.data[i+2] = curimg.data[i+2];
+                    img.data[i+3] = curimg.data[i+3];
                 }
                 
             }   
         }
-        var drawImg = new Image();
-        drawImg.src = img;
         if (equals == false) {
-            ctx.drawImage(drawImg, x,y);
-            //ctx.putImageData(img,x,y);
+            ctx.putImageData(img,x,y);
         } else {
             //console.log('skipping');
         }
