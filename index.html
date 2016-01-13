@@ -10,8 +10,8 @@
     }
 </style>
 <body bgcolor="#787878">
-<canvas id="myCanvas" height="144" width="160" style="border:1px solid black; display:none"></canvas>
-<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none;"></canvas>
+<canvas id="myCanvas" height="144" width="160" style="border:1px solid black;"></canvas>
+<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black;"></canvas>
 <canvas id="rendCanvas" height="720" width="800" style="border:1px solid black;"></canvas>
 
 
@@ -1672,7 +1672,7 @@
         //console.log(lvlComplete);
         frames++;
         //update screen dimensions
-        manageScreen();
+        //manageScreen();
         
         if (player.health <=0 || player.curse >=10) {
             lvlComplete = true;
