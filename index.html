@@ -79,6 +79,9 @@
     var lctx = loadCanvas.getContext("2d");
     lctx.imageSmoothingEnabled = false;
     
+    lctx.fillStyle = 'black';
+    lctx.fillRect(0,0,256,256);
+    
     var rendCanvas = document.getElementById("rendCanvas");
 	var rctx = rendCanvas.getContext("2d");
 	rctx.imageSmoothingEnabled = false;
@@ -1464,9 +1467,6 @@
         //console.log(sX+','+sY);
         var img = lctx.getImageData(sY,sX,8,8);
         var curimg = ctx.getImageData(x,y,8,8);
-        
-        lctx.fillStyle = 'red';
-        lctx.fillRect(sY,sX,8,8);
         
         //colorize and fix transparency
         for(var i = 0, l = img.data.length; i < l; i += 4) {
