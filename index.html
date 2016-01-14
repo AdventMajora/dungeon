@@ -1866,7 +1866,6 @@
             
                 
             img = ctx.getImageData(0,0,screenWidth,(screenHeight-16));
-            for(var i = 0, l = img.data.length; i < l; i += 4) {
                 for(var i = 0, l = img.data.length; i < l; i += 4) {
                 if (img.data[i+3] > 0) {
                     if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
@@ -1895,7 +1894,6 @@
                     }
                 } 
             } 
-            }
             ctx.putImageData(img, 0, 0);
             
             
