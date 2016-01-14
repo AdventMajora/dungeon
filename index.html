@@ -859,6 +859,7 @@
         player.spirit = 10;
         player.maxSpirit = 10;
         player.curse = 0;
+        player.moveWhileAttacking = false;
         
         player.x = 9*tileSize;
         player.y = 8*tileSize;
@@ -1902,6 +1903,8 @@
 			//render game over screen
             if (player.health <=0) {
                 ctx.font="7px monospace";
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0,0,screenWidth,screenHeight-16);
                 ctx.fillStyle = 'white';
                 ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
                 ctx.fillText('Press Space to Retry', (screenWidth/2)-40, ((screenHeight-16)/2)+8);
