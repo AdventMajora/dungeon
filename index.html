@@ -1443,46 +1443,53 @@
     }
     
     //draw a sprite
-	function drawSprite(sprite,x,y) {
-    
-        if (sprite+spriteSet == 28 && blink == true) {
-            sprite = 60-spriteSet;
-        }
-        if (sprite+spriteSet == 92 && blink == true) {
-            sprite = 124-spriteSet;
-        }
-        if (sprite+spriteSet == 27 && blink == true) {
-            sprite = 59-spriteSet;
-        }
-        if (sprite+spriteSet == 123 && blink == true) {
-            sprite = 155-spriteSet;
-        }
-        if (sprite+spriteSet == 224 && blink == true) {
-            sprite = 256-spriteSet;
-        }
-		//sprite = sprite - spriteSet;
-		var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
+	function drawSprite(sprite,x,y,quick) {
+        
+        var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
-        //console.log(sX+','+sY);
-        var img = lctx.getImageData(sY,sX,8,8);
-        var curimg = ctx.getImageData(x,y,8,8);
+        
+        if (quick == true) {
+            ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+        } else {
+            if (sprite+spriteSet == 28 && blink == true) {
+                sprite = 60-spriteSet;
+            }
+            if (sprite+spriteSet == 92 && blink == true) {
+                sprite = 124-spriteSet;
+            }
+            if (sprite+spriteSet == 27 && blink == true) {
+                sprite = 59-spriteSet;
+            }
+            if (sprite+spriteSet == 123 && blink == true) {
+                sprite = 155-spriteSet;
+            }
+            if (sprite+spriteSet == 224 && blink == true) {
+                sprite = 256-spriteSet;
+            }
+            
+            //console.log(sX+','+sY);
+            var img = lctx.getImageData(sY,sX,8,8);
+            var curimg = ctx.getImageData(x,y,8,8);
 
-        var equals = true;
-        for (var i=0; i<img.data.length; i++) {
-            if (img.data[i] != curimg.data[i]) {
-                equals = false;
-                break;
+            var equals = true;
+            for (var i=0; i<img.data.length; i++) {
+                if (img.data[i] != curimg.data[i]) {
+                    equals = false;
+                    break;
+                }
+            }
+            
+            //rctx.putImageData(curimg,0,0);
+            if (equals == false) {
+                //fix transparency
+                ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+                
+            } else {
+                //console.log('skipping');
             }
         }
         
-        //rctx.putImageData(curimg,0,0);
-        if (equals == false) {
-            //fix transparency
-            ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-            
-        } else {
-            //console.log('skipping');
-        }
+        
 	}
 	
     //game window management
@@ -1838,26 +1845,27 @@
             for (var i=0; i<currLvl[2].length; i++) {
                 for (var j=0; j<currLvl[2][i].length; j++) {
                     if (currLvl[2][i][j] !=0) {
-						drawSprite(currLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+						drawSprite(currLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
 					}
                 }
             }
+            
             //prev room overlap
             if (rTransition != -1) {
                 for (var i=0; i<prevLvl[2].length; i++) {
                     for (var j=0; j<prevLvl[2][i].length; j++) {
                         if (prevLvl[2][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)), true);
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)), true);
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j]-spriteSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
                             }
                         }
                     }
@@ -1866,7 +1874,7 @@
             
                 
             img = ctx.getImageData(0,0,screenWidth,(screenHeight-16));
-                for(var i = 0, l = img.data.length; i < l; i += 4) {
+            for(var i = 0, l = img.data.length; i < l; i += 4) {
                 if (img.data[i+3] > 0) {
                     if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
                     
