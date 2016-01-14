@@ -51,6 +51,7 @@
     var rendScreen;
     var img;
     var spriteMap = [];
+    var rendSkips = 0;
     
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -1445,35 +1446,34 @@
     //draw a sprite
 	function drawSprite(sprite,x,y,quick) {
         
+        if (sprite+spriteSet == 28 && blink == true) {
+            sprite = 60-spriteSet;
+        }
+        if (sprite+spriteSet == 92 && blink == true) {
+            sprite = 124-spriteSet;
+        }
+        if (sprite+spriteSet == 27 && blink == true) {
+            sprite = 59-spriteSet;
+        }
+        if (sprite+spriteSet == 123 && blink == true) {
+            sprite = 155-spriteSet;
+        }
+        if (sprite+spriteSet == 224 && blink == true) {
+            sprite = 256-spriteSet;
+        }
         var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
         
         if (quick == true) {
             ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
         } else {
-            if (sprite+spriteSet == 28 && blink == true) {
-                sprite = 60-spriteSet;
-            }
-            if (sprite+spriteSet == 92 && blink == true) {
-                sprite = 124-spriteSet;
-            }
-            if (sprite+spriteSet == 27 && blink == true) {
-                sprite = 59-spriteSet;
-            }
-            if (sprite+spriteSet == 123 && blink == true) {
-                sprite = 155-spriteSet;
-            }
-            if (sprite+spriteSet == 224 && blink == true) {
-                sprite = 256-spriteSet;
-            }
             
-            //console.log(sX+','+sY);
-            var img = lctx.getImageData(sY,sX,8,8);
+            var imgData = lctx.getImageData(sY,sX,8,8);
             var curimg = ctx.getImageData(x,y,8,8);
 
             var equals = true;
-            for (var i=0; i<img.data.length; i++) {
-                if (img.data[i] != curimg.data[i]) {
+            for (var i=0; i<imgData.data.length; i++) {
+                if (imgData.data[i] != curimg.data[i]) {
                     equals = false;
                     break;
                 }
@@ -1481,16 +1481,12 @@
             
             //rctx.putImageData(curimg,0,0);
             if (equals == false) {
-                //fix transparency
-                //ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-                ctx.putImageData(img,x,y);
+                ctx.putImageData(imgData,x,y);
                 
             } else {
-                //console.log('skipping');
+                rendSkips++;
             }
-        }
-        
-        
+        } 
 	}
 	
     //game window management
