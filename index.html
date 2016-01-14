@@ -1672,7 +1672,7 @@
         //console.log(lvlComplete);
         frames++;
         //update screen dimensions
-        //manageScreen();
+        manageScreen();
         
         if (player.health <=0 || player.curse >=10) {
             lvlComplete = true;
@@ -1930,6 +1930,9 @@
         menuSystem();
         rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
         rctx.putImageData(rendScreen,0,0);
+        rctx.scale(scaleFactor,scaleFactor);
+        rctx.drawImage(rendCanvas, 0,0);
+        rctx.scale(1/scaleFactor,1/scaleFactor);
 	}
 </script>
 </html>
