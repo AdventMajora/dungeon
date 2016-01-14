@@ -1479,44 +1479,6 @@
         if (equals == false) {
             //fix transparency
             ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-            img = ctx.getImageData(x,y,8,8);
-            //colorize and fix transparency
-            for(var i = 0, l = img.data.length; i < l; i += 4) {
-                if (img.data[i] == 0 && img.data[i+1] == 0 && img.data[i+2] == 0) {
-                    //console.log('fixing');
-                    img.data[i] = curimg[i];
-                    img.data[i+1] = curimg[i+1];
-                    img.data[i+2] = curimg[i+2];
-                    img.data[i+3] = curimg[i+3];
-                }
-                if (img.data[i+3] > 0) {
-                    if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
-                    
-                        img.data[i] = currPal[0][0];
-                        img.data[i+1] = currPal[0][1];
-                        img.data[i+2] = currPal[0][2];
-                    }
-                    if (img.data[i] == pal_0[1][0] && img.data[i+1] == pal_0[1][1] && img.data[i+2] == pal_0[1][2]) {
-                    
-                        img.data[i] = currPal[1][0];
-                        img.data[i+1] = currPal[1][1];
-                        img.data[i+2] = currPal[1][2];
-                    }
-                    if (img.data[i] == pal_0[2][0] && img.data[i+1] == pal_0[2][1] && img.data[i+2] == pal_0[2][2]) {
-                    
-                        img.data[i] = currPal[2][0];
-                        img.data[i+1] = currPal[2][1];
-                        img.data[i+2] = currPal[2][2];
-                    }
-                    if (img.data[i] == pal_0[3][0] && img.data[i+1] == pal_0[3][1] && img.data[i+2] == pal_0[3][2]) {
-                    
-                        img.data[i] = currPal[3][0];
-                        img.data[i+1] = currPal[3][1];
-                        img.data[i+2] = currPal[3][2];
-                    }
-                } 
-            }
-            ctx.putImageData(img,x,y);
             
         } else {
             //console.log('skipping');
@@ -1903,11 +1865,38 @@
             }
             
                 
-            imgData = ctx.getImageData(0,0,screenWidth,(screenHeight-16));
+            img = ctx.getImageData(0,0,screenWidth,(screenHeight-16));
             for(var i = 0, l = imgData.data.length; i < l; i += 4) {
-                  
+                for(var i = 0, l = img.data.length; i < l; i += 4) {
+                if (img.data[i+3] > 0) {
+                    if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
+                    
+                        img.data[i] = currPal[0][0];
+                        img.data[i+1] = currPal[0][1];
+                        img.data[i+2] = currPal[0][2];
+                    }
+                    if (img.data[i] == pal_0[1][0] && img.data[i+1] == pal_0[1][1] && img.data[i+2] == pal_0[1][2]) {
+                    
+                        img.data[i] = currPal[1][0];
+                        img.data[i+1] = currPal[1][1];
+                        img.data[i+2] = currPal[1][2];
+                    }
+                    if (img.data[i] == pal_0[2][0] && img.data[i+1] == pal_0[2][1] && img.data[i+2] == pal_0[2][2]) {
+                    
+                        img.data[i] = currPal[2][0];
+                        img.data[i+1] = currPal[2][1];
+                        img.data[i+2] = currPal[2][2];
+                    }
+                    if (img.data[i] == pal_0[3][0] && img.data[i+1] == pal_0[3][1] && img.data[i+2] == pal_0[3][2]) {
+                    
+                        img.data[i] = currPal[3][0];
+                        img.data[i+1] = currPal[3][1];
+                        img.data[i+2] = currPal[3][2];
+                    }
+                } 
+            } 
             }
-            ctx.putImageData(imgData, 0, 0);
+            ctx.putImageData(img, 0, 0);
             
             
         } else {
