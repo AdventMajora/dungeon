@@ -1511,7 +1511,7 @@
     
     //manage status bar and menu
     function menuSystem() {
-        rctx.font="7px monospace";
+        ctx.font="7px monospace";
         if (bannerCounter > -1) {
             bannerCounter++;
             if (bannerCounter > 120) {
@@ -1520,11 +1520,11 @@
         }
         
         if (bannerCounter < 120 && bannerCounter > -1) {
-            rctx.fillStyle = 'black';
-            rctx.fillRect(0, 0, 64, 8);
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 64, 8);
             
-            rctx.fillStyle = 'white';
-            rctx.fillText('Depth: '+depth, 2, 6);
+            ctx.fillStyle = 'white';
+            ctx.fillText('Depth: '+depth, 2, 6);
         }
         
         //pause screen
@@ -1541,29 +1541,29 @@
                     paused = false;
                 }
             }
-            rctx.fillStyle = 'black';
-            rctx.fillRect(Math.floor(screenWidth/2), menuHeight,Math.floor(screenWidth/2), Math.floor(screenHeight)-16-menuHeight);
+            ctx.fillStyle = 'black';
+            ctx.fillRect(Math.floor(screenWidth/2), menuHeight,Math.floor(screenWidth/2), Math.floor(screenHeight)-16-menuHeight);
             
             //stats
             //lvl dpt
             //dmg def
             //spd crs
             //hp  sp
-            rctx.fillStyle = 'white';
-            rctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+4,menuHeight+24);
-            rctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+40,menuHeight+24);
-            rctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+32);
-            rctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+32);
-            rctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+40);
-            rctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+40);
-            rctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+48);
-            rctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+48);
+            ctx.fillStyle = 'white';
+            ctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+4,menuHeight+24);
+            ctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+40,menuHeight+24);
+            ctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+32);
+            ctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+32);
+            ctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+40);
+            ctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+40);
+            ctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+48);
+            ctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+48);
             
-            rctx.fillText('Augments:',Math.floor(screenWidth/2)+4,menuHeight+60);
+            ctx.fillText('Augments:',Math.floor(screenWidth/2)+4,menuHeight+60);
             
             for (var i=0; i<player.augments.length; i++) {
-                rctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+4,menuHeight+68+(i*8));
-				rctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+40,menuHeight+68+(i*8));
+                ctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+4,menuHeight+68+(i*8));
+				ctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+40,menuHeight+68+(i*8));
             }
         
             //minimap
@@ -1584,55 +1584,55 @@
         }
         
         //status bar
-        rctx.fillStyle = 'black';
-        rctx.fillRect(0, screenHeight-16, screenWidth, 16);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, screenHeight-16, screenWidth, 16);
         
-        rctx.fillStyle = 'white';
-        rctx.fillText('HP[',0,screenHeight-10);
+        ctx.fillStyle = 'white';
+        ctx.fillText('HP[',0,screenHeight-10);
         for (var i=0; i<player.maxHealth; i++) {
             if (i<player.health) {
-                rctx.fillText('|',(i+5)*2,screenHeight-10);
+                ctx.fillText('|',(i+5)*2,screenHeight-10);
             } else {
-                rctx.fillText(' ',(i+5)*2,screenHeight-10);
+                ctx.fillText(' ',(i+5)*2,screenHeight-10);
             }
         }
-        rctx.fillText(']',(player.maxHealth+5.5)*2,screenHeight-10);
+        ctx.fillText(']',(player.maxHealth+5.5)*2,screenHeight-10);
         
-        rctx.fillText('SP[',0,screenHeight-2);
+        ctx.fillText('SP[',0,screenHeight-2);
         for (var i=0; i<player.maxSpirit; i++) {
             if (i<player.spirit) {
-                rctx.fillText('|',(i+5)*2,screenHeight-2);
+                ctx.fillText('|',(i+5)*2,screenHeight-2);
             } else {
-                rctx.fillText(' ',(i+5)*2,screenHeight-2);
+                ctx.fillText(' ',(i+5)*2,screenHeight-2);
             }
         }
-        rctx.fillText(']',(player.maxSpirit+5.5)*2,screenHeight-2);
+        ctx.fillText(']',(player.maxSpirit+5.5)*2,screenHeight-2);
         
         //ctx.fillText((player.x).toFixed(2)+','+(player.y).toFixed(2)+'; ', screenWidth-80, screenHeight-9);
         //ctx.fillText('p:'+points, 0, screenHeight-2);
-        rctx.fillText(fps,screenWidth-15,screenHeight-9);
+        ctx.fillText(fps,screenWidth-15,screenHeight-9);
         drawSprite(550, screenWidth-80,screenHeight-9);
-        rctx.fillText(':'+player.keys.length,screenWidth-72,screenHeight-2);
+        ctx.fillText(':'+player.keys.length,screenWidth-72,screenHeight-2);
         
-        rctx.fillText('XP[',screenWidth-50,screenHeight-2);
+        ctx.fillText('XP[',screenWidth-50,screenHeight-2);
         for (var i=0; i<10; i++) {
             if (i<player.exp) {
-                rctx.fillText('|',screenWidth-50+(i+5)*2,screenHeight-2);
+                ctx.fillText('|',screenWidth-50+(i+5)*2,screenHeight-2);
             } else {
-                rctx.fillText(' ',screenWidth-50+(i+5)*2,screenHeight-2);
+                ctx.fillText(' ',screenWidth-50+(i+5)*2,screenHeight-2);
             }
         }
-        rctx.fillText(']: '+player.lvl,screenWidth-50+(10+5.5)*2,screenHeight-2);
+        ctx.fillText(']: '+player.lvl,screenWidth-50+(10+5.5)*2,screenHeight-2);
         
-        rctx.fillText('CR[',screenWidth-50,screenHeight-10);
+        ctx.fillText('CR[',screenWidth-50,screenHeight-10);
         for (var i=0; i<10; i++) {
             if (i<player.curse) {
-                rctx.fillText('|',screenWidth-50+(i+5)*2,screenHeight-10);
+                ctx.fillText('|',screenWidth-50+(i+5)*2,screenHeight-10);
             } else {
-                rctx.fillText(' ',screenWidth-50+(i+5)*2,screenHeight-10);
+                ctx.fillText(' ',screenWidth-50+(i+5)*2,screenHeight-10);
             }
         }
-        rctx.fillText(']',screenWidth-50+(10+5.5)*2,screenHeight-10);
+        ctx.fillText(']',screenWidth-50+(10+5.5)*2,screenHeight-10);
     }
     
     //main loop
@@ -1922,11 +1922,11 @@
                 
         }
 		//update/render menu
+        menuSystem();
         rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
         rctx.putImageData(rendScreen,0,0);
         rctx.scale(scaleFactor,scaleFactor);
         rctx.drawImage(rendCanvas, 0,0);
-        menuSystem();
         rctx.scale(1/scaleFactor,1/scaleFactor);
 	}
 </script>
