@@ -1482,7 +1482,8 @@
             //rctx.putImageData(curimg,0,0);
             if (equals == false) {
                 //fix transparency
-                ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+                //ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+                ctx.putImageData(img,x,y);
                 
             } else {
                 //console.log('skipping');
