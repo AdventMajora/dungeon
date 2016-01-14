@@ -10,10 +10,9 @@
     }
 </style>
 <body bgcolor="#787878">
-<canvas id="myCanvas" height="144" width="160" style="border:1px solid black;"></canvas>
+<canvas id="myCanvas" height="144" width="160" style="border:1px solid black; display:none"></canvas>
 <canvas id="rendCanvas" height="144" width="160" style="border:1px solid black;"></canvas>
-<canvas id="tempCanvas" height="8" width="8" style="border:1px solid black;"></canvas>
-<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black;"></canvas>
+<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none"></canvas>
 
 <script type="text/javascript">
     var blink = true;			//state of blink
@@ -84,13 +83,6 @@
     var rendCanvas = document.getElementById("rendCanvas");
 	var rctx = rendCanvas.getContext("2d");
 	rctx.imageSmoothingEnabled = false;
-    
-    var tempCanvas = document.getElementById("tempCanvas");
-    var tctx = tempCanvas.getContext('2d');
-    tctx.imageSmoothingEnabled = false;
-    
-    tctx.fillStyle = 'black';
-    tctx.fillRect(0,0,256,256);
     
     var map = [[]];
     var mapLoc = {x:0, y:0};
@@ -1474,10 +1466,7 @@
         //console.log(sX+','+sY);
         var img = lctx.getImageData(sY,sX,8,8);
         var curimg = ctx.getImageData(x,y,8,8);
-        //console.log(JSON.stringify(curimg.data));
 
-        
-        
         var equals = true;
         for (var i=0; i<img.data.length; i++) {
             if (img.data[i] != curimg.data[i]) {
