@@ -891,7 +891,8 @@
         prevLvl = JSON.parse(JSON.stringify(currLvl));
         
         //init palette
-        palSwap(pal_0);
+        var rand = Math.floor(Math.random()*pals.length);
+        palSwap(pals[rand]);
     }
     
     function palSwap(newPal) {
