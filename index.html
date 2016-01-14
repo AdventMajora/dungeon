@@ -897,36 +897,7 @@
     }
     
     function palSwap(newPal) {
-        img = lctx.getImageData(0,0,256,256);
-        for(var i = 0, l = img.data.length; i < l; i += 4) {
-            if (img.data[i+3] > 0) {
-                if (img.data[i] == currPal[0][0] && img.data[i+1] == currPal[0][1] && img.data[i+2] == currPal[0][2]) {
-                
-                    img.data[i] = newPal[0][0];
-                    img.data[i+1] = newPal[0][1];
-                    img.data[i+2] = newPal[0][2];
-                }
-                if (img.data[i] == currPal[1][0] && img.data[i+1] == currPal[1][1] && img.data[i+2] == currPal[1][2]) {
-                
-                    img.data[i] = newPal[1][0];
-                    img.data[i+1] = newPal[1][1];
-                    img.data[i+2] = newPal[1][2];
-                }
-                if (img.data[i] == currPal[2][0] && img.data[i+1] == currPal[2][1] && img.data[i+2] == currPal[2][2]) {
-                
-                    img.data[i] = newPal[2][0];
-                    img.data[i+1] = newPal[2][1];
-                    img.data[i+2] = newPal[2][2];
-                }
-                if (img.data[i] == currPal[3][0] && img.data[i+1] == currPal[3][1] && img.data[i+2] == currPal[3][2]) {
-                
-                    img.data[i] = newPal[3][0];
-                    img.data[i+1] = newPal[3][1];
-                    img.data[i+2] = newPal[3][2];
-                }
-            } 
-        } 
-        lctx.putImageData(img, 0, 0);
+        currPal = newPal;
     }
     
     //build room config from .tmx file
@@ -1896,7 +1867,7 @@
                 }
             }
                 
-            img = ctx.getImageData(0,0,144,160);
+            img = ctx.getImageData(0,0,160,144);
             for(var i = 0, l = img.data.length; i < l; i += 4) {
                 if (img.data[i+3] > 0) {
                     if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
