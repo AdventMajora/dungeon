@@ -1497,7 +1497,7 @@
         sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		sY = ((sprite-1)%(sheetWidth/8))*8;
             
-        imgData = lctx.getImageData(sY,sX,8,8);
+        /*imgData = lctx.getImageData(sY,sX,8,8);
         curimg = ctx.getImageData(x,y,8,8);
 
         var equals = true;
@@ -1512,8 +1512,8 @@
         if (equals == false) {
             //ctx.putImageData(imgData,x,y);   
             ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
-        }
-        //ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+        }*/
+        ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
 	}
 	
     //game window management
