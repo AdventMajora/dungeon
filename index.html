@@ -898,35 +898,35 @@
     
     function palSwap(newPal) {
         img = lctx.getImageData(0,0,256,256);
-            for(var i = 0, l = img.data.length; i < l; i += 4) {
-                if (img.data[i+3] > 0) {
-                    if (img.data[i] == currPal[0][0] && img.data[i+1] == currPal[0][1] && img.data[i+2] == currPal[0][2]) {
-                    
-                        img.data[i] = newPal[0][0];
-                        img.data[i+1] = newPal[0][1];
-                        img.data[i+2] = newPal[0][2];
-                    }
-                    if (img.data[i] == currPal[1][0] && img.data[i+1] == currPal[1][1] && img.data[i+2] == currPal[1][2]) {
-                    
-                        img.data[i] = newPal[1][0];
-                        img.data[i+1] = newPal[1][1];
-                        img.data[i+2] = newPal[1][2];
-                    }
-                    if (img.data[i] == currPal[2][0] && img.data[i+1] == currPal[2][1] && img.data[i+2] == currPal[2][2]) {
-                    
-                        img.data[i] = newPal[2][0];
-                        img.data[i+1] = newPal[2][1];
-                        img.data[i+2] = newPal[2][2];
-                    }
-                    if (img.data[i] == currPal[3][0] && img.data[i+1] == currPal[3][1] && img.data[i+2] == currPal[3][2]) {
-                    
-                        img.data[i] = newPal[3][0];
-                        img.data[i+1] = newPal[3][1];
-                        img.data[i+2] = newPal[3][2];
-                    }
-                } 
+        for(var i = 0, l = img.data.length; i < l; i += 4) {
+            if (img.data[i+3] > 0) {
+                if (img.data[i] == currPal[0][0] && img.data[i+1] == currPal[0][1] && img.data[i+2] == currPal[0][2]) {
+                
+                    img.data[i] = newPal[0][0];
+                    img.data[i+1] = newPal[0][1];
+                    img.data[i+2] = newPal[0][2];
+                }
+                if (img.data[i] == currPal[1][0] && img.data[i+1] == currPal[1][1] && img.data[i+2] == currPal[1][2]) {
+                
+                    img.data[i] = newPal[1][0];
+                    img.data[i+1] = newPal[1][1];
+                    img.data[i+2] = newPal[1][2];
+                }
+                if (img.data[i] == currPal[2][0] && img.data[i+1] == currPal[2][1] && img.data[i+2] == currPal[2][2]) {
+                
+                    img.data[i] = newPal[2][0];
+                    img.data[i+1] = newPal[2][1];
+                    img.data[i+2] = newPal[2][2];
+                }
+                if (img.data[i] == currPal[3][0] && img.data[i+1] == currPal[3][1] && img.data[i+2] == currPal[3][2]) {
+                
+                    img.data[i] = newPal[3][0];
+                    img.data[i+1] = newPal[3][1];
+                    img.data[i+2] = newPal[3][2];
+                }
             } 
-            lctx.putImageData(img, 0, 0);
+        } 
+        lctx.putImageData(img, 0, 0);
     }
     
     //build room config from .tmx file
@@ -1497,7 +1497,7 @@
         var sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		var	sY = ((sprite-1)%(sheetWidth/8))*8;
             
-        var imgData = lctx.getImageData(sY,sX,8,8);
+        /*var imgData = lctx.getImageData(sY,sX,8,8);
         var curimg = ctx.getImageData(x,y,8,8);
 
         var equals = true;
@@ -1510,10 +1510,9 @@
         
         //rctx.putImageData(curimg,0,0);
         if (equals == false) {
-            ctx.putImageData(imgData,x,y);
-              
-        }
-        //ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
+            ctx.putImageData(imgData,x,y);   
+        }*/
+        ctx.drawImage(spriteSheet, sY,sX,8,8,x,y,8,8);
 	}
 	
     //game window management
