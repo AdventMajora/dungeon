@@ -81,6 +81,10 @@
     
     currPal = pals[0];
     
+    var sets = [0,6];
+    
+    spriteSet = sets[0];
+    
     //initiate canvas
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
@@ -907,6 +911,9 @@
         //init palette
         var rand = Math.floor(Math.random()*pals.length);
         palSwap(pals[rand]);
+        
+        rand = Math.floor(Math.random()*sets.length);
+        spriteSet = sets[rand];
     }
     
     function palSwap(newPal) {
