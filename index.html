@@ -848,7 +848,8 @@
         lctx.drawImage(spriteSheet,0,0);
         init();
         //start event loop
-        setInterval(mainLoop, Math.floor(1000/60));
+        //setInterval(mainLoop, Math.floor(1000/60));
+        mainLoop();
     }
     
     //fps counter
@@ -1948,6 +1949,8 @@
         rctx.scale(scaleFactor,scaleFactor);
         rctx.drawImage(rendCanvas, 0,0);
         rctx.scale(1/scaleFactor,1/scaleFactor);
+        
+        window.requestAnimationFrame(mainLoop);
 	}
 </script>
 </html>
