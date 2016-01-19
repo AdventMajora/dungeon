@@ -894,7 +894,7 @@
     
     roomTemplates.onload = function(){
         lctx.drawImage(roomTemplates,0,0);
-        //init();
+        init();
         //start event loop
         //setInterval(mainLoop, Math.floor(1000/60));
         //mainLoop();
@@ -999,18 +999,18 @@
 	
     //kick off EVERYTHING
     function init() {
-		
+		console.log('here');
 		player.init();
         depth = -1;
         difficulty = 1;
-        
+        console.log('here');
         buildLevel(difficulty);
         prevLvl = JSON.parse(JSON.stringify(currLvl));
-        
+        console.log('here');
         //init palette
         var rand = Math.floor(Math.random()*pals.length);
         palSwap(pals[rand]);
-        
+        console.log('here');
         rand = Math.floor(Math.random()*sets.length);
         wallSet = sets[rand];
     }
