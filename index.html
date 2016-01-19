@@ -710,17 +710,17 @@
         var base_1 = parseRoomData(20,16,926);
         var base_2 = parseRoomData(40,16,927);
         var base_3 = parseRoomData(60,16,928);
-        var base_4 = parseRoomData(0,16,957);
-        var base_5 = parseRoomData(20,16,958);
-        var base_6 = parseRoomData(40,16,959);
-        var base_7 = parseRoomData(60,16,960);
-        var base_8 = parseRoomData(0,16,989);
-        var base_9 = parseRoomData(20,16,990);
-        var base_10 = parseRoomData(40,16,991);
-        var base_11 = parseRoomData(60,16,992);
-        var base_12 = parseRoomData(0,16,1021);
-        var base_13 = parseRoomData(20,16,1022);
-        var base_14 = parseRoomData(40,16,1023);
+        var base_4 = parseRoomData(0,32,957);
+        var base_5 = parseRoomData(20,32,958);
+        var base_6 = parseRoomData(40,32,959);
+        var base_7 = parseRoomData(60,32,960);
+        var base_8 = parseRoomData(0,48,989);
+        var base_9 = parseRoomData(20,48,990);
+        var base_10 = parseRoomData(40,48,991);
+        var base_11 = parseRoomData(60,48,992);
+        var base_12 = parseRoomData(0,64,1021);
+        var base_13 = parseRoomData(20,64,1022);
+        var base_14 = parseRoomData(40,64,1023);
         
         /*var base_0 = {name:'base_0',    mini: 925, config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
         var base_1 = {name:'base_1',    mini: 926, config:[[9,10],[],[],[]],           contents:[], obs:-1, discovered: false};
@@ -1251,7 +1251,7 @@
             //build list of expandable rooms
             for (j=0; j<map.length; j++) {
                 for (k=0; k<map[j].length; k++) {
-                    if (JSON.stringify(map[j][k].type) == 'empty' ||
+                    if (map[j][k].type == 'empty' ||
                         JSON.stringify(map[j][k].config) == JSON.stringify(base_1.config) ||
                         JSON.stringify(map[j][k].config) == JSON.stringify(base_2.config) ||
                         JSON.stringify(map[j][k].config) == JSON.stringify(base_3.config) ||
