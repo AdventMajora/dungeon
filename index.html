@@ -274,8 +274,8 @@
                                 } else {
                                     canMove =  .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
-                                            currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
+                                        if (currLvl.map[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
+                                            currLvl.map[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
                                             this.y-=.25;
                                         } else {
                                             break;
@@ -299,8 +299,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
-                                            currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
+                                        if (currLvl.map[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
+                                            currLvl.map[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
                                             
                                             this.x-=.25;
                                         } else {
@@ -325,8 +325,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
-                                            currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
+                                        if (currLvl.map[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
+                                            currLvl.map[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
                                             
                                             this.y+=.25;
                                         } else {
@@ -351,8 +351,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
-                                            currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
+                                        if (currLvl.map[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
+                                            currLvl.map[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
                                         
                                             this.x+=.25;
                                         } else {
@@ -592,45 +592,45 @@
                                         
                                         if (rand == 0) {
                                             if (this.loc.y >= 16 
-                                                && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
-                                                && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] ==0) {
+                                                && currLvl.map[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
+                                                && currLvl.map[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] ==0) {
                                                 this.loc.y-=this.speed;
                                             }
                                         }
                                         if (rand == 1) {
                                             if (this.loc.x >= 16 
-                                                && currLvl[1][Math.floor((Math.floor(this.loc.y))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0
-                                                && currLvl[1][Math.ceil(((Math.ceil(this.loc.y)))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0) {
+                                                && currLvl.map[1][Math.floor((Math.floor(this.loc.y))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0
+                                                && currLvl.map[1][Math.ceil(((Math.ceil(this.loc.y)))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0) {
                                                 this.loc.x-=this.speed;
                                             }
                                         }
                                         if (rand == 2) {
                                             if (this.loc.y+8 < screenHeight-32 
-                                                && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] == 0
-                                                && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] == 0) {
+                                                && currLvl.map[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] == 0
+                                                && currLvl.map[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] == 0) {
                                                 this.loc.y+=this.speed;
                                             }
                                         }
                                         if (rand == 3) {
                                             if (this.loc.x+8 < screenWidth-16
-                                                && currLvl[1][Math.ceil(Math.ceil(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0
-                                                && currLvl[1][Math.floor(Math.floor(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0) {
+                                                && currLvl.map[1][Math.ceil(Math.ceil(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0
+                                                && currLvl.map[1][Math.floor(Math.floor(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0) {
                                                 this.loc.x+=this.speed;
                                             }
                                         }
                                         
                                         if (player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
                                             player.health = player.health-(this.damage-player.base_defense/10);
-                                            if (player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                                            if (player.dir == 0 && currLvl.map[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                                                 player.y+=8;
                                             }
-                                            if (player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
+                                            if (player.dir == 1 && currLvl.map[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
                                                 player.x+=8;
                                             }
-                                            if (player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                                            if (player.dir == 2 && currLvl.map[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                                                 player.y-=8;
                                             }
-                                            if (player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
+                                            if (player.dir == 3 && currLvl.map[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
                                                 player.x-=8;
                                             }
                                         }
@@ -706,21 +706,22 @@
 	var mobs = [con_mob];
     
     {//base rooms
-        var base_0 = parseRoomData(0,16,925);
-        var base_1 = parseRoomData(20,16,926);
-        var base_2 = parseRoomData(40,16,927);
-        var base_3 = parseRoomData(60,16,928);
-        var base_4 = parseRoomData(0,32,957);
-        var base_5 = parseRoomData(20,32,958);
-        var base_6 = parseRoomData(40,32,959);
-        var base_7 = parseRoomData(60,32,960);
-        var base_8 = parseRoomData(0,48,989);
-        var base_9 = parseRoomData(20,48,990);
-        var base_10 = parseRoomData(40,48,991);
-        var base_11 = parseRoomData(60,48,992);
-        var base_12 = parseRoomData(0,64,1021);
-        var base_13 = parseRoomData(20,64,1022);
-        var base_14 = parseRoomData(40,64,1023);
+        
+        var base_0;
+        var base_1;
+        var base_2;
+        var base_3;
+        var base_4;
+        var base_5;
+        var base_6;
+        var base_7;
+        var base_8;
+        var base_9;
+        var base_10;
+        var base_11;
+        var base_12;
+        var base_13;
+        var base_14;
         
         /*var base_0 = {name:'base_0',    mini: 925, config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:-1, discovered: false};
         var base_1 = {name:'base_1',    mini: 926, config:[[9,10],[],[],[]],           contents:[], obs:-1, discovered: false};
@@ -806,12 +807,7 @@
     }
     var empty = {type:'empty',          config:[[9,10],[7,8],[9,10],[7,8]], contents:[], obs:[], discovered: false};
     
-	var rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14
-                /*,open_0,open_1,open_2,open_3,open_4,open_5,open_6,open_7,open_8,open_9,open_10,open_11,open_12,open_13,open_14,open_15
-                ,open_16,open_17,open_18,open_19,open_20,open_21,open_22,open_23,open_24,open_25,open_26,open_27,open_28,open_29,open_30,open_31
-                ,open_32,open_33,open_34,open_35,open_36,open_37,open_38,open_39,open_40,open_41,open_42,open_43,open_44,open_45,open_46,open_47
-                ,open_48,open_49,open_50,open_51,open_52,open_53,open_54,open_55,open_56,open_57,open_58,open_59,open_60,open_61,open_62,open_63
-                ,open_64*/];
+	var rooms = [];
 	
     //input
 	document.addEventListener('keydown', function(event) {
@@ -897,7 +893,7 @@
         init();
         //start event loop
         //setInterval(mainLoop, Math.floor(1000/60));
-        //mainLoop();
+        mainLoop();
     }
     
     //fps counter
@@ -918,8 +914,7 @@
     },250);
     
 	function parseRoomData(x,y, mini) {
-		var rawData = lctx.getImageData(x,y,20,16);
-        rawData = rawData.data;
+		var rawData = lctx.getImageData(x,y,20,16).data;
 		var roomMap = [[],[],[]];
 		var doorData = [[],[],[],[]];
 		var row = [];
@@ -994,23 +989,53 @@
 			}
 			roomMap[1].push(row);
 		}
+        for (var i=0; i<16; i++) {
+            row = [];
+            for (var j=0; j<20; j++) {
+                row.push(0);
+            }
+            roomMap[2].push(row);
+        }
         return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:-1};
 	}
 	
     //kick off EVERYTHING
     function init() {
-		console.log('here');
+    
+        //read in room data
+        base_0 = parseRoomData(0,16,925);
+        base_1 = parseRoomData(20,16,926);
+        base_2 = parseRoomData(40,16,927);
+        base_3 = parseRoomData(60,16,928);
+        base_4 = parseRoomData(0,32,957);
+        base_5 = parseRoomData(20,32,958);
+        base_6 = parseRoomData(40,32,959);
+        base_7 = parseRoomData(60,32,960);
+        base_8 = parseRoomData(0,48,989);
+        base_9 = parseRoomData(20,48,990);
+        base_10 = parseRoomData(40,48,991);
+        base_11 = parseRoomData(60,48,992);
+        base_12 = parseRoomData(0,64,1021);
+        base_13 = parseRoomData(20,64,1022);
+        base_14 = parseRoomData(40,64,1023);
+        
+        rooms = [base_0,base_1,base_2,base_3,base_4,base_5,base_6,base_7,base_8,base_9,base_10,base_11,base_12,base_13,base_14
+                /*,open_0,open_1,open_2,open_3,open_4,open_5,open_6,open_7,open_8,open_9,open_10,open_11,open_12,open_13,open_14,open_15
+                ,open_16,open_17,open_18,open_19,open_20,open_21,open_22,open_23,open_24,open_25,open_26,open_27,open_28,open_29,open_30,open_31
+                ,open_32,open_33,open_34,open_35,open_36,open_37,open_38,open_39,open_40,open_41,open_42,open_43,open_44,open_45,open_46,open_47
+                ,open_48,open_49,open_50,open_51,open_52,open_53,open_54,open_55,open_56,open_57,open_58,open_59,open_60,open_61,open_62,open_63
+                ,open_64*/];
+        
 		player.init();
         depth = -1;
         difficulty = 1;
-        console.log('here');
+
         buildLevel(difficulty);
         prevLvl = JSON.parse(JSON.stringify(currLvl));
-        console.log('here');
+
         //init palette
         var rand = Math.floor(Math.random()*pals.length);
         palSwap(pals[rand]);
-        console.log('here');
         rand = Math.floor(Math.random()*sets.length);
         wallSet = sets[rand];
     }
@@ -1189,7 +1214,6 @@
     
     //generate a level
 	function buildLevel(size, gen) {
-        console.log('building level...');
         depth++;
 		map = [ [0,0,0],
                 [0,empty,0],
@@ -1211,7 +1235,6 @@
         seed+=size+'e';
         
         function expandMap(y, x) {
-            console.log('expanding map');
             //expand map if needed
             if (y == 0) {
                 var newRow = [];
@@ -1264,7 +1287,6 @@
                     }
                 }
             }
-            console.log(emptList.length+' expansion points');
 			
             //expand every empty room in list
             for (j=0; j<emptList.length; j++) {
@@ -1292,7 +1314,6 @@
                     matchConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
 
-                console.log('config to match: '+JSON.stringify(matchConfig));
                 //build list of applicable rooms
                 var appList = [];
                 for (k=0; k<rooms.length; k++) {
@@ -1304,7 +1325,6 @@
                     }
                 }
                 
-                console.log(appList.length+' applicable rooms');
                 //pick a room
                 if (gen) {
                     rand = parseInt(gen.charAt(genIndex));
@@ -1319,48 +1339,49 @@
                 //make a floor for the new room here
                 //190,191,192,222,223,224,254,255,256
                 var floorRow = [];
+                var floorRand;
                 for (k=0; k<16; k++) {
                     floorRow = [];
                     for (l=0; l<20; l++) {
                         if (gen) {
-                            rand = parseInt(gen.charAt(genIndex));
+                            floorRand = parseInt(gen.charAt(genIndex));
                             genIndex++;
                         } else {
-                            rand = Math.floor(Math.random()*13);
+                            floorRand = Math.floor(Math.random()*13);
                         }
-                        seed+=rand; 
+                        seed+=floorRand; 
                         
-                        if (rand == 0) {
+                        if (floorRand == 0) {
                             floorRow.push(191);
                         }
-                        if (rand == 1) {
+                        if (floorRand == 1) {
                             floorRow.push(192);
                         }
-                        if (rand == 2) {
+                        if (floorRand == 2) {
                             floorRow.push(222);
                         }
-                        if (rand == 3) {
+                        if (floorRand == 3) {
                             floorRow.push(223);
                         }
-                        if (rand == 4) {
+                        if (floorRand == 4) {
                             floorRow.push(224);
                         }
-                        if (rand == 5) {
+                        if (floorRand == 5) {
                             floorRow.push(254);
                         }
-                        if (rand == 6) {
+                        if (floorRand == 6) {
                             floorRow.push(255);
                         }
-                        if (rand == 7) {
+                        if (floorRand == 7) {
                             floorRow.push(256);
                         }
-                        if (rand > 7) {
+                        if (floorRand > 7) {
                             floorRow.push(190);
                         }
                     }
-                    map[emptList[j].y][emptList[j].x].map[0] = JSON.parse(JSON.stringify(floorRow));
+                    map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
                 }
-                console.log('floor genned');
+                
                 //create new empty's
                 if (appList[rand].config[0].length > 0 && map[emptList[j].y-1][emptList[j].x] == 0) {
                     map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
@@ -1385,7 +1406,6 @@
                 i--;
             }
         }
-        console.log('genning done; Capping');
         //cap off the remaining empties
         //build list of remaining empties
         for (j=0; j<map.length; j++) {
@@ -1395,7 +1415,6 @@
                 }
             }
         }
-        console.log(emptList.length+' rooms to cap');
         
         for (j=0; j<emptList.length; j++) {
             if (map[emptList[j].y][emptList[j].x].type == 'empty') {
@@ -1445,46 +1464,47 @@
                 numRooms++;
                 
                 floorRow = [];
+                var floorRand;
                 for (k=0; k<16; k++) {
                     floorRow = [];
                     for (l=0; l<20; l++) {
                         if (gen) {
-                            rand = parseInt(gen.charAt(genIndex));
+                            floorRand = parseInt(gen.charAt(genIndex));
                             genIndex++;
                         } else {
-                            rand = Math.floor(Math.random()*13);
+                            floorRand = Math.floor(Math.random()*13);
                         }
-                        seed+=rand; 
+                        seed+=floorRand; 
                         
-                        if (rand == 0) {
+                        if (floorRand == 0) {
                             floorRow.push(191);
                         }
-                        if (rand == 1) {
+                        if (floorRand == 1) {
                             floorRow.push(192);
                         }
-                        if (rand == 2) {
+                        if (floorRand == 2) {
                             floorRow.push(222);
                         }
-                        if (rand == 3) {
+                        if (floorRand == 3) {
                             floorRow.push(223);
                         }
-                        if (rand == 4) {
+                        if (floorRand == 4) {
                             floorRow.push(224);
                         }
-                        if (rand == 5) {
+                        if (floorRand == 5) {
                             floorRow.push(254);
                         }
-                        if (rand == 6) {
+                        if (floorRand == 6) {
                             floorRow.push(255);
                         }
-                        if (rand == 7) {
+                        if (floorRand == 7) {
                             floorRow.push(256);
                         }
-                        if (rand > 7) {
+                        if (floorRand > 7) {
                             floorRow.push(190);
                         }
                     }
-                    map[emptList[j].y][emptList[j].x].map[0] = JSON.parse(JSON.stringify(floorRow));
+                    map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
                 }
             }
         }
@@ -1617,8 +1637,8 @@
         //insert the obstacle config
         if (map[mapLoc.y][mapLoc.x].obs != -1) {
 			for (var k=0; k<3; k++) {
-				for (var i=0; i<level[k].length; i++) {
-					for (var j=0; j<level[k][i].length; j++) {
+				for (var i=0; i<level.map[k].length; i++) {
+					for (var j=0; j<level.map[k][i].length; j++) {
 						if (map[mapLoc.y][mapLoc.x].obs[k][i][j] !=0) {
 							map[mapLoc.y][mapLoc.x].map[k][i][j] = map[mapLoc.y][mapLoc.x].obs[k][i][j];
 						}
@@ -1649,7 +1669,7 @@
 				map[mapLoc.y][mapLoc.x].contents[i].loc.y = placeList[rand].y*tileSize;
 			}
             if (map[mapLoc.y][mapLoc.x].contents[i].type == 'key' &&
-                level[1][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.y/tileSize)][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.x/tileSize)] != 0) {
+                level.map[1][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.y/tileSize)][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.x/tileSize)] != 0) {
                 
                 rand = Math.floor(Math.random()*placeList.length);
 				map[mapLoc.y][mapLoc.x].contents[i].loc.x = placeList[rand].x*tileSize;
@@ -1872,28 +1892,28 @@
                 rTransition = 0;
                 roomDrawY = 0-screenHeight+16;
                 mapLoc.y--;
-                buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
+                loadRoom(map[mapLoc.y][mapLoc.x]);
                 minimap.update();
             }
             if (Math.ceil(player.y+8+player.speed) >= screenHeight-16 && mapLoc.y+1 < map.length-1) {
                 rTransition = 2;
                 roomDrawY = screenHeight-16;
                 mapLoc.y++;
-                buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
+                loadRoom(map[mapLoc.y][mapLoc.x]);
                 minimap.update();
             }
             if (Math.floor(player.x-player.speed) <= 1 && mapLoc.x-1 > 0) {
                 rTransition = 1;
                 roomDrawX = 0-screenWidth;
                 mapLoc.x--;
-                buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
+                loadRoom(map[mapLoc.y][mapLoc.x]);
                 minimap.update();
             }
             if (Math.ceil(player.x+8+player.speed) >= screenWidth && mapLoc.x+1 < map[mapLoc.y].length-1) {
                 rTransition = 3;
                 roomDrawX = screenWidth;
                 mapLoc.x++;
-                buildTiled(map[mapLoc.y][mapLoc.x].name+'.tmx');
+                loadRoom(map[mapLoc.y][mapLoc.x]);
                 minimap.update();
             }
 			
@@ -1971,29 +1991,29 @@
             
             //render map
 			//curr room background
-            for (var i=0; i<currLvl[0].length; i++) {
-                for (var j=0; j<currLvl[0][i].length; j++) {
-                    if (currLvl[0][i][j] !=0) {
-						drawSprite(currLvl[0][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+            for (var i=0; i<currLvl.map[0].length; i++) {
+                for (var j=0; j<currLvl.map[0][i].length; j++) {
+                    if (currLvl.map[0][i][j] !=0) {
+						drawSprite(currLvl.map[0][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
             //prev room background
             if (rTransition != -1) {
-                for (var i=0; i<prevLvl[0].length; i++) {
-                    for (var j=0; j<prevLvl[0][i].length; j++) {
-                        if (prevLvl[0][i][j] !=0) {
+                for (var i=0; i<prevLvl.map[0].length; i++) {
+                    for (var j=0; j<prevLvl.map[0][i].length; j++) {
+                        if (prevLvl.map[0][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[0][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[0][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[0][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[0][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[0][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -2001,29 +2021,29 @@
             }
 			
 			//curr room collision
-            for (var i=0; i<currLvl[1].length; i++) {
-                for (var j=0; j<currLvl[1][i].length; j++) {
-                    if (currLvl[1][i][j] !=0) {
-						drawSprite(currLvl[1][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+            for (var i=0; i<currLvl.map[1].length; i++) {
+                for (var j=0; j<currLvl.map[1][i].length; j++) {
+                    if (currLvl.map[1][i][j] !=0) {
+						drawSprite(currLvl.map[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
             //prev room collision
             if (rTransition != -1) {
-                for (var i=0; i<prevLvl[1].length; i++) {
-                    for (var j=0; j<prevLvl[1][i].length; j++) {
-                        if (prevLvl[1][i][j] !=0) {
+                for (var i=0; i<prevLvl.map[1].length; i++) {
+                    for (var j=0; j<prevLvl.map[1][i].length; j++) {
+                        if (prevLvl.map[1][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[1][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[1][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[1][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[1][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[1][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl.map[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -2052,30 +2072,30 @@
             player.draw();
             
             //curr room overlap
-            for (var i=0; i<currLvl[2].length; i++) {
-                for (var j=0; j<currLvl[2][i].length; j++) {
-                    if (currLvl[2][i][j] !=0) {
-						drawSprite(currLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
+            for (var i=0; i<currLvl.map[2].length; i++) {
+                for (var j=0; j<currLvl.map[2][i].length; j++) {
+                    if (currLvl.map[2][i][j] !=0) {
+						drawSprite(currLvl.map[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
 					}
                 }
             }
             
             //prev room overlap
             if (rTransition != -1) {
-                for (var i=0; i<prevLvl[2].length; i++) {
-                    for (var j=0; j<prevLvl[2][i].length; j++) {
-                        if (prevLvl[2][i][j] !=0) {
+                for (var i=0; i<prevLvl.map[2].length; i++) {
+                    for (var j=0; j<prevLvl.map[2][i].length; j++) {
+                        if (prevLvl.map[2][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)), true);
+                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)), true);
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
+                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)), true);
+                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)), true);
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
+                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
                             }
                         }
                     }
