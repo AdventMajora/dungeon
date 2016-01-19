@@ -1211,6 +1211,7 @@
         seed+=size+'e';
         
         function expandMap(y, x) {
+            console.log('expanding map');
             //expand map if needed
             if (y == 0) {
                 var newRow = [];
@@ -1263,6 +1264,7 @@
                     }
                 }
             }
+            console.log(emptList.length+' expansion points');
 			
             //expand every empty room in list
             for (j=0; j<emptList.length; j++) {
@@ -1290,6 +1292,7 @@
                     matchConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
 
+                console.log('config to match: '+JSON.stringify(matchConfig));
                 //build list of applicable rooms
                 var appList = [];
                 for (k=0; k<rooms.length; k++) {
@@ -1300,7 +1303,8 @@
                         appList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
-
+                
+                console.log(appList.length+' applicable rooms');
                 //pick a room
                 if (gen) {
                     rand = parseInt(gen.charAt(genIndex));
@@ -1356,7 +1360,7 @@
                     }
                     map[emptList[j].y][emptList[j].x].map[0] = JSON.parse(JSON.stringify(floorRow));
                 }
-
+                console.log('floor genned');
                 //create new empty's
                 if (appList[rand].config[0].length > 0 && map[emptList[j].y-1][emptList[j].x] == 0) {
                     map[emptList[j].y-1][emptList[j].x] = JSON.parse(JSON.stringify(empty));
@@ -1381,7 +1385,7 @@
                 i--;
             }
         }
-        
+        console.log('genning done; Capping');
         //cap off the remaining empties
         //build list of remaining empties
         for (j=0; j<map.length; j++) {
@@ -1391,6 +1395,7 @@
                 }
             }
         }
+        console.log(emptList.length+' rooms to cap');
         
         for (j=0; j<emptList.length; j++) {
             if (map[emptList[j].y][emptList[j].x].type == 'empty') {
