@@ -909,7 +909,7 @@
 		for (var i=0; i< 16; i++) {
 			row = [];
 			for (var j=0; j<(20*4); j += 4) {
-                console.log(rawData[i*(20*4)+j]+'.'rawData[i*(20*4)+j+1]+'.'rawData[i*(20*4)+j]+'.'+2);
+                console.log(rawData[i*(20*4)+j]+'.'+rawData[i*(20*4)+j+1]+'.'+rawData[i*(20*4)+j]+'.'+2);
                 if (rawData[i*(20*4)+j] == 60 && rawData[i*(20*4)+j+1] == 188 && rawData[i*(20*4)+j+2] == 252) {
                     row.push(30);
                 }
