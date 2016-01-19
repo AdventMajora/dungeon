@@ -910,73 +910,71 @@
 			row = [];
 			for (var j=0; j<(20*4); j += 4) {
                 console.log(i*(20*4)+j);
-				if (rawData[i*(20*4)+j+3] > 0) {
-					if (rawData[i*(20*4)+j] == 60 && rawData[i*(20*4)+j+1] == 188 && rawData[i*(20*4)+j+2] == 252) {
-						row.push(30);
-					}
-					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
-						row.push(31);
-					}
-					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 252) {
-						row.push(32)
-					}
-					if (rawData[i*(20*4)+j] == 104 && rawData[i*(20*4)+j+1] == 136 && rawData[i*(20*4)+j+2] == 252) {
-						row.push(62);
-					}
-					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 88 && rawData[i*(20*4)+j+2] == 248) {
-						row.push(63);
-					}
-					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 188) {
-						row.push(64);
-					}
-					if (rawData[i*(20*4)+j] == 152 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
-						row.push(94);
-					}
-					if (rawData[i*(20*4)+j] == 104 && rawData[i*(20*4)+j+1] == 68 && rawData[i*(20*4)+j+2] == 252) {
-						row.push(95);
-					}
-					if (rawData[i*(20*4)+j] == 68 && rawData[i*(20*4)+j+1] == 40 && rawData[i*(20*4)+j+2] == 188) {
-						row.push(96);
-					}
-					if (rawData[i*(20*4)+j] == 248 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
-						row.push(126);
-					}
-					if (rawData[i*(20*4)+j] == 216 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 204) {
-						row.push(127);
-					}
-					if (rawData[i*(20*4)+j] == 148 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 132) {
-						row.push(128);
-					}
-					if (rawData[i*(20*4)+j] == 248 && rawData[i*(20*4)+j+1] == 88 && rawData[i*(20*4)+j+2] == 152) {
-						row.push(158);
-					}
-					if (rawData[i*(20*4)+j] == 228 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 88) {
-						row.push(159);
-					}
-					if (rawData[i*(20*4)+j] == 168 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 32) {
-						row.push(160);
-					}
-					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 0) {
-						row.push(0);
-                        //mark for door
-                        if (i == 0) {
-                            doorData[0].push(parseInt(j/4));
-                        }
-                        if (i== 15) {
-                            doorData[2].push(parseInt(j/4));
-                        }
-                        if (j==0) {
-                            doorData[1].push(i);
-                        }
-                        if (j==j == (20*4)-4) {
-                            doorData[3].push(i)
-                        }
-                        
-					}
-					if (rawData[i*(20*4)+j] == 255 && rawData[i*(20*4)+j+1] == 255 && rawData[i*(20*4)+j+2] == 255) {
-						row.push(0);
-					}
-				}
+                if (rawData[i*(20*4)+j] == 60 && rawData[i*(20*4)+j+1] == 188 && rawData[i*(20*4)+j+2] == 252) {
+                    row.push(30);
+                }
+                if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
+                    row.push(31);
+                }
+                if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 252) {
+                    row.push(32)
+                }
+                if (rawData[i*(20*4)+j] == 104 && rawData[i*(20*4)+j+1] == 136 && rawData[i*(20*4)+j+2] == 252) {
+                    row.push(62);
+                }
+                if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 88 && rawData[i*(20*4)+j+2] == 248) {
+                    row.push(63);
+                }
+                if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 188) {
+                    row.push(64);
+                }
+                if (rawData[i*(20*4)+j] == 152 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
+                    row.push(94);
+                }
+                if (rawData[i*(20*4)+j] == 104 && rawData[i*(20*4)+j+1] == 68 && rawData[i*(20*4)+j+2] == 252) {
+                    row.push(95);
+                }
+                if (rawData[i*(20*4)+j] == 68 && rawData[i*(20*4)+j+1] == 40 && rawData[i*(20*4)+j+2] == 188) {
+                    row.push(96);
+                }
+                if (rawData[i*(20*4)+j] == 248 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
+                    row.push(126);
+                }
+                if (rawData[i*(20*4)+j] == 216 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 204) {
+                    row.push(127);
+                }
+                if (rawData[i*(20*4)+j] == 148 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 132) {
+                    row.push(128);
+                }
+                if (rawData[i*(20*4)+j] == 248 && rawData[i*(20*4)+j+1] == 88 && rawData[i*(20*4)+j+2] == 152) {
+                    row.push(158);
+                }
+                if (rawData[i*(20*4)+j] == 228 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 88) {
+                    row.push(159);
+                }
+                if (rawData[i*(20*4)+j] == 168 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 32) {
+                    row.push(160);
+                }
+                if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 0) {
+                    row.push(0);
+                    //mark for door
+                    if (i == 0) {
+                        doorData[0].push(parseInt(j/4));
+                    }
+                    if (i== 15) {
+                        doorData[2].push(parseInt(j/4));
+                    }
+                    if (j==0) {
+                        doorData[1].push(i);
+                    }
+                    if (j==j == (20*4)-4) {
+                        doorData[3].push(i)
+                    }
+                    
+                }
+                if (rawData[i*(20*4)+j] == 255 && rawData[i*(20*4)+j+1] == 255 && rawData[i*(20*4)+j+2] == 255) {
+                    row.push(0);
+                }
 			}
 			roomMap.push(row);
 		}
