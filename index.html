@@ -52,11 +52,15 @@
     var img;
     var spriteMap = [];
     var sX,sY,imgData,curimg;
+	
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
     
     var playerSheet = new Image();
     playerSheet.src = 'assets/player_sheet.png';
+	
+	var roomTemplates = new Image();
+	roomTemplates.src = 'assets/RoomTemplates.png';
     
     var currPal;
     var pal_0 = [[241,241,241,255],[178,178,178,255],[108,108,108,255],[26,26,26,255]];
@@ -73,9 +77,6 @@
     var pal_10 = [[241,241,241,255],[184,248,184,255],[88,216,84,255],[26,26,26,255]];
     var pal_11 = [[241,241,241,255],[248,120,248,255],[228,0,88,255],[26,26,26,255]];
     var pal_12 = [[241,241,241,255],[252,124,168,255],[248,124,0,255],[26,26,26,255]];
-    //var pal_g = [[241,241,241,255],[88,216,84,255],[0,88,0,255],[26,26,26,255]];
-    //var pal_r = [[241,241,241,255],[252,160,68,255],[228,92,16,255],[26,26,26,255]];
-    //var pal_b = [[104,136,252,255],[241,241,241,255],[0,64,88,255],[26,26,26,255]];
     
     var pals = [pal_0,pal_1,pal_2,pal_3,pal_4,pal_5,pal_6,pal_7,pal_8,pal_9,pal_10,pal_11,pal_12];
     
@@ -99,7 +100,6 @@
     
     var rendCanvas = document.getElementById("rendCanvas");
 	var rctx = rendCanvas.getContext("2d");
-	//rctx.imageSmoothingEnabled = false;
     
     var map = [[]];
     var mapLoc = {x:0, y:0};
@@ -438,7 +438,39 @@
                                 }
                             }
                         },
-                keys:[],
+                init: 	function() {
+							this.health = 10;
+							this.maxHealth = 10;
+							this.spirit = 10;
+							this.maxSpirit = 10;
+							this.curse = 0;
+							this.moveWhileAttacking = false;
+							
+							this.x = 9*tileSize;
+							this.y = 8*tileSize;
+							this.dir = 2;
+							this.strafe = false;
+							this.moving = false;
+							this.attacking = false;
+							this.speed = 1;
+							this.base_damage = 1;
+							this.base_defense = 1;
+
+							this.healthGen = 0;
+							this.spiritGen = .1;
+							this.curseGen = .0001;
+							this.exp = 0;
+							this.lvl = 0;
+							
+							this.augments = [];
+							this.keys = [];
+							
+							this.anim_index = 0;
+							this.animCounter = -1;
+							
+							this.wepIndex = 0;
+						}, 
+				keys:[],
 				wepIndex: 0,
 				weapons:[]
     };
@@ -763,7 +795,7 @@
                 ,open_16,open_17,open_18,open_19,open_20,open_21,open_22,open_23,open_24,open_25,open_26,open_27,open_28,open_29,open_30,open_31
                 ,open_32,open_33,open_34,open_35,open_36,open_37,open_38,open_39,open_40,open_41,open_42,open_43,open_44,open_45,open_46,open_47
                 ,open_48,open_49,open_50,open_51,open_52,open_53,open_54,open_55,open_56,open_57,open_58,open_59,open_60,open_61,open_62,open_63
-                ,open_64,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0,open_0];
+                ,open_64];
 	
     //input
 	document.addEventListener('keydown', function(event) {
@@ -844,8 +876,8 @@
 	//-
 	//-----------------------------------------------------------------------------
     
-    spriteSheet.onload = function(){
-        lctx.drawImage(spriteSheet,0,0);
+    roomTemplates.onload = function(){
+        lctx.drawImage(roomTemplates,0,0);
         init();
         //start event loop
         //setInterval(mainLoop, Math.floor(1000/60));
@@ -869,40 +901,77 @@
         }
     },250);
     
+	function parseRoomData(x,y) {
+		var rawData = lctx.getImageData(x,y,20,16);
+		var roomMap = [];
+		var 
+		var row = [];
+		for (var i=0; i< 16; i++) {
+			row = [];
+			for (var j=0; j<(20*4); j += 4) {
+				if (rawData[i*(20*4)+j+3] > 0) {
+					if (rawData[i*(20*4)+j] == 60 && rawData[i*(20*4)+j+1] == 188 && rawData[i*(20*4)+j+2] == 252) {
+						row.push(30);
+					}
+					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
+						row.push(31);
+					}
+					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 252) {
+						row.push(32)
+					}
+					if (rawData[i*(20*4)+j] == 104 && rawData[i*(20*4)+j+1] == 136 && rawData[i*(20*4)+j+2] == 252) {
+						row.push(62);
+					}
+					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 88 && rawData[i*(20*4)+j+2] == 248) {
+						row.push(63);
+					}
+					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 188) {
+						row.push(64);
+					}
+					if (rawData[i*(20*4)+j] == 152 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
+						row.push(94);
+					}
+					if (rawData[i*(20*4)+j] == 104 && rawData[i*(20*4)+j+1] == 68 && rawData[i*(20*4)+j+2] == 252) {
+						row.push(95);
+					}
+					if (rawData[i*(20*4)+j] == 68 && rawData[i*(20*4)+j+1] == 40 && rawData[i*(20*4)+j+2] == 188) {
+						row.push(96);
+					}
+					if (rawData[i*(20*4)+j] == 248 && rawData[i*(20*4)+j+1] == 120 && rawData[i*(20*4)+j+2] == 248) {
+						row.push(126);
+					}
+					if (rawData[i*(20*4)+j] == 216 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 204) {
+						row.push(127);
+					}
+					if (rawData[i*(20*4)+j] == 148 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 132) {
+						row.push(128);
+					}
+					if (rawData[i*(20*4)+j] == 248 && rawData[i*(20*4)+j+1] == 88 && rawData[i*(20*4)+j+2] == 152) {
+						row.push(158);
+					}
+					if (rawData[i*(20*4)+j] == 228 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 88) {
+						row.push(159);
+					}
+					if (rawData[i*(20*4)+j] == 168 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 32) {
+						row.push(160);
+					}
+					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 0) {
+						//mark for door
+					}
+					if (rawData[i*(20*4)+j] == 255 && rawData[i*(20*4)+j+1] == 255 && rawData[i*(20*4)+j+2] == 255) {
+						//mark for floor
+					}
+				}
+			}
+			roomMap.push(row);
+		}
+		
+	}
+	
     //kick off EVERYTHING
     function init() {
-        
-        player.health = 10;
-        player.maxHealth = 10;
-        player.spirit = 10;
-        player.maxSpirit = 10;
-        player.curse = 0;
-        player.moveWhileAttacking = false;
-        
-        player.x = 9*tileSize;
-        player.y = 8*tileSize;
-        player.dir = 2;
-        player.strafe = false;
-        player.moving = false;
-        player.attacking = false;
-        player.speed = 1;
-        player.base_damage = 1;
-        player.base_defense = 1;
-
-        player.healthGen = 0;
-        player.spiritGen = .1;
-        player.curseGen = .0001;
-        player.exp = 0;
-        player.lvl = 0;
-        
-        player.augments = [];
-        player.keys = [];
-        
-        player.anim_index = 0;
-        player.animCounter = -1;
-        
-        player.wepIndex = 0;
-        
+		
+		player.init();
         depth = -1;
         difficulty = 1;
         
