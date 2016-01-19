@@ -904,7 +904,7 @@
 	function parseRoomData(x,y) {
 		var rawData = lctx.getImageData(x,y,20,16);
 		var roomMap = [];
-		var 
+		var doorData = [[],[],[],[]];
 		var row = [];
 		for (var i=0; i< 16; i++) {
 			row = [];
@@ -956,15 +956,30 @@
 						row.push(160);
 					}
 					if (rawData[i*(20*4)+j] == 0 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 0) {
-						//mark for door
+						row.push(0);
+                        //mark for door
+                        if (i == 0) {
+                            doorData[0].push(parseInt(j/4));
+                        }
+                        if (i== 15) {
+                            doorData[2].push(parseInt(j/4));
+                        }
+                        if (j==0) {
+                            doorData[1].push(i);
+                        }
+                        if (j==j == (20*4)-4) {
+                            doorData[3].push(i)
+                        }
+                        
 					}
 					if (rawData[i*(20*4)+j] == 255 && rawData[i*(20*4)+j+1] == 255 && rawData[i*(20*4)+j+2] == 255) {
-						//mark for floor
+						row.push(0);
 					}
 				}
 			}
 			roomMap.push(row);
 		}
+        return{roomMap, doorData};
 		
 	}
 	
