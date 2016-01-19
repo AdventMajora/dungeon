@@ -913,6 +913,7 @@
         }
     },250);
     
+    //read in room data from image
 	function parseRoomData(x,y, mini) {
 		var rawData = lctx.getImageData(x,y,20,16).data;
 		var roomMap = [[],[],[]];
@@ -1607,7 +1608,7 @@
         //console.log(JSON.stringify(cards));
         
         //assign obstacle configs
-        for (i=0; i<map.length; i++) {
+        /*for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
                 if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
                     if (gen) {
@@ -1621,7 +1622,7 @@
                     map[i][j].obs = buildConfig('config_'+rand);
                 }
             }
-        }
+        }*/
         
         loadRoom(map[mapLoc.y][mapLoc.x]);
         lvlComplete = false;
@@ -1685,20 +1686,8 @@
     //draw a sprite
 	function drawSprite(sprite,x,y,quick) {
         
-        if (sprite+wallSet == 28 && blink == true) {
-            sprite = 60-wallSet;
-        }
-        if (sprite+wallSet == 92 && blink == true) {
-            sprite = 124-wallSet;
-        }
-        if (sprite+wallSet == 27 && blink == true) {
-            sprite = 59-wallSet;
-        }
-        if (sprite+wallSet == 123 && blink == true) {
-            sprite = 155-wallSet;
-        }
-        if (sprite+wallSet == 224 && blink == true) {
-            sprite = 256-wallSet;
+        if (sprite == 256 && blink == true) {
+            sprite = 288;
         }
         sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		sY = ((sprite-1)%(sheetWidth/8))*8;
@@ -1994,7 +1983,7 @@
             for (var i=0; i<currLvl.map[0].length; i++) {
                 for (var j=0; j<currLvl.map[0][i].length; j++) {
                     if (currLvl.map[0][i][j] !=0) {
-						drawSprite(currLvl.map[0][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+						drawSprite(currLvl.map[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
