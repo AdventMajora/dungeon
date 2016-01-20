@@ -1594,7 +1594,15 @@
     
     //draw a sprite
 	function drawSprite(sprite,x,y) {
-        
+        if (sprite == 286 && blink == true) {
+            sprite = 318;
+        }
+        if (sprite == 287 && blink == true) {
+            sprite = 319;
+        }
+        if (sprite == 288 && blink == true) {
+            sprite = 320;
+        }
         
         sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		sY = ((sprite-1)%(sheetWidth/8))*8;
