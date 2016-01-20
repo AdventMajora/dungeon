@@ -274,8 +274,8 @@
                                 } else {
                                     canMove =  .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl.map[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
-                                            currLvl.map[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
+                                        if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
+                                            currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
                                             this.y-=.25;
                                         } else {
                                             break;
@@ -299,8 +299,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl.map[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
-                                            currLvl.map[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
+                                        if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
+                                            currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
                                             
                                             this.x-=.25;
                                         } else {
@@ -325,8 +325,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl.map[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
-                                            currLvl.map[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
+                                        if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
+                                            currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
                                             
                                             this.y+=.25;
                                         } else {
@@ -351,8 +351,8 @@
                                 } else {
                                     canMove = .25;
                                     while (canMove <= this.speed) {
-                                        if (currLvl.map[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
-                                            currLvl.map[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
+                                        if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
+                                            currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
                                         
                                             this.x+=.25;
                                         } else {
@@ -510,16 +510,16 @@
                                                     map[mapLoc.y][mapLoc.x].contents[i].health = map[mapLoc.y][mapLoc.x].contents[i].health-(player.base_damage+this.damage);
                                                     ctx.fillStyle = 'red';
                                                     ctx.fillRect(map[mapLoc.y][mapLoc.x].contents[i].loc.x, map[mapLoc.y][mapLoc.x].contents[i].loc.y, tileSize, tileSize);
-                                                    if (player.dir == 0 && currLvl.map[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
+                                                    if (player.dir == 0 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
                                                         map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y-this.knockback;
                                                     }
-                                                    if (player.dir == 1 && currLvl.map[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4-this.knockback)/tileSize)] == 0) {
+                                                    if (player.dir == 1 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4-this.knockback)/tileSize)] == 0) {
                                                         map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x-this.knockback;
                                                     }
-                                                    if (player.dir == 2 && currLvl.map[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4+this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
+                                                    if (player.dir == 2 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4+this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
                                                         map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y+this.knockback;
                                                     }
-                                                    if (player.dir == 3 && currLvl.map[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4+this.knockback)/tileSize)] == 0) {
+                                                    if (player.dir == 3 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4+this.knockback)/tileSize)] == 0) {
                                                         map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x+this.knockback;
                                                     }
                                                 }
@@ -592,45 +592,45 @@
                                         
                                         if (rand == 0) {
                                             if (this.loc.y >= 16 
-                                                && currLvl.map[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
-                                                && currLvl.map[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] ==0) {
+                                                && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
+                                                && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] ==0) {
                                                 this.loc.y-=this.speed;
                                             }
                                         }
                                         if (rand == 1) {
                                             if (this.loc.x >= 16 
-                                                && currLvl.map[1][Math.floor((Math.floor(this.loc.y))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0
-                                                && currLvl.map[1][Math.ceil(((Math.ceil(this.loc.y)))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0) {
+                                                && currLvl[1][Math.floor((Math.floor(this.loc.y))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0
+                                                && currLvl[1][Math.ceil(((Math.ceil(this.loc.y)))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0) {
                                                 this.loc.x-=this.speed;
                                             }
                                         }
                                         if (rand == 2) {
                                             if (this.loc.y+8 < screenHeight-32 
-                                                && currLvl.map[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] == 0
-                                                && currLvl.map[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] == 0) {
+                                                && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] == 0
+                                                && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] == 0) {
                                                 this.loc.y+=this.speed;
                                             }
                                         }
                                         if (rand == 3) {
                                             if (this.loc.x+8 < screenWidth-16
-                                                && currLvl.map[1][Math.ceil(Math.ceil(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0
-                                                && currLvl.map[1][Math.floor(Math.floor(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0) {
+                                                && currLvl[1][Math.ceil(Math.ceil(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0
+                                                && currLvl[1][Math.floor(Math.floor(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0) {
                                                 this.loc.x+=this.speed;
                                             }
                                         }
                                         
                                         if (player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
                                             player.health = player.health-(this.damage-player.base_defense/10);
-                                            if (player.dir == 0 && currLvl.map[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                                            if (player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                                                 player.y+=8;
                                             }
-                                            if (player.dir == 1 && currLvl.map[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
+                                            if (player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
                                                 player.x+=8;
                                             }
-                                            if (player.dir == 2 && currLvl.map[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                                            if (player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                                                 player.y-=8;
                                             }
-                                            if (player.dir == 3 && currLvl.map[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
+                                            if (player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
                                                 player.x-=8;
                                             }
                                         }
@@ -1120,99 +1120,6 @@
 		return newmap;
     }
     
-    //load a room from a .tmx file
-	function buildTiled(map_name) {
-        map_name = 'assets/'+map_name;
-        var tiledXML;
-		var tiled;
-		var background,collision,overlap;
-		var newmap = [];
-		var rawFile = new XMLHttpRequest();
-		rawFile.open('GET', map_name, false);
-		rawFile.onreadystatechange = function () {
-			if (rawFile.readyState === 4) {
-				if (rawFile.status === 200 || rawFile.status == 0) {
-					tiledXML = rawFile.responseText;
-				}
-			}
-		}
-		rawFile.send(null);
-		tiledXML = $.parseXML(tiledXML);
-		$tiled = $(tiledXML);
-		$tiled = $tiled.find('data');
-		
-		background = $tiled[0].innerHTML;
-		collision = $tiled[1].innerHTML;
-		overlap = $tiled[2].innerHTML;
-		
-		background = background.split('\n');
-		background.shift();
-		background.pop();
-		for (var i=0; i<background.length; i++) {
-			background[i] = background[i].split(',');
-			if (i!=background.length-1) {
-				background[i].pop();
-			}
-			
-		}
-		for (var i=0; i<background.length; i++) {
-			for (var j=0; j<background[i].length; j++) {
-				background[i][j] = parseInt(background[i][j]);
-			}
-		}
-		newmap.push(background);
-		
-		collision = collision.split('\n');
-		collision.shift();
-		collision.pop();
-		for (var i=0; i<collision.length; i++) {
-			collision[i] = collision[i].split(',');
-			if (i!=collision.length-1) {
-				collision[i].pop();
-			}
-		}
-		for (var i=0; i<collision.length; i++) {
-			for (var j=0; j<collision[i].length; j++) {
-				collision[i][j] = parseInt(collision[i][j]);
-			}
-		}
-		newmap.push(collision);
-		overlap = overlap.split('\n');
-		overlap.shift();
-		overlap.pop();
-		for (var i=0; i<overlap.length; i++) {
-			overlap[i] = overlap[i].split(',');
-			if (i!=overlap.length-1) {
-				overlap[i].pop();
-			}
-		}
-		for (var i=0; i<overlap.length; i++) {
-			for (var j=0; j<overlap[i].length; j++) {
-				overlap[i][j] = parseInt(overlap[i][j]);
-			}
-		}
-		newmap.push(overlap);
-		//console.log(map);
-		loadRoom(newmap);
-	}
-	
-    //debug print the level map
-    function printMap() {
-        var row = '';
-        console.log('Map:');
-        for (var i=0; i<map.length; i++) {
-            row = '';
-            for (var j=0; j<map[i].length; j++) {
-                if (map[i][j] == 0) {
-                    row+=' 0';
-                } else {
-                    row+=' '+map[i][j].name;
-                }
-            }
-            console.log(row);
-        }
-    }
-    
     //generate a level
 	function buildLevel(size, gen) {
         depth++;
@@ -1229,11 +1136,43 @@
         var config;
         var minRooms = 3+size;
         var numRooms = 0;
+        var floorPal = [];
+        var posFloors = [190,191,192,222,223,224,254,255,256];
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
         }
         seed+=size+'e';
+        
+        //190,191,192,222,223,224,254,255,256
+        //make a floor palette
+        for (i=0; i<4; i++) {
+            if (gen) {
+                rand = parseInt(gen.charAt(genIndex));
+                genIndex++;
+            } else {
+                rand = Math.floor(Math.random()*posFloors.length);
+            }
+            seed+=rand;
+            floorPal.push(posFloors[rand]);
+        }
+        if (gen) {
+            rand = parseInt(gen.charAt(genIndex));
+            genIndex++;
+        } else {
+            rand = Math.floor(Math.random()*3);
+        }
+        seed+=rand;
+        if (rand == 0) {
+            floorPal.push(286);
+        }
+        if (rand == 1) {
+            floorPal.push(287);
+        }
+        if (rand == 2) {
+            floorPal.push(288);
+        }
+        shuffle(floorPal);
         
         function expandMap(y, x) {
             //expand map if needed
@@ -1338,7 +1277,7 @@
                 numRooms++;
                 
                 //make a floor for the new room here
-                //190,191,192,222,223,224,254,255,256
+                
                 var floorRow = [];
                 var floorRand;
                 for (k=0; k<16; k++) {
@@ -1348,36 +1287,21 @@
                             floorRand = parseInt(gen.charAt(genIndex));
                             genIndex++;
                         } else {
-                            floorRand = Math.floor(Math.random()*13);
+                            floorRand = Math.floor(Math.random()*8);
                         }
                         seed+=floorRand; 
                         
                         if (floorRand == 0) {
-                            floorRow.push(191);
+                            floorRow.push(floorPal[0]);
                         }
                         if (floorRand == 1) {
-                            floorRow.push(192);
+                            floorRow.push(floorPal[1]);
                         }
                         if (floorRand == 2) {
-                            floorRow.push(222);
+                            floorRow.push(floorPal[2]);
                         }
-                        if (floorRand == 3) {
-                            floorRow.push(223);
-                        }
-                        if (floorRand == 4) {
-                            floorRow.push(224);
-                        }
-                        if (floorRand == 5) {
-                            floorRow.push(254);
-                        }
-                        if (floorRand == 6) {
-                            floorRow.push(255);
-                        }
-                        if (floorRand == 7) {
-                            floorRow.push(256);
-                        }
-                        if (floorRand > 7) {
-                            floorRow.push(190);
+                        if (floorRand > 2) {
+                            floorRow.push(floorPal[3]);
                         }
                     }
                     map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
@@ -1478,31 +1402,16 @@
                         seed+=floorRand; 
                         
                         if (floorRand == 0) {
-                            floorRow.push(191);
+                            floorRow.push(floorPal[0]);
                         }
                         if (floorRand == 1) {
-                            floorRow.push(192);
+                            floorRow.push(floorPal[1]);
                         }
                         if (floorRand == 2) {
-                            floorRow.push(222);
+                            floorRow.push(floorPal[2]);
                         }
-                        if (floorRand == 3) {
-                            floorRow.push(223);
-                        }
-                        if (floorRand == 4) {
-                            floorRow.push(224);
-                        }
-                        if (floorRand == 5) {
-                            floorRow.push(254);
-                        }
-                        if (floorRand == 6) {
-                            floorRow.push(255);
-                        }
-                        if (floorRand == 7) {
-                            floorRow.push(256);
-                        }
-                        if (floorRand > 7) {
-                            floorRow.push(190);
+                        if (floorRand > 2) {
+                            floorRow.push(floorPal[3]);
                         }
                     }
                     map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
@@ -1624,7 +1533,7 @@
             }
         }*/
         
-        loadRoom(map[mapLoc.y][mapLoc.x]);
+        loadRoom(map[mapLoc.y][mapLoc.x].map);
         lvlComplete = false;
 	}
 	
@@ -1638,8 +1547,8 @@
         //insert the obstacle config
         if (map[mapLoc.y][mapLoc.x].obs != -1) {
 			for (var k=0; k<3; k++) {
-				for (var i=0; i<level.map[k].length; i++) {
-					for (var j=0; j<level.map[k][i].length; j++) {
+				for (var i=0; i<level[k].length; i++) {
+					for (var j=0; j<level[k][i].length; j++) {
 						if (map[mapLoc.y][mapLoc.x].obs[k][i][j] !=0) {
 							map[mapLoc.y][mapLoc.x].map[k][i][j] = map[mapLoc.y][mapLoc.x].obs[k][i][j];
 						}
@@ -1670,7 +1579,7 @@
 				map[mapLoc.y][mapLoc.x].contents[i].loc.y = placeList[rand].y*tileSize;
 			}
             if (map[mapLoc.y][mapLoc.x].contents[i].type == 'key' &&
-                level.map[1][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.y/tileSize)][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.x/tileSize)] != 0) {
+                level[1][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.y/tileSize)][Math.floor(map[mapLoc.y][mapLoc.x].contents[i].loc.x/tileSize)] != 0) {
                 
                 rand = Math.floor(Math.random()*placeList.length);
 				map[mapLoc.y][mapLoc.x].contents[i].loc.x = placeList[rand].x*tileSize;
@@ -1684,11 +1593,9 @@
     }
     
     //draw a sprite
-	function drawSprite(sprite,x,y,quick) {
+	function drawSprite(sprite,x,y) {
         
-        if (sprite == 256 && blink == true) {
-            sprite = 288;
-        }
+        
         sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
 		sY = ((sprite-1)%(sheetWidth/8))*8;
             
@@ -1881,28 +1788,28 @@
                 rTransition = 0;
                 roomDrawY = 0-screenHeight+16;
                 mapLoc.y--;
-                loadRoom(map[mapLoc.y][mapLoc.x]);
+                loadRoom(map[mapLoc.y][mapLoc.x].map);
                 minimap.update();
             }
             if (Math.ceil(player.y+8+player.speed) >= screenHeight-16 && mapLoc.y+1 < map.length-1) {
                 rTransition = 2;
                 roomDrawY = screenHeight-16;
                 mapLoc.y++;
-                loadRoom(map[mapLoc.y][mapLoc.x]);
+                loadRoom(map[mapLoc.y][mapLoc.x].map);
                 minimap.update();
             }
             if (Math.floor(player.x-player.speed) <= 1 && mapLoc.x-1 > 0) {
                 rTransition = 1;
                 roomDrawX = 0-screenWidth;
                 mapLoc.x--;
-                loadRoom(map[mapLoc.y][mapLoc.x]);
+                loadRoom(map[mapLoc.y][mapLoc.x].map);
                 minimap.update();
             }
             if (Math.ceil(player.x+8+player.speed) >= screenWidth && mapLoc.x+1 < map[mapLoc.y].length-1) {
                 rTransition = 3;
                 roomDrawX = screenWidth;
                 mapLoc.x++;
-                loadRoom(map[mapLoc.y][mapLoc.x]);
+                loadRoom(map[mapLoc.y][mapLoc.x].map);
                 minimap.update();
             }
 			
@@ -1980,29 +1887,29 @@
             
             //render map
 			//curr room background
-            for (var i=0; i<currLvl.map[0].length; i++) {
-                for (var j=0; j<currLvl.map[0][i].length; j++) {
-                    if (currLvl.map[0][i][j] !=0) {
-						drawSprite(currLvl.map[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+            for (var i=0; i<currLvl[0].length; i++) {
+                for (var j=0; j<currLvl[0][i].length; j++) {
+                    if (currLvl[0][i][j] !=0) {
+						drawSprite(currLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
             //prev room background
             if (rTransition != -1) {
-                for (var i=0; i<prevLvl.map[0].length; i++) {
-                    for (var j=0; j<prevLvl.map[0][i].length; j++) {
-                        if (prevLvl.map[0][i][j] !=0) {
+                for (var i=0; i<prevLvl[0].length; i++) {
+                    for (var j=0; j<prevLvl[0][i].length; j++) {
+                        if (prevLvl[0][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl.map[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl.map[0][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl.map[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl.map[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -2010,29 +1917,29 @@
             }
 			
 			//curr room collision
-            for (var i=0; i<currLvl.map[1].length; i++) {
-                for (var j=0; j<currLvl.map[1][i].length; j++) {
-                    if (currLvl.map[1][i][j] !=0) {
-						drawSprite(currLvl.map[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+            for (var i=0; i<currLvl[1].length; i++) {
+                for (var j=0; j<currLvl[1][i].length; j++) {
+                    if (currLvl[1][i][j] !=0) {
+						drawSprite(currLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
             //prev room collision
             if (rTransition != -1) {
-                for (var i=0; i<prevLvl.map[1].length; i++) {
-                    for (var j=0; j<prevLvl.map[1][i].length; j++) {
-                        if (prevLvl.map[1][i][j] !=0) {
+                for (var i=0; i<prevLvl[1].length; i++) {
+                    for (var j=0; j<prevLvl[1][i].length; j++) {
+                        if (prevLvl[1][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl.map[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl.map[1][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl.map[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl.map[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -2061,30 +1968,30 @@
             player.draw();
             
             //curr room overlap
-            for (var i=0; i<currLvl.map[2].length; i++) {
-                for (var j=0; j<currLvl.map[2][i].length; j++) {
-                    if (currLvl.map[2][i][j] !=0) {
-						drawSprite(currLvl.map[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
+            for (var i=0; i<currLvl[2].length; i++) {
+                for (var j=0; j<currLvl[2][i].length; j++) {
+                    if (currLvl[2][i][j] !=0) {
+						drawSprite(currLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
                 }
             }
             
             //prev room overlap
             if (rTransition != -1) {
-                for (var i=0; i<prevLvl.map[2].length; i++) {
-                    for (var j=0; j<prevLvl.map[2][i].length; j++) {
-                        if (prevLvl.map[2][i][j] !=0) {
+                for (var i=0; i<prevLvl[2].length; i++) {
+                    for (var j=0; j<prevLvl[2][i].length; j++) {
+                        if (prevLvl[2][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)), true);
+                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
+                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)), true);
+                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl.map[2][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)), true);
+                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
@@ -2151,5 +2058,22 @@
         
         window.requestAnimationFrame(mainLoop);
 	}
+    
+    //Fisher-Yates shuffle
+    function shuffle(array) {
+        var m = array.length, t, i;
+
+        // While there remain elements to shuffle…
+        while (m) {
+
+            // Pick a remaining element…
+            i = Math.floor(Math.random() * m--);
+
+            // And swap it with the current element.
+            t = array[m];
+            array[m] = array[i];
+            array[i] = t;
+        }
+    }
 </script>
 </html>
