@@ -683,6 +683,20 @@
                                     }
                                 }
         };
+        var con_drop = {type: 'drop', sprite: [583], lov: {x:-1,y:-1}, collected: false,
+                        action: function() {
+                            if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
+                                player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
+                                this.collected == false) {
+                                player.health = player.health+4;
+                                this.collected = true;
+                            }
+                        },
+                        draw: function() {
+                            drawSprite(this.sprite[0], this.loc.x, this.loc.y);
+                        }
+                
+        };
         var con_goal = {type: 'goal', sprite: [581], loc: {x: 9.5*tileSize, y: 8*tileSize},
                         action:	function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 
@@ -907,6 +921,8 @@
 		var roomMap = [[],[],[]];
 		var doorData = [[],[],[],[]];
 		var row = [];
+        var randBot = [159,157,93];
+        var randMid = [127,125,61];
 		for (var i=0; i< 16; i++) {
 			row = [];
 			for (var j=0; j<(20*4); j += 4) {
@@ -941,7 +957,9 @@
                     row.push(126);
                 }
                 if (rawData[i*(20*4)+j] == 216 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 204) {
-                    row.push(127);
+                    //pick random
+                    var rand = Math.floor(Math.random()*randBot.length);
+                    row.push(randMid[rand]);
                 }
                 if (rawData[i*(20*4)+j] == 148 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 132) {
                     row.push(128);
@@ -950,7 +968,9 @@
                     row.push(158);
                 }
                 if (rawData[i*(20*4)+j] == 228 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 88) {
-                    row.push(159);
+                    //pick random
+                    var rand = Math.floor(Math.random()*randMid.length);
+                    row.push(randBot[rand]);
                 }
                 if (rawData[i*(20*4)+j] == 168 && rawData[i*(20*4)+j+1] == 0 && rawData[i*(20*4)+j+2] == 32) {
                     row.push(160);
@@ -2074,16 +2094,16 @@
                     for (var j=0; j<prevLvl[2][i].length; j++) {
                         if (prevLvl[2][i][j] !=0) {
                             if (rTransition == 0) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
                             if (rTransition == 1) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                             if (rTransition == 2) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
                             }
                             if (rTransition == 3) {
-                                drawSprite(prevLvl[2][i][j]-wallSet,roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                                drawSprite(prevLvl[2][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
                     }
