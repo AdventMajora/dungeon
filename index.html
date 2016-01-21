@@ -1197,8 +1197,8 @@
         var config;
         var minRooms = 3+size;
         var numRooms = 0;
-        var floorPal = [];
-        var posFloors = [190,191,192,222,223,224,254,255,256];
+        var floorPal = [190];
+        var posFloors = [191,192,222,223,224,254,255,256];
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
@@ -1207,7 +1207,7 @@
         
         //190,191,192,222,223,224,254,255,256
         //make a floor palette
-        for (i=0; i<4; i++) {
+        for (i=0; i<2; i++) {
             if (gen) {
                 rand = parseInt(gen.charAt(genIndex));
                 genIndex++;
@@ -1216,6 +1216,7 @@
             }
             seed+=rand;
             floorPal.push(posFloors[rand]);
+            posFloors.splice(rand, 1);
         }
         if (gen) {
             rand = parseInt(gen.charAt(genIndex));
@@ -1233,7 +1234,7 @@
         if (rand == 2) {
             floorPal.push(288);
         }
-        shuffle(floorPal);
+        //shuffle(floorPal);
         
         function expandMap(y, x) {
             //expand map if needed
@@ -1349,21 +1350,21 @@
                             floorRand = parseInt(gen.charAt(genIndex));
                             genIndex++;
                         } else {
-                            floorRand = Math.floor(Math.random()*6);
+                            floorRand = Math.floor(Math.random()*8);
                         }
                         seed+=floorRand; 
                         
                         if (floorRand == 0) {
-                            floorRow.push(floorPal[0]);
+                            floorRow.push(floorPal[3]);
                         }
-                        if (floorRand == 1) {
+                        if (floorRand == 1 || floorRand == 2) {
                             floorRow.push(floorPal[1]);
                         }
-                        if (floorRand == 2) {
+                        if (floorRand == 3 || floorRand == 4) {
                             floorRow.push(floorPal[2]);
                         }
-                        if (floorRand > 2) {
-                            floorRow.push(floorPal[3]);
+                        if (floorRand > 4) {
+                            floorRow.push(floorPal[0]);
                         }
                     }
                     map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
@@ -1460,21 +1461,21 @@
                             floorRand = parseInt(gen.charAt(genIndex));
                             genIndex++;
                         } else {
-                            floorRand = Math.floor(Math.random()*6);
+                            floorRand = Math.floor(Math.random()*8);
                         }
                         seed+=floorRand; 
                         
                         if (floorRand == 0) {
-                            floorRow.push(floorPal[0]);
+                            floorRow.push(floorPal[3]);
                         }
-                        if (floorRand == 1) {
+                        if (floorRand == 1 || floorRand == 2) {
                             floorRow.push(floorPal[1]);
                         }
-                        if (floorRand == 2) {
+                        if (floorRand == 3 || floorRand == 4) {
                             floorRow.push(floorPal[2]);
                         }
-                        if (floorRand > 2) {
-                            floorRow.push(floorPal[3]);
+                        if (floorRand > 4) {
+                            floorRow.push(floorPal[0]);
                         }
                     }
                     map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
