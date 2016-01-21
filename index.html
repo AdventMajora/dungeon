@@ -52,6 +52,8 @@
     var img;
     var spriteMap = [];
     var sX,sY,imgData,curimg;
+    var remKeys = 0;
+    var remMobs = 0;
 	
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -565,6 +567,7 @@
                                     if (this.health <= 0 && this.alive == true) {
                                         player.exp = player.exp+this.exp_reward;
                                         player.curse = player.curse + this.cursePenalty;
+                                        remMobs--;
                                         this.alive = false;
                                     }
                                     if (this.alive == true) {
@@ -670,6 +673,7 @@
                                         player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                         this.collected == false) {
                                         player.keys.push(this);
+                                        remKeys--;
                                         this.collected = true;
                                     }
                                 },
@@ -682,7 +686,7 @@
         var con_goal = {type: 'goal', sprite: [581], loc: {x: 9.5*tileSize, y: 8*tileSize},
                         action:	function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 
-                                && (player.keys.length >= this.diff)) {
+                                && (player.keys.length >= this.diff || remMobs == 0)) {
                                 lvlComplete = true;
 								var rand = Math.floor(Math.random()*pals.length); 
 								palSwap(pals[rand]);
@@ -985,9 +989,9 @@
         return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:-1};
 	}
 	
-    //kick off EVERYTHING
-    function init() {
-    
+    //buld room templates
+    function initRooms() {
+        
         //read in room data
         base_0 = parseRoomData(0,16,925);
         base_1 = parseRoomData(20,16,926);
@@ -1085,6 +1089,12 @@
                 ,open_32,open_33,open_34,open_35,open_36,open_37,open_38,open_39,open_40,open_41,open_42,open_43,open_44,open_45,open_46,open_47
                 ,open_48,open_49,open_50,open_51,open_52,open_53,open_54,open_55,open_56,open_57,open_58,open_59,open_60,open_61,open_62,open_63
                 ,open_64];
+    }
+    
+    //kick off EVERYTHING
+    function init() {
+    
+        initRooms();
         
 		player.init();
         depth = -1;
@@ -1510,6 +1520,7 @@
 		rList.splice(rand, 1);
         
 		//put in keys
+        remKeys = numKeys;
 		for (i=0; i<numKeys; i++) {
 			if (gen) {
 				rand = gen.charAt(genIndex);
@@ -1542,6 +1553,7 @@
 						}
 						seed+=rand;
 						map[i][j].contents.push($.extend(true, {}, mobs[rand]));
+                        remMobs++;
 					}
 				}
 			}
@@ -1810,8 +1822,16 @@
         //ctx.fillText((player.x).toFixed(2)+','+(player.y).toFixed(2)+'; ', screenWidth-80, screenHeight-9);
         //ctx.fillText('p:'+points, 0, screenHeight-2);
         ctx.fillText(fps,screenWidth-15,screenHeight-9);
-        drawSprite(550, screenWidth-80,screenHeight-9);
+        
+        if (remKeys == 0) {
+                drawSprite(549, screenWidth-80,screenHeight-8);
+        } else {
+            drawSprite(550, screenWidth-80,screenHeight-8);
+        }
         ctx.fillText(':'+player.keys.length,screenWidth-72,screenHeight-2);
+        
+        drawSprite(551, screenWidth-80,screenHeight-15);
+        ctx.fillText(':'+remMobs,screenWidth-72,screenHeight-10);
         
         ctx.fillText('XP[',screenWidth-50,screenHeight-2);
         for (var i=0; i<10; i++) {
