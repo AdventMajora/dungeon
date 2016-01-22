@@ -568,6 +568,9 @@
                                         player.exp = player.exp+this.exp_reward;
                                         player.curse = player.curse + this.cursePenalty;
                                         remMobs--;
+                                        map[mapLoc.y][mapLoc.x].contents.push($.extend(true, {}, con_drop));
+                                        map[mapLoc.y][mapLoc.x].contents[map[mapLoc.y][mapLoc.x].contents.length-1].loc.x = this.loc.x;
+                                        map[mapLoc.y][mapLoc.x].contents[map[mapLoc.y][mapLoc.x].contents.length-1].loc.y = this.loc.y;
                                         this.alive = false;
                                     }
                                     if (this.alive == true) {
@@ -683,7 +686,7 @@
                                     }
                                 }
         };
-        var con_drop = {type: 'drop', sprite: [583], lov: {x:-1,y:-1}, collected: false,
+        var con_drop = {type: 'drop', sprite: [583], loc: {x:-1,y:-1}, collected: false,
                         action: function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
                                 player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
@@ -693,7 +696,9 @@
                             }
                         },
                         draw: function() {
-                            drawSprite(this.sprite[0], this.loc.x, this.loc.y);
+                            if (this.collected == false) {
+                                drawSprite(this.sprite[0], this.loc.x, this.loc.y);
+                            }
                         }
                 
         };
@@ -1005,7 +1010,6 @@
             }
             roomMap[2].push(row);
         }
-        console.log(x+','+y+'; '+JSON.stringify(doorData));
         return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:-1};
 	}
 	
@@ -1206,8 +1210,6 @@
 			}
 		}
 		newmap.push(overlap);
-        console.log(config_name);
-        console.log(newmap);
 		return newmap;
     }
     
@@ -1244,7 +1246,7 @@
             } else {
                 rand = Math.floor(Math.random()*posFloors.length);
             }
-            seed+=rand;
+            seed+=rand+'f';
             floorPal.push(posFloors[rand]);
             posFloors.splice(rand, 1);
         }
@@ -1254,7 +1256,7 @@
         } else {
             rand = Math.floor(Math.random()*3);
         }
-        seed+=rand;
+        seed+=rand+'f';
         if (rand == 0) {
             floorPal.push(286);
         }
@@ -1346,7 +1348,6 @@
                     matchConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
 
-                console.log('To match: '+JSON.stringify(matchConfig));
                 //build list of applicable rooms
                 var appList = [];
                 for (k=0; k<rooms.length; k++) {
@@ -1365,7 +1366,7 @@
                 } else {
                     rand = Math.floor(Math.random()*appList.length);
                 }
-                seed+=rand;
+                seed+=rand+'d';
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
                 numRooms++;
                 
@@ -1382,7 +1383,7 @@
                         } else {
                             floorRand = Math.floor(Math.random()*8);
                         }
-                        seed+=floorRand; 
+                        seed+=floorRand+'f'; 
                         
                         if (floorRand == 0) {
                             floorRow.push(floorPal[3]);
@@ -1459,7 +1460,6 @@
                     capConfig.push(map[emptList[j].y][emptList[j].x+1].config[1]);
                 }
                 
-                console.log('To match: '+JSON.stringify(capConfig));
                 //build list of applicable rooms
                 var capList = [];
                 for (k=0; k<rooms.length; k++) {
@@ -1470,7 +1470,6 @@
                         capList.push(JSON.parse(JSON.stringify(rooms[k])));
                     }
                 }
-                console.log(capList.length+' applicable rooms');
                 //pick a room
                 if (gen) {
                     rand = parseInt(gen.charAt(genIndex));
@@ -1478,7 +1477,7 @@
                 } else {
                     rand = Math.floor(Math.random()*capList.length);
                 }
-                seed+=rand;
+                seed+=rand+'d';
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
                 numRooms++;
                 
@@ -1493,7 +1492,7 @@
                         } else {
                             floorRand = Math.floor(Math.random()*8);
                         }
-                        seed+=floorRand; 
+                        seed+=floorRand+'f'; 
                         
                         if (floorRand == 0) {
                             floorRow.push(floorPal[3]);
@@ -1529,7 +1528,7 @@
         } else {
             rand = Math.floor(Math.random()*rList.length);
         }
-        seed+=rand;
+        seed+=rand+'g';
 
         map[rList[rand].y][rList[rand].x].contents.push($.extend({}, con_goal));
         map[rList[rand].y][rList[rand].x].obs = buildConfig('config_goal');
@@ -1548,7 +1547,7 @@
 			} else {
 				rand = Math.floor(Math.random()*rList.length);
 			}
-			seed+=rand;
+			seed+=rand+'k';
 			map[rList[rand].y][rList[rand].x].contents.push($.extend(true, {}, con_key));
 			rList.splice(rand,1);
 			
@@ -1563,7 +1562,7 @@
 					} else {
 						rand = Math.floor(Math.random()*2);
 					}
-					seed+=rand;
+					seed+=rand+'m';
 					if (rand == 0) {
 						if (gen) {
 							rand = gen.charAt(genIndex);
@@ -1571,7 +1570,7 @@
 						} else {
 							rand = Math.floor(Math.random()*mobs.length);
 						}
-						seed+=rand;
+						seed+=rand+'m';
 						map[i][j].contents.push($.extend(true, {}, mobs[rand]));
                         remMobs++;
 					}
@@ -1589,7 +1588,7 @@
                         } else {
                             rand = Math.floor(Math.random()*2);
                         }
-                        seed+=rand;
+                        seed+=rand+'p';
                         if (rand == 0) {
                             if (gen) {
                                 rand = gen.charAt(genIndex);
@@ -1597,7 +1596,7 @@
                             } else {
                                 rand = Math.floor(Math.random()*augments.length);
                             }
-                            seed+=rand;
+                            seed+=rand+'p';
                             map[i][j].contents.push($.extend(true, {}, con_aug));
                             map[i][j].obs = buildConfig('config_item');
                             map[i][j].contents[map[i][j].contents.length-1].aug = rand;
@@ -1615,6 +1614,9 @@
         //assign obstacle configs
         for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
+                if (i == mapLoc.y && j == mapLoc.x) {
+                    map[i][j].obs = buildConfig('config_start');
+                }
                 if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
                     if (gen) {
                         rand = gen.charAt(genIndex);
@@ -1622,7 +1624,7 @@
                     } else {
                         rand = Math.floor(Math.random()*17);
                     }
-                    seed+=rand;
+                    seed+=rand+'c';
                     
                     map[i][j].obs = buildConfig('config_'+rand);
                 }
@@ -1698,6 +1700,22 @@
         }
         if (sprite == 288 && blink == true) {
             sprite = 320;
+        }
+        if (sprite == 352 && blink == false) {
+            sprite = 384;
+        }
+        if (sprite == 438 && blink == false) {
+            sprite = 470;
+        }
+        if (sprite == 468 && blink == false && 
+            (player.x+4 > x && player.x+4 <= x+8) && 
+            (player.y+8 > y && player.y+8 <= y+8)){
+            sprite = 434;
+        }
+        if (sprite == 468 && blink == true && 
+            (player.x+4 > x && player.x+4 <= x+8) && 
+            (player.y+8 > y && player.y+8 <= y+8)){
+            sprite = 466;
         }
         
         sX = Math.floor((sprite-1)/(sheetWidth/8))*8;
