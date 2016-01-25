@@ -127,6 +127,9 @@
                 strafe: false,
                 moving: false,
                 attacking: false,
+                invincible: false,
+                invincCounter: 0,
+                invincLimit:60,
                 moveWhileAttacking: false,
                 speed: 1,//60/fps,
                 speedLimit: 4,
@@ -163,6 +166,15 @@
                 anim_index:0,
                 animCounter:-1,
                 update: function (){
+                            
+                            if (this.invincible == true) {
+                                this.invincCounter++;
+                            }
+                            
+                            if (this.invincCounter > this.invincLimit) {
+                                this.invincible = false;
+                                this.invincCounter = 0;
+                            }
                             
                             if (this.speed > 4) {
                                 this.speed = 4;
@@ -386,106 +398,110 @@
                                     this.anim_index++;
                                 }
                             }
-                            if (player.dir == 0) {
-                                if (this.moving == true && paused == false) {
-                                    if (player.anim_index >= player.animations.wU_anim.length) {
-										player.anim_index = 0;
-									}
-                                    ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                    ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    /*for (var i=0; i<this.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.wU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
-                                    }*/
-                                } else if (this.attacking == true && paused == false){
-                                    if (player.anim_index >= player.animations.aU_anim.length) {
-                                        player.anim_index = 0;
+                            if (this.invincCounter%2 == 0) {
+                            
+                                if (player.dir == 0) {
+                                    if (this.moving == true && paused == false) {
+                                        if (player.anim_index >= player.animations.wU_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        /*for (var i=0; i<this.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.wU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
+                                        }*/
+                                    } else if (this.attacking == true && paused == false){
+                                        if (player.anim_index >= player.animations.aU_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, player.animations.aU_anim[player.anim_index].x,player.animations.aU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        
+                                    } else {
+                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                        ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,48,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
                                     }
-                                    ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                    ctx.drawImage(playerSheet, player.animations.aU_anim[player.anim_index].x,player.animations.aU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                     
-                                } else {
-                                    ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                    ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,48,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
+                                }
+                                if (player.dir == 1) {
+                                    if (this.moving == true && paused == false) {
+                                        if (player.anim_index >= player.animations.wL_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        
+                                        ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wL_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
+                                    } else if (this.attacking == true && paused == false){
+                                        if (player.anim_index >= player.animations.aD_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        ctx.drawImage(playerSheet, player.animations.aL_anim[player.anim_index].x,player.animations.aL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    } else {
+                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                        ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,32,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
+                                    }
+                                    
+                                }
+                                if (player.dir == 2) {
+                                    if (this.moving == true && paused == false) {
+                                        if (player.anim_index >= player.animations.wD_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wD_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
+                                    } else if (this.attacking == true && paused == false){
+                                        if (player.anim_index >= player.animations.aD_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        ctx.drawImage(playerSheet, player.animations.aD_anim[player.anim_index].x,player.animations.aD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    } else {
+                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                        ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,0,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
+                                    }
+                                }
+                                if (player.dir == 3) {
+                                    if (this.moving == true && paused == false) {   
+                                        if (player.anim_index >= player.animations.wR_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        
+                                        ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wR_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
+                                    } else if (this.attacking == true && paused == false){
+                                        if (player.anim_index >= player.animations.aR_anim.length) {
+                                            player.anim_index = 0;
+                                        }
+                                        ctx.drawImage(playerSheet, player.animations.aR_anim[player.anim_index].x,player.animations.aR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    } else {
+                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                        ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        /*for (var i=0; i<player.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,16,16,16,player.x-4, player.y-8,16,16);
+                                        }*/
+                                    }
                                 }
                                 
-                            }
-                            if (player.dir == 1) {
-                                if (this.moving == true && paused == false) {
-									if (player.anim_index >= player.animations.wL_anim.length) {
-										player.anim_index = 0;
-									}
-                                    
-                                    ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wL_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
-                                } else if (this.attacking == true && paused == false){
-                                    if (player.anim_index >= player.animations.aD_anim.length) {
-                                        player.anim_index = 0;
-                                    }
-                                    ctx.drawImage(playerSheet, player.animations.aL_anim[player.anim_index].x,player.animations.aL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                } else {
-                                    ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                    ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,32,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
-                                }
-                                
-                            }
-                            if (player.dir == 2) {
-                                if (this.moving == true && paused == false) {
-                                    if (player.anim_index >= player.animations.wD_anim.length) {
-                                        player.anim_index = 0;
-                                    }
-                                    ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wD_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
-                                } else if (this.attacking == true && paused == false){
-                                    if (player.anim_index >= player.animations.aD_anim.length) {
-                                        player.anim_index = 0;
-                                    }
-                                    ctx.drawImage(playerSheet, player.animations.aD_anim[player.anim_index].x,player.animations.aD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                } else {
-                                    ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                    ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,0,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
-                                }
-                            }
-                            if (player.dir == 3) {
-                                if (this.moving == true && paused == false) {   
-                                    if (player.anim_index >= player.animations.wR_anim.length) {
-                                        player.anim_index = 0;
-                                    }
-                                    
-                                    ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wR_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
-                                } else if (this.attacking == true && paused == false){
-                                    if (player.anim_index >= player.animations.aR_anim.length) {
-                                        player.anim_index = 0;
-                                    }
-                                    ctx.drawImage(playerSheet, player.animations.aR_anim[player.anim_index].x,player.animations.aR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                } else {
-                                    ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                    ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                    /*for (var i=0; i<player.augments.length; i++) {
-                                        ctx.drawImage(playerSheet, player.augments[i].drawCol,16,16,16,player.x-4, player.y-8,16,16);
-                                    }*/
-                                }
                             }
                         },
                 init: 	function() {
@@ -609,7 +625,7 @@
     
     {//room items
         var con_mob = {type: 'mob', sprite: [705], loc: {x: -1, y:-1}, speed: 1, health: 10, alive: true, exp_reward: 1,
-                        damage: .5,
+                        damage: 1,
                         cursePenalty: 1,
                         action:	function() {
                                     if (this.health <= 0 && this.alive == true) {
@@ -673,20 +689,23 @@
                                             }
                                         }
                                         
-                                        if (player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
+                                        if (player.invincible == false && player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
                                             player.health = player.health-(this.damage-player.base_defense/10);
-                                            if (player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                                            
+                                            if (player.invincible == false && player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                                                 player.y+=8;
                                             }
-                                            if (player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
+                                            if (player.invincible == false && player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
                                                 player.x+=8;
                                             }
-                                            if (player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                                            if (player.invincible == false && player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                                                 player.y-=8;
                                             }
-                                            if (player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
+                                            if (player.invincible == false && player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
                                                 player.x-=8;
                                             }
+                                            player.invincible = true;
+                                            player.invincCounter = 0;
                                         }
                             }
                             
@@ -1571,20 +1590,12 @@
                 }
             }
         }
-        //console.log(rList);
-        if (gen) {
-            rand = gen.charAt(genIndex);
-            genIndex++;
-        } else {
-            rand = Math.floor(Math.random()*rList.length);
-        }
-        seed+=rand+'_';
 
-        map[rList[rand].y][rList[rand].x].contents.push($.extend({}, con_goal));
-        map[rList[rand].y][rList[rand].x].obs = buildConfig('config_goal');
-		map[rList[rand].y][rList[rand].x].contents[0].diff = Math.ceil((rList.length-1)/2);
-		goalTile.x = rList[rand].x;
-		goalTile.y = rList[rand].y;
+        map[mapLoc.y][mapLoc.x].contents.push($.extend({}, con_goal));
+        map[mapLoc.y][mapLoc.x].obs = buildConfig('config_goal');
+		map[mapLoc.y][mapLoc.x].contents[0].diff = Math.ceil((rList.length-1)/2);
+		goalTile.x = parseInt(mapLoc.x);
+		goalTile.y = parseInt(mapLoc.y);
 		var numKeys = Math.ceil((rList.length-1)/2);
 		rList.splice(rand, 1);
         
@@ -1664,9 +1675,6 @@
         //assign obstacle configs
         for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
-                if (i == mapLoc.y && j == mapLoc.x) {
-                    map[i][j].obs = buildConfig('config_start');
-                }
                 if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
                     if (gen) {
                         rand = gen.charAt(genIndex);
