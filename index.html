@@ -149,10 +149,16 @@
                 newLvl:10,
                 augments:[],
 				maxAugs: 5,
-                animations:{wU_anim:[{x:0,y:112},{x:0,y:176}],
-                            wD_anim:[{x:0,y:64},{x:0,y:128}],
-                            wL_anim:[{x:0,y:96},{x:0,y:160}],
-                            wR_anim:[{x:0,y:80},{x:0,y:144}]
+                headSet: 0,
+                bodySet: 0,
+                animations:{wU_anim:[{x:48,y:24},{x:32,y:24},{x:64,y:24},{x:32,y:24}],
+                            wD_anim:[{x:48,y:0},{x:32,y:0},{x:64,y:0},{x:32,y:0}],
+                            wL_anim:[{x:48,y:16},{x:32,y:16},{x:64,y:16},{x:32,y:16}],
+                            wR_anim:[{x:48,y:8},{x:32,y:8},{x:64,y:8},{x:32,y:8}],
+                            aU_anim:[{x:80,y:24},{x:96,y:24},{x:112,y:24}],
+                            aD_anim:[{x:80,y:0},{x:96,y:0},{x:112,y:0}],
+                            aL_anim:[{x:80,y:16},{x:96,y:16},{x:112,y:16}],
+                            aR_anim:[{x:80,y:8},{x:96,y:8},{x:112,y:8}]
                             },
                 anim_index:0,
                 animCounter:-1,
@@ -200,7 +206,6 @@
                                 }
                             } else {
                                 this.moving = false;
-                                this.animCounter = -1;
                             }
                             
                             //check if/where the player should be facing
@@ -216,6 +221,10 @@
                                     this.moving  = false;
                                 }
                                 this.weapons[this.wepIndex].action();
+                                if (this.animCounter == -1) {
+                                    this.animCounter = 0;
+                                    this.anim_index = 0;
+                                }
                             } else {
                                 this.spirit = this.spirit+this.spiritGen;
                             }
@@ -225,6 +234,10 @@
                             
                             if (this.spirit > this.maxSpirit) {
                                 this.spirit = this.maxSpirit;
+                            }
+                            
+                            if (this.moving == false && this.attacking == false) {
+                                this.animCounter = -1;
                             }
                             
                             for (var i=0; i<pressedKeys.length; i++) {
@@ -378,15 +391,24 @@
                                     if (player.anim_index >= player.animations.wU_anim.length) {
 										player.anim_index = 0;
 									}
-                                    ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<this.augments.length; i++) {
+                                    ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    /*for (var i=0; i<this.augments.length; i++) {
                                         ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.wU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
+                                    }*/
+                                } else if (this.attacking == true && paused == false){
+                                    if (player.anim_index >= player.animations.aU_anim.length) {
+                                        player.anim_index = 0;
                                     }
+                                    ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    ctx.drawImage(playerSheet, player.animations.aU_anim[player.anim_index].x,player.animations.aU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    
                                 } else {
-                                    ctx.drawImage(playerSheet, 0,48,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                    ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,48,16,16,player.x-4, player.y-8,16,16);
-                                    }
+                                    }*/
                                 }
                                 
                             }
@@ -395,15 +417,24 @@
 									if (player.anim_index >= player.animations.wL_anim.length) {
 										player.anim_index = 0;
 									}
-                                    ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    
+                                    ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wL_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                    }*/
+                                } else if (this.attacking == true && paused == false){
+                                    if (player.anim_index >= player.animations.aD_anim.length) {
+                                        player.anim_index = 0;
                                     }
+                                    ctx.drawImage(playerSheet, player.animations.aL_anim[player.anim_index].x,player.animations.aL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                 } else {
-                                    ctx.drawImage(playerSheet, 0,32,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                    ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,32,16,16,player.x-4, player.y-8,16,16);
-                                    }
+                                    }*/
                                 }
                                 
                             }
@@ -412,15 +443,23 @@
                                     if (player.anim_index >= player.animations.wD_anim.length) {
                                         player.anim_index = 0;
                                     }
-                                    ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wD_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                    }*/
+                                } else if (this.attacking == true && paused == false){
+                                    if (player.anim_index >= player.animations.aD_anim.length) {
+                                        player.anim_index = 0;
                                     }
+                                    ctx.drawImage(playerSheet, player.animations.aD_anim[player.anim_index].x,player.animations.aD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                 } else {
-                                    ctx.drawImage(playerSheet, 0,0,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                    ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,0,16,16,player.x-4, player.y-8,16,16);
-                                    }
+                                    }*/
                                 }
                             }
                             if (player.dir == 3) {
@@ -428,15 +467,24 @@
                                     if (player.anim_index >= player.animations.wR_anim.length) {
                                         player.anim_index = 0;
                                     }
-                                    ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    
+                                    ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wR_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
+                                    }*/
+                                } else if (this.attacking == true && paused == false){
+                                    if (player.anim_index >= player.animations.aR_anim.length) {
+                                        player.anim_index = 0;
                                     }
+                                    ctx.drawImage(playerSheet, player.animations.aR_anim[player.anim_index].x,player.animations.aR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                 } else {
-                                    ctx.drawImage(playerSheet, 0,16,16,16,player.x-4, player.y-8,16,16);
-                                    for (var i=0; i<player.augments.length; i++) {
+                                    ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
+                                    ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                    /*for (var i=0; i<player.augments.length; i++) {
                                         ctx.drawImage(playerSheet, player.augments[i].drawCol,16,16,16,player.x-4, player.y-8,16,16);
-                                    }
+                                    }*/
                                 }
                             }
                         },
@@ -481,10 +529,10 @@
                         cont: true,
                         use_cost: .1,
                         knockback: 8,
-                        aoe: [[{x: -8, y: 0, sprite: 33, dur:4, dirXadj: 8, dirYadj: 0},{x: -8, y: -8, sprite: 1, dur:4, dirXadj: 8, dirYadj: 8},{x: 0, y: -8, sprite: 2, dur:4, dirXadj: 0, dirYadj: 8}],
-                              [{x: 0, y: +8, sprite: 66, dur:4, dirXadj: 0, dirYadj: 0},{x: -8, y: +8, sprite: 65, dur:4, dirXadj: 8, dirYadj: 0},{x: -8, y: 0, sprite: 33, dur:4, dirXadj: 8, dirYadj: 8}],
-                              [{x: +8, y: 0, sprite: 35, dur:4, dirXadj: 0, dirYadj: 8},{x: +8, y: +8, sprite: 67, dur:4, dirXadj: 0, dirYadj: 0},{x: 0, y: +8, sprite: 66, dur:4, dirXadj: 8, dirYadj: 0}],
-                              [{x: 0, y: -8, sprite: 2, dur:4, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:4, dirXadj: 0, dirYadj: 8},{x: +8, y: 0, sprite: 35, dur:4, dirXadj: 0, dirYadj: 0}]
+                        aoe: [[{x: -12, y: -2, sprite: 33, dur:4, dirXadj: 8, dirYadj: 0},{x: -12, y: -10, sprite: 1, dur:4, dirXadj: 8, dirYadj: 8},{x: 0, y: -10, sprite: 2, dur:4, dirXadj: 0, dirYadj: 8}],
+                              [{x: +2, y: +8, sprite: 66, dur:4, dirXadj: 0, dirYadj: 0},{x: -10, y: +8, sprite: 65, dur:4, dirXadj: 8, dirYadj: 0},{x: -12, y: -2, sprite: 33, dur:4, dirXadj: 8, dirYadj: 8}],
+                              [{x: +12, y: -2, sprite: 35, dur:4, dirXadj: 0, dirYadj: 8},{x: +12, y: +8, sprite: 67, dur:4, dirXadj: 0, dirYadj: 0},{x: +2, y: +8, sprite: 66, dur:4, dirXadj: 8, dirYadj: 0}],
+                              [{x: +2, y: -8, sprite: 2, dur:4, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:4, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, sprite: 35, dur:4, dirXadj: 0, dirYadj: 8}]
                              ],
                         damage: 1,
                         durCount:0,
@@ -1216,6 +1264,8 @@
     //generate a level
 	function buildLevel(size, gen) {
         depth++;
+        remKeys = 0;
+        remMobs = 0;
 		map = [ [0,0,0],
                 [0,empty,0],
                 [0,0,0]];
@@ -1235,7 +1285,7 @@
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
         }
-        seed+=size+'e';
+        seed+=size+'_';
         
         //190,191,192,222,223,224,254,255,256
         //make a floor palette
@@ -1246,7 +1296,7 @@
             } else {
                 rand = Math.floor(Math.random()*posFloors.length);
             }
-            seed+=rand+'f';
+            seed+=rand+'_';
             floorPal.push(posFloors[rand]);
             posFloors.splice(rand, 1);
         }
@@ -1256,7 +1306,7 @@
         } else {
             rand = Math.floor(Math.random()*3);
         }
-        seed+=rand+'f';
+        seed+=rand+'_';
         if (rand == 0) {
             floorPal.push(286);
         }
@@ -1366,7 +1416,7 @@
                 } else {
                     rand = Math.floor(Math.random()*appList.length);
                 }
-                seed+=rand+'d';
+                seed+=rand+'_';
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
                 numRooms++;
                 
@@ -1383,7 +1433,7 @@
                         } else {
                             floorRand = Math.floor(Math.random()*8);
                         }
-                        seed+=floorRand+'f'; 
+                        seed+=floorRand+'_'; 
                         
                         if (floorRand == 0) {
                             floorRow.push(floorPal[3]);
@@ -1477,7 +1527,7 @@
                 } else {
                     rand = Math.floor(Math.random()*capList.length);
                 }
-                seed+=rand+'d';
+                seed+=rand+'_';
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
                 numRooms++;
                 
@@ -1492,7 +1542,7 @@
                         } else {
                             floorRand = Math.floor(Math.random()*8);
                         }
-                        seed+=floorRand+'f'; 
+                        seed+=floorRand+'_'; 
                         
                         if (floorRand == 0) {
                             floorRow.push(floorPal[3]);
@@ -1528,7 +1578,7 @@
         } else {
             rand = Math.floor(Math.random()*rList.length);
         }
-        seed+=rand+'g';
+        seed+=rand+'_';
 
         map[rList[rand].y][rList[rand].x].contents.push($.extend({}, con_goal));
         map[rList[rand].y][rList[rand].x].obs = buildConfig('config_goal');
@@ -1547,7 +1597,7 @@
 			} else {
 				rand = Math.floor(Math.random()*rList.length);
 			}
-			seed+=rand+'k';
+			seed+=rand+'_';
 			map[rList[rand].y][rList[rand].x].contents.push($.extend(true, {}, con_key));
 			rList.splice(rand,1);
 			
@@ -1562,7 +1612,7 @@
 					} else {
 						rand = Math.floor(Math.random()*2);
 					}
-					seed+=rand+'m';
+					seed+=rand+'_';
 					if (rand == 0) {
 						if (gen) {
 							rand = gen.charAt(genIndex);
@@ -1570,7 +1620,7 @@
 						} else {
 							rand = Math.floor(Math.random()*mobs.length);
 						}
-						seed+=rand+'m';
+						seed+=rand+'_';
 						map[i][j].contents.push($.extend(true, {}, mobs[rand]));
                         remMobs++;
 					}
@@ -1588,7 +1638,7 @@
                         } else {
                             rand = Math.floor(Math.random()*2);
                         }
-                        seed+=rand+'p';
+                        seed+=rand+'_';
                         if (rand == 0) {
                             if (gen) {
                                 rand = gen.charAt(genIndex);
@@ -1596,7 +1646,7 @@
                             } else {
                                 rand = Math.floor(Math.random()*augments.length);
                             }
-                            seed+=rand+'p';
+                            seed+=rand+'_';
                             map[i][j].contents.push($.extend(true, {}, con_aug));
                             map[i][j].obs = buildConfig('config_item');
                             map[i][j].contents[map[i][j].contents.length-1].aug = rand;
@@ -1624,7 +1674,7 @@
                     } else {
                         rand = Math.floor(Math.random()*17);
                     }
-                    seed+=rand+'c';
+                    seed+=rand+'_';
                     
                     map[i][j].obs = buildConfig('config_'+rand);
                 }
