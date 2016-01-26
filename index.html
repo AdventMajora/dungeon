@@ -1610,6 +1610,7 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
                                         map[i-1][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i-1, j);
+                                        map[i-1][j].wallStyle = walls;
                                     } 
                                     if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
@@ -1617,6 +1618,7 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
                                         map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j);
+                                        map[i][j].wallStyle = walls;
                                     }
                                 }
                                 
@@ -1643,6 +1645,7 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
                                         map[i][j-1] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j-1);
+                                        map[i][j-1].wallStyle = walls;
                                     } 
                                     if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
@@ -1650,6 +1653,7 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
                                         map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j);
+                                        map[i][j].wallStyle = walls;
                                     }
                                 }
                             }
