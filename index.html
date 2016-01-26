@@ -1610,7 +1610,8 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
                                         map[i-1][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i-1, j);
-                                    } else if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
+                                    } 
+                                    if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
                                         (JSON.stringify(rooms[k].config[2]) == JSON.stringify(mConfig[2])) &&
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
@@ -1642,7 +1643,8 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
                                         map[i][j-1] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j-1);
-                                    } else if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
+                                    } 
+                                    if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
                                         (JSON.stringify(rooms[k].config[2]) == JSON.stringify(mConfig[2])) &&
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
