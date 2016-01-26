@@ -1310,6 +1310,7 @@
         var floorPal = [190];
         var posFloors = [191,192,222,223,224,254,255,256];
         var walls = 0;
+        var floorStyle = 0;
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
@@ -1318,6 +1319,16 @@
         
         //190,191,192,222,223,224,254,255,256
         //make a floor palette
+        if (gen) {
+            rand = parseInt(gen.charAt(genIndex));
+            genIndex++;
+        } else {
+            rand = Math.floor(Math.random()*2);
+        }
+        seed+=rand+'_';
+        
+        flooStyle = rand*3;
+        
         for (i=0; i<2; i++) {
             if (gen) {
                 rand = parseInt(gen.charAt(genIndex));
@@ -1326,7 +1337,7 @@
                 rand = Math.floor(Math.random()*posFloors.length);
             }
             seed+=rand+'_';
-            floorPal.push(posFloors[rand]);
+            floorPal.push(posFloors[rand]-floorStyle);
             posFloors.splice(rand, 1);
         }
         if (gen) {
@@ -1337,13 +1348,13 @@
         }
         seed+=rand+'_';
         if (rand == 0) {
-            floorPal.push(286);
+            floorPal.push(286-floorStyle);
         }
         if (rand == 1) {
-            floorPal.push(287);
+            floorPal.push(287-floorStyle);
         }
         if (rand == 2) {
-            floorPal.push(288);
+            floorPal.push(288-floorStyle);
         }
         //shuffle(floorPal);
         
