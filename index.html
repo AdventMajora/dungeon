@@ -1915,6 +1915,7 @@
     
     //manage status bar and menu
     function menuSystem() {
+        var sX,sY;
         rctx.font="7px monospace";
         if (bannerCounter > -1) {
             bannerCounter++;
@@ -1975,12 +1976,21 @@
                 for(var j=0; j<minimap.map[i].length; j++) {
                     
                     //if (map[i][j].discovered == true) {
-                        drawSprite(minimap.map[i][j],(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
+                        sX = Math.floor((minimap.map[i][j]-1)/(sheetWidth/8))*8;
+                        sY = ((minimap.map[i][j]-1)%(sheetWidth/8))*8;
+                        rctx.drawImage(spriteSheet, sY,sX,8,8,(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8),8,8);
+                        //drawSprite(minimap.map[i][j],(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         if (i == goalTile.y && j == goalTile.x) {
-                            drawSprite(757, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
+                            sX = Math.floor((757-1)/(sheetWidth/8))*8;
+                            sY = ((757-1)%(sheetWidth/8))*8;
+                            rctx.drawImage(spriteSheet, sY,sX,8,8,(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8),8,8);
+                            //drawSprite(757, (8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8));
                         }
                         if (i == mapLoc.y && j == mapLoc.x) {
-                            drawSprite(758, 4*8,menuHeight+(8*8));
+                            sX = Math.floor((758-1)/(sheetWidth/8))*8;
+                            sY = ((758-1)%(sheetWidth/8))*8;
+                            rctx.drawImage(spriteSheet, sY,sX,8,8,4*8,menuHeight+(8*8),8,8);
+                            //drawSprite(758, 4*8,menuHeight+(8*8));
                         }
                     //}
                 }
@@ -2017,13 +2027,22 @@
         rctx.fillText(fps,screenWidth-15,screenHeight-9);
         
         if (remKeys == 0) {
-                drawSprite(549, screenWidth-80,screenHeight-8);
+            sX = Math.floor((549-1)/(sheetWidth/8))*8;
+            sY = ((549-1)%(sheetWidth/8))*8;
+            rctx.drawImage(spriteSheet, sY,sX,8,8,screenWidth-80,screenHeight-8,8,8);
+            //drawSprite(549, screenWidth-80,screenHeight-8);
         } else {
-            drawSprite(550, screenWidth-80,screenHeight-8);
+            sX = Math.floor((550-1)/(sheetWidth/8))*8;
+            sY = ((550-1)%(sheetWidth/8))*8;
+            rctx.drawImage(spriteSheet, sY,sX,8,8,screenWidth-80,screenHeight-8,8,8);
+            //drawSprite(550, screenWidth-80,screenHeight-8);
         }
         rctx.fillText(':'+player.keys.length,screenWidth-72,screenHeight-2);
         
-        drawSprite(551, screenWidth-80,screenHeight-15);
+        sX = Math.floor((551-1)/(sheetWidth/8))*8;
+        sY = ((551-1)%(sheetWidth/8))*8;
+        rctx.drawImage(spriteSheet, sY,sX,8,8,screenWidth-80,screenHeight-15,8,8);
+        //drawSprite(551, screenWidth-80,screenHeight-15);
         rctx.fillText(':'+remMobs,screenWidth-72,screenHeight-10);
         
         rctx.fillText('XP[',screenWidth-50,screenHeight-2);
