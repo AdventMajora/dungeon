@@ -1632,7 +1632,7 @@
                                                 JSON.parse(JSON.stringify(map[i][j-1].config[2])),[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]];
                                 var mConfig = [JSON.parse(JSON.stringify(map[i][j].config[0])),[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
                                                 JSON.parse(JSON.stringify(map[i][j].config[2])),JSON.parse(JSON.stringify(map[i][j].config[3]))];
-                                
+                                console.log('left fix');
                                 for (k=0; k<rooms.length; k++) {
                                     if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(nConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(nConfig[1])) &&
@@ -1690,7 +1690,7 @@
                                                 JSON.parse(JSON.stringify(map[i][j+1].config[2])),JSON.parse(JSON.stringify(map[i][j+1].config[3]))];
                                 var mConfig = [JSON.parse(JSON.stringify(map[i][j].config[0])),JSON.parse(JSON.stringify(map[i][j].config[1])),
                                                 JSON.parse(JSON.stringify(map[i][j].config[2])),[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]];
-                                                
+                                console.log('right fix');
                                 for (k=0; k<rooms.length; k++) {
                                     if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(nConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(nConfig[1])) &&
