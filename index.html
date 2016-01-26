@@ -2380,10 +2380,10 @@
         rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
         rctx.putImageData(rendScreen,0,0);
         rctx.scale(scaleFactor,scaleFactor);
-        rctx.drawImage(rendCanvas, 0,0);
+        //rctx.drawImage(rendCanvas, 0,0);
         //update/render menu
         menuSystem();
-        rctx.scale(1/scaleFactor,1/scaleFactor);
+        //rctx.scale(1/scaleFactor,1/scaleFactor);
         
         window.requestAnimationFrame(mainLoop);
 	}
