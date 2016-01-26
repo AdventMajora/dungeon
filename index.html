@@ -1622,8 +1622,7 @@
                                     
                                     
                                 }
-                            }
-                            if (map[i][j].config[1].length <=2) {
+                            } else if (map[i][j].config[1].length <=2) {
                                 connectables++;
                                 if (map[i][j-1] !=0 && 
                                     (map[i][j-1].config[0].length > 2 || map[i][j-1].config[1].length > 2 ||
@@ -1652,8 +1651,7 @@
                                         }
                                     }
                                 }
-                            }
-                            if (map[i][j].config[2].length <=2) {
+                            } else if (map[i][j].config[2].length <=2) {
                                 connectables++
                                 if (map[i+1][j] !=0 && 
                                     (map[i+1][j].config[0].length > 2 || map[i+1][j].config[1].length > 2 ||
@@ -1682,8 +1680,7 @@
                                         }
                                     }
                                 }
-                            }
-                            if (map[i][j].config[3].length <=2) {
+                            } else if (map[i][j].config[3].length <=2) {
                                 connectables
                                 if (map[i][j+1] !=0 && 
                                     (map[i][j+1].config[0].length > 2 || map[i][j+1].config[1].length > 2 ||
