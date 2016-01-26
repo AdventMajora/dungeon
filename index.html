@@ -1582,7 +1582,6 @@
         }
         
         var connectables = 0;
-
         //check for connectibles
         for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
@@ -1591,7 +1590,7 @@
                     if (map[i][j].config[0].length > 2 || map[i][j].config[1].length > 2 || map[i][j].config[2].length > 2 || map[i][j].config[3].length > 2) {
                         
                         //Do I neighbor another open room through a small door?
-                        /*if (map[i][j].config[0].length <=2) {
+                        if (map[i][j].config[0].length <=2) {
                             connectables++;
                             if (map[i-1][j] !=0 &&
                                 (map[i-1][j].config[0].length > 2 || map[i-1][j].config[1].length > 2 ||
@@ -1621,7 +1620,7 @@
                                 
                                 
                             }
-                        }*/
+                        }
                         if (map[i][j].config[1].length <=2) {
                             connectables++;
                             if (map[i][j-1] !=0 && 
@@ -1641,6 +1640,36 @@
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
                                         map[i][j-1] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j-1);
+                                    } else if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
+                                        (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
+                                        (JSON.stringify(rooms[k].config[2]) == JSON.stringify(mConfig[2])) &&
+                                        (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
+                                        map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
+                                        genFloor(i, j);
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (map[i][j].config[3].length <=2) {
+                            connectables
+                            if (map[i][j+1] !=0 && 
+                                (map[i][j+1].config[0].length > 2 || map[i][j+1].config[1].length > 2 ||
+                                map[i][j+1].config[2].length > 2 || map[i][j+1].config[3].length > 2)) {
+                                
+                                //change rooms to connect openly
+                                var nConfig = [JSON.parse(JSON.stringify(map[i][j+1].config[0])),[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+                                                JSON.parse(JSON.stringify(map[i][j+1].config[2])),JSON.parse(JSON.stringify(map[i][j+1].config[3]))];
+                                var mConfig = [JSON.parse(JSON.stringify(map[i][j].config[0])),JSON.parse(JSON.stringify(map[i][j].config[1])),
+                                                JSON.parse(JSON.stringify(map[i][j].config[2])),[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]];
+                                console.log('right fix');
+                                for (k=0; k<rooms.length; k++) {
+                                    if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(nConfig[0])) &&
+                                        (JSON.stringify(rooms[k].config[1]) == JSON.stringify(nConfig[1])) &&
+                                        (JSON.stringify(rooms[k].config[2]) == JSON.stringify(nConfig[2])) &&
+                                        (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
+                                        map[i][j+1] = JSON.parse(JSON.stringify(rooms[k]));
+                                        genFloor(i, j+1);
                                     } else if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
                                         (JSON.stringify(rooms[k].config[2]) == JSON.stringify(mConfig[2])) &&
