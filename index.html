@@ -407,9 +407,10 @@
                                         }
                                         ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                         ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        /*for (var i=0; i<this.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, this.augments[i].drawCol,this.animations.wU_anim[this.anim_index].y,16,16,this.x-4, this.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, 144,0+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                            ctx.drawImage(playerSheet, 128+player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                        }
                                     } else if (this.attacking == true && paused == false){
                                         if (player.anim_index >= player.animations.aU_anim.length) {
                                             player.anim_index = 0;
@@ -420,9 +421,10 @@
                                     } else {
                                         ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
                                         ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,48,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {
+                                            ctx.drawImage(playerSheet, 128+16,0+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
+                                            ctx.drawImage(playerSheet, 128+32,24+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                        }
                                     }
                                     
                                 }
@@ -434,9 +436,10 @@
                                         
                                         ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wL_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {     
+                                            ctx.drawImage(playerSheet, 128+player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,16+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                        }
                                     } else if (this.attacking == true && paused == false){
                                         if (player.anim_index >= player.animations.aD_anim.length) {
                                             player.anim_index = 0;
@@ -446,9 +449,10 @@
                                     } else {
                                         ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
                                         ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,32,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {     
+                                            ctx.drawImage(playerSheet, 128+0,16+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
+                                            ctx.drawImage(playerSheet, 128+32,16+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                        }
                                     }
                                     
                                 }
@@ -459,9 +463,10 @@
                                         }
                                         ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wD_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {     
+                                            ctx.drawImage(playerSheet, 128+player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,0+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                        }
                                     } else if (this.attacking == true && paused == false){
                                         if (player.anim_index >= player.animations.aD_anim.length) {
                                             player.anim_index = 0;
@@ -471,9 +476,10 @@
                                     } else {
                                         ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
                                         ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,0,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {     
+                                            ctx.drawImage(playerSheet, 128+32,0+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,0+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
+                                        }
                                     }
                                 }
                                 if (player.dir == 3) {
@@ -484,9 +490,10 @@
                                         
                                         ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,player.animations.wR_anim[player.anim_index].y,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {     
+                                            ctx.drawImage(playerSheet, 128+player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+16,16+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                        }
                                     } else if (this.attacking == true && paused == false){
                                         if (player.anim_index >= player.animations.aR_anim.length) {
                                             player.anim_index = 0;
@@ -496,9 +503,10 @@
                                     } else {
                                         ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
                                         ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        /*for (var i=0; i<player.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, player.augments[i].drawCol,16,16,16,player.x-4, player.y-8,16,16);
-                                        }*/
+                                        for (var i=0; i<this.augments.length; i++) {     
+                                            ctx.drawImage(playerSheet, 128+32,8+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+16,16+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
+                                        }
                                     }
                                 }
                                 
@@ -614,12 +622,12 @@
 	player.weapons.push(wep_test);
 	
     {//augments
-        var aug_scarf = 	{name: 'Scarf', effectText: '+.25 spd', drawCol: 16, onPickup: function(){player.speed = player.speed+.25;}, 			onDrop:	function(){player.speed = player.speed-.25;}, 				action:   function(){}};
+        var aug_scarf = 	{name: 'Scarf', effectText: '+.25 spd', drawCol: 0, onPickup: function(){player.speed = player.speed+.25;}, 			onDrop:	function(){player.speed = player.speed-.25;}, 				action:   function(){}};
         var aug_heartPin = 	{name: 'Pin',	effectText: '+.005 hpr', drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
-        var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 48, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
-        var aug_tabard = 	{name: 'Tabard',effectText: '+move+atk', drawCol: 64, onPickup: function(){player.moveWhileAttacking = true;}, onDrop:	function(){player.moveWhileAttacking = false;},	action:    function(){}};
-        var aug_robe = 		{name: 'Robe',	effectText: '+3 def', drawCol: 80, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1}, action:    function(){}};
-        var aug_horns = 	{name: 'Horns',	effectText: '+1 dmg', drawCol: 96, onPickup: function(){player.base_damage = player.base_damage+1}, 	onDrop:	function(){player.base_damage = player.base_damage-1}, 		action:    function(){}};
+        var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 64, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
+        var aug_tabard = 	{name: 'Tabard',effectText: '+move+atk', drawCol: 96, onPickup: function(){player.moveWhileAttacking = true;}, onDrop:	function(){player.moveWhileAttacking = false;},	action:    function(){}};
+        var aug_robe = 		{name: 'Robe',	effectText: '+3 def', drawCol: 128, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1}, action:    function(){}};
+        var aug_horns = 	{name: 'Horns',	effectText: '+1 dmg', drawCol: 160, onPickup: function(){player.base_damage = player.base_damage+1}, 	onDrop:	function(){player.base_damage = player.base_damage-1}, 		action:    function(){}};
     }
     var augments = [aug_scarf,aug_heartPin,aug_bracelet,aug_tabard,aug_robe,aug_horns,aug_scarf];
     
@@ -1077,7 +1085,7 @@
             }
             roomMap[2].push(row);
         }
-        return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:-1};
+        return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:0};
 	}
 	
     //buld room templates
@@ -1300,6 +1308,7 @@
         var numRooms = 0;
         var floorPal = [190];
         var posFloors = [191,192,222,223,224,254,255,256];
+        var walls = 0;
         if (gen) {
             size = parseInt(gen.substring(0,gen.indexOf('e')));
             genIndex = gen.indexOf('e')+1;
@@ -1337,6 +1346,16 @@
         }
         //shuffle(floorPal);
         
+        if (gen) {
+            rand = parseInt(gen.charAt(genIndex));
+            genIndex++;
+        } else {
+            rand = Math.floor(Math.random()*2);
+        }
+        seed+=rand+'_';
+        
+        walls = rand*4;
+        
         function expandMap(y, x) {
             //expand map if needed
             if (y == 0) {
@@ -1372,6 +1391,37 @@
                 }
             }
         } 
+        
+        function genFloor(y, x) {
+            var floorRow = [];
+            var floorRand;
+            for (var k=0; k<16; k++) {
+                floorRow = [];
+                for (var l=0; l<20; l++) {
+                    if (gen) {
+                        floorRand = parseInt(gen.charAt(genIndex));
+                        genIndex++;
+                    } else {
+                        floorRand = Math.floor(Math.random()*8);
+                    }
+                    seed+=floorRand+'_'; 
+                    
+                    if (floorRand == 0) {
+                        floorRow.push(floorPal[3]);
+                    }
+                    if (floorRand == 1 || floorRand == 2) {
+                        floorRow.push(floorPal[1]);
+                    }
+                    if (floorRand == 3 || floorRand == 4) {
+                        floorRow.push(floorPal[2]);
+                    }
+                    if (floorRand > 4) {
+                        floorRow.push(floorPal[0]);
+                    }
+                }
+                map[y][x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
+            }
+        }
         
         for (i=0; i<size; i++) {
             //build list of expandable rooms
@@ -1441,34 +1491,9 @@
                 
                 //make a floor for the new room here
                 
-                var floorRow = [];
-                var floorRand;
-                for (k=0; k<16; k++) {
-                    floorRow = [];
-                    for (l=0; l<20; l++) {
-                        if (gen) {
-                            floorRand = parseInt(gen.charAt(genIndex));
-                            genIndex++;
-                        } else {
-                            floorRand = Math.floor(Math.random()*8);
-                        }
-                        seed+=floorRand+'_'; 
-                        
-                        if (floorRand == 0) {
-                            floorRow.push(floorPal[3]);
-                        }
-                        if (floorRand == 1 || floorRand == 2) {
-                            floorRow.push(floorPal[1]);
-                        }
-                        if (floorRand == 3 || floorRand == 4) {
-                            floorRow.push(floorPal[2]);
-                        }
-                        if (floorRand > 4) {
-                            floorRow.push(floorPal[0]);
-                        }
-                    }
-                    map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
-                }
+                //genFloor(emptList[j].y, emptList[j].x);
+                
+                map[emptList[j].y][emptList[j].x].wallStyle = walls;
                 
                 //create new empty's
                 if (appList[rand].config[0].length > 0 && map[emptList[j].y-1][emptList[j].x] == 0) {
@@ -1550,36 +1575,92 @@
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
                 numRooms++;
                 
-                floorRow = [];
-                var floorRand;
-                for (k=0; k<16; k++) {
-                    floorRow = [];
-                    for (l=0; l<20; l++) {
-                        if (gen) {
-                            floorRand = parseInt(gen.charAt(genIndex));
-                            genIndex++;
-                        } else {
-                            floorRand = Math.floor(Math.random()*8);
-                        }
-                        seed+=floorRand+'_'; 
-                        
-                        if (floorRand == 0) {
-                            floorRow.push(floorPal[3]);
-                        }
-                        if (floorRand == 1 || floorRand == 2) {
-                            floorRow.push(floorPal[1]);
-                        }
-                        if (floorRand == 3 || floorRand == 4) {
-                            floorRow.push(floorPal[2]);
-                        }
-                        if (floorRand > 4) {
-                            floorRow.push(floorPal[0]);
-                        }
-                    }
-                    map[emptList[j].y][emptList[j].x].map[0].push(JSON.parse(JSON.stringify(floorRow)));
-                }
+                //genFloor(emptList[j].y, emptList[j].x);
+            
+                map[emptList[j].y][emptList[j].x].wallStyle = walls;
             }
         }
+        
+        var connectables = 0;
+        //check for connectibles
+        for (i=0; i<map.length; i++) {
+			for (j=0; j<map[i].length; j++) {
+                if (map[i][j] !=0) {
+                    // am I an open room?
+                    if (map[i][j].config[0].length > 2 ||
+                        map[i][j].config[1].length > 2 ||
+                        map[i][j].config[2].length > 2 ||
+                        map[i][j].config[3].length > 2) {
+                        
+                        //Do I neighbor another open room through a small door?
+                        if (map[i][j].config[0].length <=2) {
+                            if (map[i-1][j] !=0 && (map[i-1][j].config[0].length > 2 ||
+                                map[i-1][j].config[1].length > 2 ||
+                                map[i-1][j].config[2].length > 2 ||
+                                map[i-1][j].config[3].length > 2)) {
+                                
+                                //change rooms to connect openly
+                                var nConfig = [JSON.parse(JSON.stringify(map[i-1][j].config[0])),JSON.parse(JSON.stringify(map[i-1][j].config[1])),
+                                                [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],JSON.parse(JSON.stringify(map[i-1][j].config[3]))];
+                                var mConfig = [[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],JSON.parse(JSON.stringify(map[i][j].config[1])),
+                                                JSON.parse(JSON.stringify(map[i][j].config[2])),JSON.parse(JSON.stringify(map[i][j].config[3]))];
+                                                
+                                for (k=0; k<rooms.length; k++) {
+                                    if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(nConfig[0])) &&
+                                        (JSON.stringify(rooms[k].config[1]) == JSON.stringify(nConfig[1])) &&
+                                        (JSON.stringify(rooms[k].config[2]) == JSON.stringify(nConfig[2])) &&
+                                        (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
+                                        map[i-1][j] = JSON.parse(JSON.stringify(rooms[k]));
+                                        //genFloor(i-1, j);
+                                    } else if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
+                                        (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
+                                        (JSON.stringify(rooms[k].config[2]) == JSON.stringify(mConfig[2])) &&
+                                        (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
+                                        map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
+                                        //genFloor(i, j);
+                                    }
+                                }
+                                
+                                
+                            }
+                        }
+                        if (map[i][j].config[1].length <=2) {
+                            if (map[i][j-1] !=0 && (map[i][j-1].config[0].length > 2 ||
+                                map[i][j-1].config[1].length > 2 ||
+                                map[i][j-1].config[2].length > 2 ||
+                                map[i][j-1].config[3].length > 2)) {
+                                
+                                //change rooms to connect openly
+                                
+                            }
+                        }
+                        if (map[i][j].config[2].length <=2) {
+                            if (map[i+1][j] !=0 && (map[i+1][j].config[0].length > 2 ||
+                                map[i+1][j].config[1].length > 2 ||
+                                map[i+1][j].config[2].length > 2 ||
+                                map[i+1][j].config[3].length > 2)) {
+                                
+                                //change rooms to connect openly
+                                
+                            }
+                        }
+                        if (map[i][j].config[3].length <=2) {
+                            if (map[i][j+1] !=0 && (map[i][j+1].config[0].length > 2 ||
+                                map[i][j+1].config[1].length > 2 ||
+                                map[i][j+1].config[2].length > 2 ||
+                                map[i][j+1].config[3].length > 2)) {
+                                
+                                //change rooms to connect openly
+                                
+                            }
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        
         
         //put goal in map
         var rList = [];
@@ -1616,7 +1697,7 @@
 		//put mobs in rooms
 		for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
-				if (map[i][j] != 0) {
+				if (map[i][j] != 0 && !(i == mapLoc.y && j == mapLoc.x)) {
 					if (gen) {
 						rand = gen.charAt(genIndex);
 						genIndex++;
@@ -1700,6 +1781,15 @@
         
 		map[mapLoc.y][mapLoc.x].discovered = true;
 		
+        //apply wall style
+		for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
+			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
+                if (map[mapLoc.y][mapLoc.x].map[1][i][j] != 0) {
+                    map[mapLoc.y][mapLoc.x].map[1][i][j] = map[mapLoc.y][mapLoc.x].map[1][i][j]-map[mapLoc.y][mapLoc.x].wallStyle;
+                }
+            }
+        }
+        
         //insert the obstacle config
         if (map[mapLoc.y][mapLoc.x].obs != -1) {
 			for (var k=0; k<3; k++) {
@@ -1713,7 +1803,7 @@
 			}
         }
         
-		//build list of placeable spots
+        //build list of placeable spots
 		var placeList = [];
 		for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
 			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
@@ -1746,6 +1836,15 @@
             prevLvl = JSON.parse(JSON.stringify(currLvl));
         }
         currLvl = JSON.parse(JSON.stringify(level));
+        
+        //undo wall styling
+        for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
+			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
+                if (map[mapLoc.y][mapLoc.x].map[1][i][j] != 0) {
+                    map[mapLoc.y][mapLoc.x].map[1][i][j] = map[mapLoc.y][mapLoc.x].map[1][i][j]+map[mapLoc.y][mapLoc.x].wallStyle;
+                }
+            }
+        }
     }
     
     //draw a sprite
