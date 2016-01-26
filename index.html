@@ -1491,7 +1491,7 @@
                 
                 //make a floor for the new room here
                 
-                //genFloor(emptList[j].y, emptList[j].x);
+                genFloor(emptList[j].y, emptList[j].x);
                 
                 map[emptList[j].y][emptList[j].x].wallStyle = walls;
                 
@@ -1575,7 +1575,7 @@
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
                 numRooms++;
                 
-                //genFloor(emptList[j].y, emptList[j].x);
+                genFloor(emptList[j].y, emptList[j].x);
             
                 map[emptList[j].y][emptList[j].x].wallStyle = walls;
             }
@@ -1611,13 +1611,13 @@
                                         (JSON.stringify(rooms[k].config[2]) == JSON.stringify(nConfig[2])) &&
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(nConfig[3]))) {
                                         map[i-1][j] = JSON.parse(JSON.stringify(rooms[k]));
-                                        //genFloor(i-1, j);
+                                        genFloor(i-1, j);
                                     } else if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
                                         (JSON.stringify(rooms[k].config[2]) == JSON.stringify(mConfig[2])) &&
                                         (JSON.stringify(rooms[k].config[3]) == JSON.stringify(mConfig[3]))) {
                                         map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
-                                        //genFloor(i, j);
+                                        genFloor(i, j);
                                     }
                                 }
                                 
