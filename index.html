@@ -158,10 +158,10 @@
                             wD_anim:[{x:48,y:0,dur:4},{x:32,y:0,dur:4},{x:64,y:0,dur:4},{x:32,y:0,dur:4}],
                             wL_anim:[{x:48,y:16,dur:4},{x:32,y:16,dur:4},{x:64,y:16,dur:4},{x:32,y:16,dur:4}],
                             wR_anim:[{x:48,y:8,dur:4},{x:32,y:8,dur:4},{x:64,y:8,dur:4},{x:32,y:8,dur:4}],
-                            aU_anim:[{x:80,y:24,dur:1},{x:96,y:24,dur:1},{x:112,y:24,dur:12}],
-                            aD_anim:[{x:80,y:0,dur:1},{x:96,y:0,dur:1},{x:112,y:0,dur:12}],
-                            aL_anim:[{x:80,y:16,dur:1},{x:96,y:16,dur:1},{x:112,y:16,dur:12}],
-                            aR_anim:[{x:80,y:8,dur:1},{x:96,y:8,dur:1},{x:112,y:8,dur:12}]
+                            aU_anim:[{x:80,y:24,dur:1},{x:96,y:24,dur:1},{x:112,y:24,dur:8}],
+                            aD_anim:[{x:80,y:0,dur:1},{x:96,y:0,dur:1},{x:112,y:0,dur:8}],
+                            aL_anim:[{x:80,y:16,dur:1},{x:96,y:16,dur:1},{x:112,y:16,dur:8}],
+                            aR_anim:[{x:80,y:8,dur:1},{x:96,y:8,dur:1},{x:112,y:8,dur:8}]
                             },
                 anim_index:0,
                 animCounter:-1,
@@ -623,10 +623,10 @@
                         use_cost: .1,
                         knockback: 8,
                         curseScale: 1.5,
-                        aoe: [[{x: -12, y: -2, sprite: 33, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -10, sprite: 1, dur:1, dirXadj: 8, dirYadj: 8},{x: 0, y: -14, sprite: 2, dur:12, dirXadj: 0, dirYadj: 8}],
-                              [{x: +2, y: +8, sprite: 66, dur:1, dirXadj: 0, dirYadj: 0},{x: -10, y: +8, sprite: 65, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -2, sprite: 33, dur:12, dirXadj: 8, dirYadj: 8}],
-                              [{x: +12, y: -2, sprite: 35, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: +8, sprite: 67, dur:1, dirXadj: 0, dirYadj: 0},{x: +2, y: +8, sprite: 66, dur:12, dirXadj: 8, dirYadj: 0}],
-                              [{x: +2, y: -8, sprite: 2, dur:1, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, sprite: 35, dur:12, dirXadj: 0, dirYadj: 8}]
+                        aoe: [[{x: -12, y: -2, sprite: 33, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -10, sprite: 1, dur:1, dirXadj: 8, dirYadj: 8},{x: 0, y: -14, sprite: 2, dur:8, dirXadj: 0, dirYadj: 8}],
+                              [{x: +2, y: +8, sprite: 66, dur:1, dirXadj: 0, dirYadj: 0},{x: -10, y: +8, sprite: 65, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -2, sprite: 33, dur:8, dirXadj: 8, dirYadj: 8}],
+                              [{x: +12, y: -2, sprite: 35, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: +8, sprite: 67, dur:1, dirXadj: 0, dirYadj: 0},{x: +2, y: +8, sprite: 66, dur:8, dirXadj: 8, dirYadj: 0}],
+                              [{x: +2, y: -8, sprite: 2, dur:1, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, sprite: 35, dur:8, dirXadj: 0, dirYadj: 8}]
                              ],
                         damage: 1,
                         durCount:0,
@@ -1057,6 +1057,14 @@
         fps = frames;
         frames = 0;
     },1000);
+    
+    setInterval(function() {
+        if (blink == true) {
+            blink = false;
+        } else {
+            blink = true;
+        }
+    },250);
     
     //read in room data from image
 	function parseRoomData(x,y, mini) {
