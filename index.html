@@ -154,14 +154,14 @@
 				maxAugs: 5,
                 headSet: 0,
                 bodySet: 0,
-                animations:{wU_anim:[{x:48,y:24},{x:32,y:24},{x:64,y:24},{x:32,y:24}],
-                            wD_anim:[{x:48,y:0},{x:32,y:0},{x:64,y:0},{x:32,y:0}],
-                            wL_anim:[{x:48,y:16},{x:32,y:16},{x:64,y:16},{x:32,y:16}],
-                            wR_anim:[{x:48,y:8},{x:32,y:8},{x:64,y:8},{x:32,y:8}],
-                            aU_anim:[{x:80,y:24},{x:96,y:24},{x:112,y:24}],
-                            aD_anim:[{x:80,y:0},{x:96,y:0},{x:112,y:0}],
-                            aL_anim:[{x:80,y:16},{x:96,y:16},{x:112,y:16}],
-                            aR_anim:[{x:80,y:8},{x:96,y:8},{x:112,y:8}]
+                animations:{wU_anim:[{x:48,y:24,dur:4},{x:32,y:24,dur:4},{x:64,y:24,dur:4},{x:32,y:24,dur:4}],
+                            wD_anim:[{x:48,y:0,dur:4},{x:32,y:0,dur:4},{x:64,y:0,dur:4},{x:32,y:0,dur:4}],
+                            wL_anim:[{x:48,y:16,dur:4},{x:32,y:16,dur:4},{x:64,y:16,dur:4},{x:32,y:16,dur:4}],
+                            wR_anim:[{x:48,y:8,dur:4},{x:32,y:8,dur:4},{x:64,y:8,dur:4},{x:32,y:8,dur:4}],
+                            aU_anim:[{x:80,y:24,dur:1},{x:96,y:24,dur:1},{x:112,y:24,dur:12}],
+                            aD_anim:[{x:80,y:0,dur:1},{x:96,y:0,dur:1},{x:112,y:0,dur:12}],
+                            aL_anim:[{x:80,y:16,dur:1},{x:96,y:16,dur:1},{x:112,y:16,dur:12}],
+                            aR_anim:[{x:80,y:8,dur:1},{x:96,y:8,dur:1},{x:112,y:8,dur:12}]
                             },
                 anim_index:0,
                 animCounter:-1,
@@ -212,6 +212,7 @@
                             //check if player should be moving
                             if (pressedKeys.indexOf('W') > -1 || pressedKeys.indexOf('A') > -1 ||
                                 pressedKeys.indexOf('S') > -1 || pressedKeys.indexOf('D') > -1) {
+                                
                                 this.moving = true;
                                 if (this.animCounter == -1) {
                                     this.animCounter = 0;
@@ -227,18 +228,27 @@
                                 this.strafe = false;
                             }
                             
-                            //use weapon of regen spirit
+                            //use weapon or regen spirit
                             if (this.attacking == true) {
                                 if (this.moveWhileAttacking == false) {
                                     this.moving  = false;
                                 }
-                                this.weapons[this.wepIndex].action();
+                                if (this.weapons[this.wepIndex].cont == false && this.weapons[this.wepIndex].swung == false) {
+                                    this.weapons[this.wepIndex].action();
+                                } else if (this.weapons[this.wepIndex].cont == true) {
+                                    this.weapons[this.wepIndex].action();
+                                }
+                                
                                 if (this.animCounter == -1) {
                                     this.animCounter = 0;
                                     this.anim_index = 0;
                                 }
                             } else {
                                 this.spirit = this.spirit+this.spiritGen;
+                            }
+                            
+                            if (pressedKeys.indexOf('_') < 0 && this.weapons[this.wepIndex].swung == true) {
+                                this.weapons[this.wepIndex].swung = false;
                             }
                             
                             //update the weapon
@@ -270,7 +280,8 @@
                                                         player.move(3);
                                                     }
                                                     break;
-									case	'_':	if (this.attacking == false && this.spirit>=this.weapons[this.wepIndex].init_cost) {
+									case	'_':	if (this.attacking == false && this.spirit>=this.weapons[this.wepIndex].init_cost && this.weapons[this.wepIndex].swung == false) {
+                                                        this.anim_index = 0;
                                                         player.attacking = true;
                                                         player.spirit = player.spirit-player.weapons[player.wepIndex].init_cost;
                                                     }
@@ -391,47 +402,65 @@
                             }
                         },
                 draw:   function(){
-                            if (this.animCounter > -1) {
-                                this.animCounter++;
-                                if (this.animCounter > 4) {
-                                    this.animCounter = 0;
-                                    this.anim_index++;
-                                }
-                            }
+                            
                             if (this.invincCounter%2 == 0) {
                             
                                 if (player.dir == 0) {
                                     if (this.moving == true && paused == false) {
-                                        if (player.anim_index >= player.animations.wU_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.wU_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (this.anim_index >= player.animations.wU_anim.length) {
+                                                    this.anim_index = 0;
+                                                }
+                                            }
                                         }
-                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                        ctx.drawImage(playerSheet, player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        
+                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.wU_anim[this.anim_index].x,this.animations.wU_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
                                         for (var i=0; i<this.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, 144,0+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
-                                            ctx.drawImage(playerSheet, 128+player.animations.wU_anim[player.anim_index].x,player.animations.wU_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 144,0+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
+                                            ctx.drawImage(playerSheet, 128+this.animations.wU_anim[this.anim_index].x,this.animations.wU_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
                                         }
                                     } else if (this.attacking == true && paused == false){
-                                        if (player.anim_index >= player.animations.aU_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.aU_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (this.anim_index >= this.animations.aU_anim.length) {
+                                                    this.anim_index = 0;
+                                                }
+                                            }
                                         }
-                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
-                                        ctx.drawImage(playerSheet, player.animations.aU_anim[player.anim_index].x,player.animations.aU_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        
+                                        
+                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.aU_anim[this.anim_index].x,this.animations.aU_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
                                         
                                     } else {
-                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                        ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,this.x-4, this.y-16,16,16);
+                                        ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,this.x-4, this.y,16,8);
                                         for (var i=0; i<this.augments.length; i++) {
-                                            ctx.drawImage(playerSheet, 128+16,0+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
-                                            ctx.drawImage(playerSheet, 128+32,24+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+16,0+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
+                                            ctx.drawImage(playerSheet, 128+32,24+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
                                         }
                                     }
                                     
                                 }
                                 if (player.dir == 1) {
                                     if (this.moving == true && paused == false) {
-                                        if (player.anim_index >= player.animations.wL_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.wL_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (this.anim_index >= this.animations.wL_anim.length) {
+                                                    this.anim_index = 0;
+                                                }
+                                            }
                                         }
                                         
                                         ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
@@ -441,9 +470,17 @@
                                             ctx.drawImage(playerSheet, 128+0,16+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
                                         }
                                     } else if (this.attacking == true && paused == false){
-                                        if (player.anim_index >= player.animations.aD_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;  
+                                            if (this.animCounter > this.animations.aL_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (player.anim_index >= player.animations.aL_anim.length) {
+                                                    player.anim_index = 0;
+                                                }
+                                            }
                                         }
+                                        
                                         ctx.drawImage(playerSheet, player.animations.aL_anim[player.anim_index].x,player.animations.aL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                     } else {
@@ -458,9 +495,17 @@
                                 }
                                 if (player.dir == 2) {
                                     if (this.moving == true && paused == false) {
-                                        if (player.anim_index >= player.animations.wD_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.wD_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (player.anim_index >= player.animations.wD_anim.length) {
+                                                    player.anim_index = 0;
+                                                }
+                                            }
                                         }
+                                        
                                         ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                         for (var i=0; i<this.augments.length; i++) {     
@@ -468,9 +513,17 @@
                                             ctx.drawImage(playerSheet, 128+0,0+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
                                         }
                                     } else if (this.attacking == true && paused == false){
-                                        if (player.anim_index >= player.animations.aD_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.aD_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (player.anim_index >= player.animations.aD_anim.length) {
+                                                    player.anim_index = 0;
+                                                }
+                                            }
                                         }
+                                        
                                         ctx.drawImage(playerSheet, player.animations.aD_anim[player.anim_index].x,player.animations.aD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                     } else {
@@ -484,8 +537,15 @@
                                 }
                                 if (player.dir == 3) {
                                     if (this.moving == true && paused == false) {   
-                                        if (player.anim_index >= player.animations.wR_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.wR_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (player.anim_index >= player.animations.wR_anim.length) {
+                                                    player.anim_index = 0;
+                                                }
+                                            }
                                         }
                                         
                                         ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
@@ -495,9 +555,17 @@
                                             ctx.drawImage(playerSheet, 128+16,16+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
                                         }
                                     } else if (this.attacking == true && paused == false){
-                                        if (player.anim_index >= player.animations.aR_anim.length) {
-                                            player.anim_index = 0;
+                                        if (this.animCounter > -1) {
+                                            this.animCounter++;
+                                            if (this.animCounter > this.animations.aR_anim[this.anim_index].dur) {
+                                                this.animCounter = 0;
+                                                this.anim_index++;
+                                                if (player.anim_index >= player.animations.aR_anim.length) {
+                                                    player.anim_index = 0;
+                                                }
+                                            }
                                         }
+                                        
                                         ctx.drawImage(playerSheet, player.animations.aR_anim[player.anim_index].x,player.animations.aR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
                                         ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
                                     } else {
@@ -550,14 +618,15 @@
     };
     
 	var wep_test = 	{   init_cost: 4,
-                        cont: true,
+                        cont: false,
+                        swung: false,
                         use_cost: .1,
                         knockback: 8,
                         curseScale: 1.5,
-                        aoe: [[{x: -12, y: -2, sprite: 33, dur:4, dirXadj: 8, dirYadj: 0},{x: -12, y: -10, sprite: 1, dur:4, dirXadj: 8, dirYadj: 8},{x: 0, y: -10, sprite: 2, dur:4, dirXadj: 0, dirYadj: 8}],
-                              [{x: +2, y: +8, sprite: 66, dur:4, dirXadj: 0, dirYadj: 0},{x: -10, y: +8, sprite: 65, dur:4, dirXadj: 8, dirYadj: 0},{x: -12, y: -2, sprite: 33, dur:4, dirXadj: 8, dirYadj: 8}],
-                              [{x: +12, y: -2, sprite: 35, dur:4, dirXadj: 0, dirYadj: 8},{x: +12, y: +8, sprite: 67, dur:4, dirXadj: 0, dirYadj: 0},{x: +2, y: +8, sprite: 66, dur:4, dirXadj: 8, dirYadj: 0}],
-                              [{x: +2, y: -8, sprite: 2, dur:4, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:4, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, sprite: 35, dur:4, dirXadj: 0, dirYadj: 8}]
+                        aoe: [[{x: -12, y: -2, sprite: 33, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -10, sprite: 1, dur:1, dirXadj: 8, dirYadj: 8},{x: 0, y: -14, sprite: 2, dur:12, dirXadj: 0, dirYadj: 8}],
+                              [{x: +2, y: +8, sprite: 66, dur:1, dirXadj: 0, dirYadj: 0},{x: -10, y: +8, sprite: 65, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -2, sprite: 33, dur:12, dirXadj: 8, dirYadj: 8}],
+                              [{x: +12, y: -2, sprite: 35, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: +8, sprite: 67, dur:1, dirXadj: 0, dirYadj: 0},{x: +2, y: +8, sprite: 66, dur:12, dirXadj: 8, dirYadj: 0}],
+                              [{x: +2, y: -8, sprite: 2, dur:1, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, sprite: 35, dur:12, dirXadj: 0, dirYadj: 8}]
                              ],
                         damage: 1,
                         durCount:0,
@@ -602,12 +671,15 @@
                                         }
                                         //player.attacking = false;
                                         
-                                        if (this.durCount >= this.aoe[player.dir][this.atkIndex].dur) {
+                                        if (this.durCount > this.aoe[player.dir][this.atkIndex].dur) {
                                             this.durCount = 0;
                                             this.atkIndex++;
                                             if (this.atkIndex >= this.aoe[player.dir].length) {
                                                 this.atkIndex = 0;
                                                 this.actioning = false;
+                                                if (this.cont == false) {
+                                                    player.attacking = false;
+                                                }
                                             }
                                         }
                                     }
@@ -615,6 +687,7 @@
                         action:	function() {
                                     if (this.actioning == false) {
                                         this.actioning = true;
+                                        this.swung = true;
                                         this.durCount = 0;
                                     }
 								}
@@ -730,10 +803,10 @@
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
                                 player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                 this.collected == false) {
-                                player.augments.unshift(augments[this.aug]);
+                                player.augments.push(augments[this.aug]);
 								if (player.augments.length > player.maxAugs) {
 									player.augments[player.augments.length-1].onDrop();
-									player.augments.pop();
+									player.augments.shift();
 								}
                                 augments[this.aug].onPickup();
                                 this.collected = true;
@@ -958,7 +1031,7 @@
         case    77: pressedKeys.splice(pressedKeys.indexOf('M'),1);
                     break;
 		case	32:	pressedKeys.splice(pressedKeys.indexOf('_'),1);
-                    player.attacking = false;
+                    //player.attacking = false;
                     break;			
       }
 	}, false);
@@ -984,17 +1057,6 @@
         fps = frames;
         frames = 0;
     },1000);
-    
-    //control blinking
-    setInterval(function() {
-		//player.anim_index++;
-		
-        if (blink == true) {
-            blink = false;
-        } else {
-            blink = true;
-        }
-    },250);
     
     //read in room data from image
 	function parseRoomData(x,y, mini) {
@@ -1086,7 +1148,7 @@
             }
             roomMap[2].push(row);
         }
-        return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:0};
+        return{type:'room', mini: mini, map:roomMap, config:doorData, contents:[], obs:-1, discovered:false, wallStyle:0, floorStyle:0};
 	}
 	
     //buld room templates
@@ -1337,7 +1399,7 @@
                 rand = Math.floor(Math.random()*posFloors.length);
             }
             seed+=rand+'_';
-            floorPal.push(posFloors[rand]-floorStyle);
+            floorPal.push(posFloors[rand]);
             posFloors.splice(rand, 1);
         }
         if (gen) {
@@ -1348,13 +1410,13 @@
         }
         seed+=rand+'_';
         if (rand == 0) {
-            floorPal.push(286-floorStyle);
+            floorPal.push(286);
         }
         if (rand == 1) {
-            floorPal.push(287-floorStyle);
+            floorPal.push(287);
         }
         if (rand == 2) {
-            floorPal.push(288-floorStyle);
+            floorPal.push(288);
         }
         //shuffle(floorPal);
         
@@ -1506,6 +1568,7 @@
                 genFloor(emptList[j].y, emptList[j].x);
                 
                 map[emptList[j].y][emptList[j].x].wallStyle = walls;
+                map[emptList[j].y][emptList[j].x].floorStyle = floorStyle;
                 
                 //create new empty's
                 if (appList[rand].config[0].length > 0 && map[emptList[j].y-1][emptList[j].x] == 0) {
@@ -1590,6 +1653,7 @@
                 genFloor(emptList[j].y, emptList[j].x);
             
                 map[emptList[j].y][emptList[j].x].wallStyle = walls;
+                map[emptList[j].y][emptList[j].x].floorStyle = floorStyle;
             }
         }
         
@@ -1623,6 +1687,7 @@
                                         map[i-1][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i-1, j);
                                         map[i-1][j].wallStyle = walls;
+                                        map[i-1][j].floorStyle = floorStyle;
                                     } 
                                     if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
@@ -1631,6 +1696,7 @@
                                         map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j);
                                         map[i][j].wallStyle = walls;
+                                        map[i][j].floorStyle = floorStyle;
                                     }
                                 }
                                 
@@ -1658,6 +1724,7 @@
                                         map[i][j-1] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j-1);
                                         map[i][j-1].wallStyle = walls;
+                                        map[i][j-1].floorStyle = floorStyle;
                                     } 
                                     if ((JSON.stringify(rooms[k].config[0]) == JSON.stringify(mConfig[0])) &&
                                         (JSON.stringify(rooms[k].config[1]) == JSON.stringify(mConfig[1])) &&
@@ -1666,6 +1733,7 @@
                                         map[i][j] = JSON.parse(JSON.stringify(rooms[k]));
                                         genFloor(i, j);
                                         map[i][j].wallStyle = walls;
+                                        map[i][j].floorStyle = floorStyle;
                                     }
                                 }
                             }
@@ -1795,6 +1863,15 @@
         
 		map[mapLoc.y][mapLoc.x].discovered = true;
 		
+        //apply floor style
+		for (var i=0; i<map[mapLoc.y][mapLoc.x].map[0].length; i++) {
+			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[0][i].length; j++) {
+                if (map[mapLoc.y][mapLoc.x].map[0][i][j] != 0) {
+                    map[mapLoc.y][mapLoc.x].map[0][i][j] = map[mapLoc.y][mapLoc.x].map[0][i][j]-map[mapLoc.y][mapLoc.x].floorStyle;
+                }
+            }
+        }
+        
         //apply wall style
 		for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
 			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
@@ -1856,6 +1933,15 @@
 			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
                 if (map[mapLoc.y][mapLoc.x].map[1][i][j] != 0) {
                     map[mapLoc.y][mapLoc.x].map[1][i][j] = map[mapLoc.y][mapLoc.x].map[1][i][j]+map[mapLoc.y][mapLoc.x].wallStyle;
+                }
+            }
+        }
+        
+        //undo wall styling
+        for (var i=0; i<map[mapLoc.y][mapLoc.x].map[0].length; i++) {
+			for (var j=0; j<map[mapLoc.y][mapLoc.x].map[0][i].length; j++) {
+                if (map[mapLoc.y][mapLoc.x].map[0][i][j] != 0) {
+                    map[mapLoc.y][mapLoc.x].map[0][i][j] = map[mapLoc.y][mapLoc.x].map[0][i][j]+map[mapLoc.y][mapLoc.x].floorStyle;
                 }
             }
         }
