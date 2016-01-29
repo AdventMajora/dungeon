@@ -54,6 +54,8 @@
     var sX,sY,imgData,curimg;
     var remKeys = 0;
     var remMobs = 0;
+    var draws = 0;
+    var drawsperframe = 0;
 	
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -123,6 +125,8 @@
     
     var player={x:9*tileSize,
                 y:8*tileSize,
+                drawX: 9*tileSize,
+                drawY: 9*tileSize,
                 dir:2,
                 strafe: false,
                 moving: false,
@@ -166,6 +170,14 @@
                 anim_index:0,
                 animCounter:-1,
                 update: function (){
+                            
+                            if (this.freeRoam == true) {
+                                this.drawX = this.x;
+                                this.drawY = this.y;
+                            } else {
+                                this.drawX = 9*tileSize;
+                                this.drawY = 8*tileSize;
+                            }
                             
                             if (this.invincible == true) {
                                 this.invincCounter++;
@@ -265,25 +277,25 @@
                             for (var i=0; i<pressedKeys.length; i++) {
                                 switch (pressedKeys[i]) {
                                     case    'W':    if (this.moving == true) {
-                                                        player.move(0);
+                                                        this.move(0);
                                                     }
                                                     break;
                                     case    'A':    if (this.moving == true) {
-                                                        player.move(1);
+                                                        this.move(1);
                                                     }
                                                     break;
                                     case    'S':    if (this.moving == true) {
-                                                        player.move(2);
+                                                        this.move(2);
                                                     }
                                                     break;
                                     case    'D':    if (this.moving == true) {
-                                                        player.move(3);
+                                                        this.move(3);
                                                     }
                                                     break;
 									case	'_':	if (this.attacking == false && this.spirit>=this.weapons[this.wepIndex].init_cost && this.weapons[this.wepIndex].swung == false) {
                                                         this.anim_index = 0;
-                                                        player.attacking = true;
-                                                        player.spirit = player.spirit-player.weapons[player.wepIndex].init_cost;
+                                                        this.attacking = true;
+                                                        this.spirit = this.spirit-this.weapons[this.wepIndex].init_cost;
                                                     }
                                                     if (this.attacking == true && player.weapons[this.wepIndex].cont == true){
                                                         this.spirit = this.spirit-player.weapons[this.wepIndex].use_cost;
@@ -405,14 +417,14 @@
                             
                             if (this.invincCounter%2 == 0) {
                             
-                                if (player.dir == 0) {
+                                if (this.dir == 0) {
                                     if (this.moving == true && paused == false) {
                                         if (this.animCounter > -1) {
                                             this.animCounter++;
                                             if (this.animCounter > this.animations.wU_anim[this.anim_index].dur) {
                                                 this.animCounter = 0;
                                                 this.anim_index++;
-                                                if (this.anim_index >= player.animations.wU_anim.length) {
+                                                if (this.anim_index >= this.animations.wU_anim.length) {
                                                     this.anim_index = 0;
                                                 }
                                             }
@@ -450,7 +462,7 @@
                                     }
                                     
                                 }
-                                if (player.dir == 1) {
+                                if (this.dir == 1) {
                                     if (this.moving == true && paused == false) {
                                         if (this.animCounter > -1) {
                                             this.animCounter++;
@@ -463,11 +475,11 @@
                                             }
                                         }
                                         
-                                        ctx.drawImage(playerSheet, player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.wL_anim[this.anim_index].x,this.animations.wL_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
                                         for (var i=0; i<this.augments.length; i++) {     
-                                            ctx.drawImage(playerSheet, 128+player.animations.wL_anim[player.anim_index].x,player.animations.wL_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
-                                            ctx.drawImage(playerSheet, 128+0,16+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                            ctx.drawImage(playerSheet, 128+this.animations.wL_anim[this.anim_index].x,this.animations.wL_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,16+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
                                         }
                                     } else if (this.attacking == true && paused == false){
                                         if (this.animCounter > -1) {
@@ -475,42 +487,42 @@
                                             if (this.animCounter > this.animations.aL_anim[this.anim_index].dur) {
                                                 this.animCounter = 0;
                                                 this.anim_index++;
-                                                if (player.anim_index >= player.animations.aL_anim.length) {
-                                                    player.anim_index = 0;
+                                                if (this.anim_index >= this.animations.aL_anim.length) {
+                                                    this.anim_index = 0;
                                                 }
                                             }
                                         }
                                         
-                                        ctx.drawImage(playerSheet, player.animations.aL_anim[player.anim_index].x,player.animations.aL_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.aL_anim[this.anim_index].x,this.animations.aL_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
                                     } else {
-                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                        ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,this.x-4, this.y-16,16,16);
+                                        ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,this.x-4, this.y,16,8);
                                         for (var i=0; i<this.augments.length; i++) {     
-                                            ctx.drawImage(playerSheet, 128+0,16+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
-                                            ctx.drawImage(playerSheet, 128+32,16+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,16+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
+                                            ctx.drawImage(playerSheet, 128+32,16+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
                                         }
                                     }
                                     
                                 }
-                                if (player.dir == 2) {
+                                if (this.dir == 2) {
                                     if (this.moving == true && paused == false) {
                                         if (this.animCounter > -1) {
                                             this.animCounter++;
                                             if (this.animCounter > this.animations.wD_anim[this.anim_index].dur) {
                                                 this.animCounter = 0;
                                                 this.anim_index++;
-                                                if (player.anim_index >= player.animations.wD_anim.length) {
-                                                    player.anim_index = 0;
+                                                if (this.anim_index >= this.animations.wD_anim.length) {
+                                                    this.anim_index = 0;
                                                 }
                                             }
                                         }
                                         
-                                        ctx.drawImage(playerSheet, player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.wD_anim[this.anim_index].x,this.animations.wD_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
                                         for (var i=0; i<this.augments.length; i++) {     
-                                            ctx.drawImage(playerSheet, 128+player.animations.wD_anim[player.anim_index].x,player.animations.wD_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
-                                            ctx.drawImage(playerSheet, 128+0,0+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                            ctx.drawImage(playerSheet, 128+this.animations.wD_anim[this.anim_index].x,this.animations.wD_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,0+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
                                         }
                                     } else if (this.attacking == true && paused == false){
                                         if (this.animCounter > -1) {
@@ -518,41 +530,41 @@
                                             if (this.animCounter > this.animations.aD_anim[this.anim_index].dur) {
                                                 this.animCounter = 0;
                                                 this.anim_index++;
-                                                if (player.anim_index >= player.animations.aD_anim.length) {
-                                                    player.anim_index = 0;
+                                                if (this.anim_index >= this.animations.aD_anim.length) {
+                                                    this.anim_index = 0;
                                                 }
                                             }
                                         }
                                         
-                                        ctx.drawImage(playerSheet, player.animations.aD_anim[player.anim_index].x,player.animations.aD_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.aD_anim[this.anim_index].x,this.animations.aD_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
                                     } else {
-                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                        ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,this.x-4, this.y-16,16,16);
+                                        ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,this.x-4, this.y,16,8);
                                         for (var i=0; i<this.augments.length; i++) {     
-                                            ctx.drawImage(playerSheet, 128+32,0+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
-                                            ctx.drawImage(playerSheet, 128+0,0+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
+                                            ctx.drawImage(playerSheet, 128+32,0+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+0,0+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
                                         }
                                     }
                                 }
-                                if (player.dir == 3) {
+                                if (this.dir == 3) {
                                     if (this.moving == true && paused == false) {   
                                         if (this.animCounter > -1) {
                                             this.animCounter++;
                                             if (this.animCounter > this.animations.wR_anim[this.anim_index].dur) {
                                                 this.animCounter = 0;
                                                 this.anim_index++;
-                                                if (player.anim_index >= player.animations.wR_anim.length) {
-                                                    player.anim_index = 0;
+                                                if (this.anim_index >= this.animations.wR_anim.length) {
+                                                    this.anim_index = 0;
                                                 }
                                             }
                                         }
                                         
-                                        ctx.drawImage(playerSheet, player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.wR_anim[this.anim_index].x,this.animations.wR_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
+                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
                                         for (var i=0; i<this.augments.length; i++) {     
-                                            ctx.drawImage(playerSheet, 128+player.animations.wR_anim[player.anim_index].x,player.animations.wR_anim[player.anim_index].y+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
-                                            ctx.drawImage(playerSheet, 128+16,16+player.augments[i].drawCol,16,16,player.x-4, player.y-15,16,16);
+                                            ctx.drawImage(playerSheet, 128+this.animations.wR_anim[this.anim_index].x,this.animations.wR_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+16,16+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
                                         }
                                     } else if (this.attacking == true && paused == false){
                                         if (this.animCounter > -1) {
@@ -560,20 +572,20 @@
                                             if (this.animCounter > this.animations.aR_anim[this.anim_index].dur) {
                                                 this.animCounter = 0;
                                                 this.anim_index++;
-                                                if (player.anim_index >= player.animations.aR_anim.length) {
-                                                    player.anim_index = 0;
+                                                if (this.anim_index >= this.animations.aR_anim.length) {
+                                                    this.anim_index = 0;
                                                 }
                                             }
                                         }
                                         
-                                        ctx.drawImage(playerSheet, player.animations.aR_anim[player.anim_index].x,player.animations.aR_anim[player.anim_index].y+this.bodySet,16,8,player.x-4, player.y,16,8);
-                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-15,16,16);
+                                        ctx.drawImage(playerSheet, this.animations.aR_anim[this.anim_index].x,this.animations.aR_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
+                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
                                     } else {
-                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,player.x-4, player.y-16,16,16);
-                                        ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,player.x-4, player.y,16,8);
+                                        ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,this.x-4, this.y-16,16,16);
+                                        ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,this.x-4, this.y,16,8);
                                         for (var i=0; i<this.augments.length; i++) {     
-                                            ctx.drawImage(playerSheet, 128+32,8+player.augments[i].drawCol,16,8,player.x-4, player.y,16,8);
-                                            ctx.drawImage(playerSheet, 128+16,16+player.augments[i].drawCol,16,16,player.x-4, player.y-16,16,16);
+                                            ctx.drawImage(playerSheet, 128+32,8+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
+                                            ctx.drawImage(playerSheet, 128+16,16+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
                                         }
                                     }
                                 }
@@ -700,7 +712,7 @@
         var aug_heartPin = 	{name: 'Pin',	effectText: '+.005 hpr', drawCol: 32, onPickup: function() {player.healthGen = player.healthGen+.005;}, 	onDrop:	function(){player.healthGen = player.healthGen-.005;}, 		action:    function(){}};
         var aug_bracelet = 	{name: 'Brace',	effectText: '+.1 spr', drawCol: 64, onPickup: function(){player.spiritGen = player.spiritGen+.1;}, 	onDrop:	function(){player.spiritGen = player.spiritGen-.1;}, 		action:    function(){}};
         var aug_tabard = 	{name: 'Tabard',effectText: '+move+atk', drawCol: 96, onPickup: function(){player.moveWhileAttacking = true;}, onDrop:	function(){player.moveWhileAttacking = false;},	action:    function(){}};
-        var aug_robe = 		{name: 'Robe',	effectText: '+3 def', drawCol: 128, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1}, action:    function(){}};
+        var aug_robe = 		{name: 'Robe',	effectText: '+1 def', drawCol: 128, onPickup: function(){player.base_defense = player.base_defense+1}, onDrop:	function(){player.base_defense = player.base_defense-1}, action:    function(){}};
         var aug_horns = 	{name: 'Horns',	effectText: '+1 dmg', drawCol: 160, onPickup: function(){player.base_damage = player.base_damage+1}, 	onDrop:	function(){player.base_damage = player.base_damage-1}, 		action:    function(){}};
     }
     var augments = [aug_scarf,aug_heartPin,aug_bracelet,aug_tabard,aug_robe,aug_horns,aug_scarf];
@@ -805,7 +817,7 @@
                                 this.collected == false) {
                                 player.augments.push(augments[this.aug]);
 								if (player.augments.length > player.maxAugs) {
-									player.augments[player.augments.length-1].onDrop();
+									player.augments[0].onDrop();
 									player.augments.shift();
 								}
                                 augments[this.aug].onPickup();
@@ -814,7 +826,11 @@
                         },
                         draw:	function() {
                                     if (this.collected == false) {	
-                                        drawSprite(this.sprite[0], this.loc.x, this.loc.y);
+                                        if (blink == true) {
+                                            drawSprite(this.sprite[0], this.loc.x, this.loc.y);
+                                        } else {
+                                            drawSprite(this.sprite[1], this.loc.x, this.loc.y);
+                                        }
                                     }
                                 },
                         aug: -1
@@ -1957,6 +1973,7 @@
     
     //draw a sprite
 	function drawSprite(sprite,x,y) {
+        draws++;
         if (sprite == 286 && blink == true) {
             sprite = 318;
         }
@@ -2298,7 +2315,8 @@
                     if (roomDrawY >=0) {
                         roomDrawY = 0;
                     }
-                    if (roomDrawY == 0 && player.y == 8*tileSize){
+                    
+                    if ((roomDrawY == 0 && player.y == 8*tileSize)){
                         rTransition = -1;
                         bannerCounter = 0;
                     }
@@ -2478,6 +2496,9 @@
         //update/render menu
         menuSystem();
         rctx.scale(1/scaleFactor,1/scaleFactor);
+        
+        drawsperframe = draws;
+        draws = 0;
         
         window.requestAnimationFrame(mainLoop);
 	}
