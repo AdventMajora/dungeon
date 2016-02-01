@@ -66,6 +66,8 @@
 	var roomTemplates = new Image();
 	roomTemplates.src = 'assets/RoomTemplates.png';
     
+    var bgm = new Audio('assets/song2.wav');
+    
     var currPal;
     var pal_0 = [[241,241,241,255],[178,178,178,255],[108,108,108,255],[26,26,26,255]];
     var pal_1 = [[241,241,241,255],[216,184,248,255],[104,136,252,255],[26,26,26,255]];
@@ -1279,7 +1281,8 @@
     
     //kick off EVERYTHING
     function init() {
-    
+        bgm.loop = true;
+        bgm.play();
         initRooms();
         
 		player.init();
@@ -2441,6 +2444,7 @@
                 
         } else {
 			//render game over screen
+            bgm.stop();
             if (player.health <=0) {
                 ctx.font="7px monospace";
                 ctx.fillStyle = 'black';
