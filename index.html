@@ -15,6 +15,7 @@
 <canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none"></canvas>
 
 <script type="text/javascript">
+    //music url http://www.beepbox.co/#5s6k6l00e0ftaa7g0fj7i0r0w1111f0000d1111c0000h0060v0003o3210b000w8h4h4g0h4i4zcP8x8y8y4h8y8h8h4x800i4w018p22-FBO9cd6gFO0V6j8Rj3Apllg5cKh9xwQQV0siN2hGMoIOSD83ApdteyCNd3HqTqWwkOV4C6z8kV0sz9AqGqfuPnjIp5dehjAQQwmo589wngChmNmRhJr5rl6QVwhmYnBulZltunI2XR2TvgHKXU_cPcHKXHKXM3dgggA444aXKY-O0Xi7dQrmlhhthhJkm0
     var blink = true;			//state of blink
     var frames = 0;				//A frame count
     var goalTile = {x:-1,y:-1};	//Exit Tile	
@@ -1306,6 +1307,7 @@
     //build room config from .tmx file
     function buildConfig(config_name) {
         config_name = 'assets/'+config_name+'.tmx';
+        console.log(config_name);
         var tiledXML;
 		var tiled;
 		var background,collision,overlap;
@@ -1316,6 +1318,7 @@
 			if (rawFile.readyState === 4) {
 				if (rawFile.status === 200 || rawFile.status == 0) {
 					tiledXML = rawFile.responseText;
+                    console.log(rawFile.responseText);
 				}
 			}
 		}
