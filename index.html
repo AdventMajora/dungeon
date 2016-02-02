@@ -1870,21 +1870,23 @@
         //console.log(JSON.stringify(cards));
         
         //assign obstacle configs
-        /*for (i=0; i<map.length; i++) {
+        for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
                 if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
                     if (gen) {
                         rand = gen.charAt(genIndex);
                         genIndex++;
                     } else {
-                        rand = Math.floor(Math.random()*17);
+                        rand = Math.floor(Math.random()*18);
                     }
                     seed+=rand+'_';
+                    if (!rand == 17) {
+                        map[i][j].obs = buildConfig('config_'+rand);
+                    }
                     
-                    map[i][j].obs = buildConfig('config_'+rand);
                 }
             }
-        }*/
+        }
         
         loadRoom(map[mapLoc.y][mapLoc.x].map);
         lvlComplete = false;
