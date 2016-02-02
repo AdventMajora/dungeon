@@ -1016,8 +1016,10 @@
                         pressedKeys.push('M');
                         if (paused == true) {
                             menu = false;
+                            bgm.play();
                         } else {
                             paused = true;
+                            bgm.pause();
                             menu = true;
                             menuHeight = screenHeight-16;
                         }
@@ -1282,8 +1284,8 @@
     
     //kick off EVERYTHING
     function init() {
-        bgm.loop = true;
-        bgm.play();
+        //bgm.loop = true;
+        //bgm.play();
         initRooms();
         
 		player.init();
@@ -1316,13 +1318,15 @@
 		rawFile.open('GET', config_name, false);
 		rawFile.onreadystatechange = function () {
 			if (rawFile.readyState === 4) {
-				if (rawFile.status === 200 || rawFile.status == 0) {
+				if (rawFile.status === 200 || rawFile.status === 0) {
 					tiledXML = rawFile.responseText;
                     console.log(rawFile.responseText);
+                    console.log(rawFile.status);
 				}
 			}
 		}
 		rawFile.send(null);
+
 		tiledXML = $.parseXML(tiledXML);
 		$tiled = $(tiledXML);
 		$tiled = $tiled.find('data');
@@ -1866,7 +1870,7 @@
         //console.log(JSON.stringify(cards));
         
         //assign obstacle configs
-        for (i=0; i<map.length; i++) {
+        /*for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
                 if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
                     if (gen) {
@@ -1880,7 +1884,7 @@
                     map[i][j].obs = buildConfig('config_'+rand);
                 }
             }
-        }
+        }*/
         
         loadRoom(map[mapLoc.y][mapLoc.x].map);
         lvlComplete = false;
@@ -2071,7 +2075,7 @@
             rctx.fillRect(0, 0, 64, 8);
             
             rctx.fillStyle = 'white';
-            rctx.fillText('Depth: '+depth, 2, 6);
+            rctx.fillText('Cycle: '+depth, 2, 6);
         }
         
         //pause screen
@@ -2098,7 +2102,7 @@
             //hp  sp
             rctx.fillStyle = 'white';
             rctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+4,menuHeight+24);
-            rctx.fillText('depth: '+depth,Math.floor(screenWidth/2)+40,menuHeight+24);
+            rctx.fillText('cycle: '+depth,Math.floor(screenWidth/2)+40,menuHeight+24);
             rctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+32);
             rctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+32);
             rctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+40);
