@@ -1387,13 +1387,18 @@
     }
     
     //generate a level
-	function buildLevel(size, gen) {
+	function buildLevel(size, gen, prev) {
         depth++;
         remKeys = 0;
         remMobs = 0;
-		map = [ [0,0,0],
-                [0,empty,0],
-                [0,0,0]];
+        if (prev) {
+            map = prev;
+        ) else {
+            map = [ [0,0,0],
+                    [0,empty,0],
+                    [0,0,0]];
+        }
+		
 		mapLoc = {x:1, y:1};
         cards = [];
         var emptList = [];
