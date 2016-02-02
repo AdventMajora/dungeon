@@ -57,6 +57,7 @@
     var remMobs = 0;
     var draws = 0;
     var drawsperframe = 0;
+    var palettesEnabled = true;
 	
     var spriteSheet = new Image();	//Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -2472,38 +2473,41 @@
         }
 		
         //apply pallette swap
-        img = ctx.getImageData(0,0,160,144-16);
-        for(var i = 0, l = img.data.length; i < l; i += 4) {
-            if (img.data[i+3] > 0) {
-                if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
-                
-                    img.data[i] = currPal[0][0];
-                    img.data[i+1] = currPal[0][1];
-                    img.data[i+2] = currPal[0][2];
-                }
-                if (img.data[i] == pal_0[1][0] && img.data[i+1] == pal_0[1][1] && img.data[i+2] == pal_0[1][2]) {
-                
-                    img.data[i] = currPal[1][0];
-                    img.data[i+1] = currPal[1][1];
-                    img.data[i+2] = currPal[1][2];
-                }
-                if (img.data[i] == pal_0[2][0] && img.data[i+1] == pal_0[2][1] && img.data[i+2] == pal_0[2][2]) {
-                
-                    img.data[i] = currPal[2][0];
-                    img.data[i+1] = currPal[2][1];
-                    img.data[i+2] = currPal[2][2];
-                }
-                if (img.data[i] == pal_0[3][0] && img.data[i+1] == pal_0[3][1] && img.data[i+2] == pal_0[3][2]) {
-                
-                    img.data[i] = currPal[3][0];
-                    img.data[i+1] = currPal[3][1];
-                    img.data[i+2] = currPal[3][2];
-                }
+        if (palettesEnabled == true) {
+            img = ctx.getImageData(0,0,160,144-16);
+            for(var i = 0, l = img.data.length; i < l; i += 4) {
+                if (img.data[i+3] > 0) {
+                    if (img.data[i] == pal_0[0][0] && img.data[i+1] == pal_0[0][1] && img.data[i+2] == pal_0[0][2]) {
+                    
+                        img.data[i] = currPal[0][0];
+                        img.data[i+1] = currPal[0][1];
+                        img.data[i+2] = currPal[0][2];
+                    }
+                    if (img.data[i] == pal_0[1][0] && img.data[i+1] == pal_0[1][1] && img.data[i+2] == pal_0[1][2]) {
+                    
+                        img.data[i] = currPal[1][0];
+                        img.data[i+1] = currPal[1][1];
+                        img.data[i+2] = currPal[1][2];
+                    }
+                    if (img.data[i] == pal_0[2][0] && img.data[i+1] == pal_0[2][1] && img.data[i+2] == pal_0[2][2]) {
+                    
+                        img.data[i] = currPal[2][0];
+                        img.data[i+1] = currPal[2][1];
+                        img.data[i+2] = currPal[2][2];
+                    }
+                    if (img.data[i] == pal_0[3][0] && img.data[i+1] == pal_0[3][1] && img.data[i+2] == pal_0[3][2]) {
+                    
+                        img.data[i] = currPal[3][0];
+                        img.data[i+1] = currPal[3][1];
+                        img.data[i+2] = currPal[3][2];
+                    }
+                } 
             } 
-        } 
-        ctx.putImageData(img, 0, 0);
-        rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
-        rctx.putImageData(rendScreen,0,0);
+            ctx.putImageData(img, 0, 0);
+            rendScreen = ctx.getImageData(0,0,screenWidth,screenHeight);
+            rctx.putImageData(rendScreen,0,0);
+        }
+        
         rctx.scale(scaleFactor,scaleFactor);
         rctx.drawImage(rendCanvas, 0,0);
         //update/render menu
