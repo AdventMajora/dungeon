@@ -1793,7 +1793,7 @@
                 }
             }
         }
-
+        console.log(map[mapLoc.y][mapLoc.x]);
         map[mapLoc.y][mapLoc.x].contents.push($.extend({}, con_goal));
         map[mapLoc.y][mapLoc.x].obs = buildConfig('config_goal');
 		map[mapLoc.y][mapLoc.x].contents[0].diff = Math.ceil((rList.length-1)/2);
@@ -1869,7 +1869,7 @@
                 }
             }
         }
-        console.log(seed);
+        //console.log(seed);
         minimap.update();
         player.x = 9*tileSize;
         player.y = 8*tileSize;
