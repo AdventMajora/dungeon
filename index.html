@@ -1880,7 +1880,7 @@
                         rand = Math.floor(Math.random()*18);
                     }
                     seed+=rand+'_';
-                    if (!rand == 17) {
+                    if (rand != 17) {
                         map[i][j].obs = buildConfig('config_'+rand);
                     }
                     
