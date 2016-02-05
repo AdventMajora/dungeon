@@ -1874,7 +1874,7 @@
         var ent_goal = {type: 'goal', sprite: [581], loc: {x: 9.5*tileSize, y: 8*tileSize},
                         action:	function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 
-                                && (player.keys.length >= this.diff || remMobs == 0)) {
+                                && (remKeys == 0 || remMobs == 0)) {
                                 lvlComplete = true;
 								var rand = Math.floor(Math.random()*pals.length); 
 								currPal = pals[rand];
@@ -2311,6 +2311,7 @@
     
     //generate a level
 	function buildLevel(size, prev) {
+        player.keys = [];
         cycle++;                    //increment the cycle
         remKeys = 0;                //reset the remaining keys
         remMobs = 0;                //reset the remaingin mobs
