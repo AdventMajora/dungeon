@@ -1,4 +1,4 @@
-weapon name ideas
+///////////////////////////////////////weapon name ideas
 The Walking Shadow
 Oh What Great Heart
 All Riven
@@ -49,3 +49,11 @@ A Brief Wakening
 Looking Outward, Reaching In
 Each Darkest Fire
 Impulsive Designs
+My Wayward Son
+
+///////////////////////////////////////Lore
+The universe is fading, most of it already gone
+The player must work to reclaim/regrow/regenerate the universe
+The universe is constantly fading. Anything the player removes from the univers (kills/destroys) contributes to it's fade
+The more cycles the player completes, the more the universe is regrown and can be explored.
+eventually, teh universe will reach a critical mass, and will reset/renew. At this point the game can be considered complete.

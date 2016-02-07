@@ -1211,7 +1211,7 @@
                 lvl:0,
                 newLvl:10,
                 augments:[],
-				maxAugs: 5,
+				maxAugs: 8,
                 headSet: 0,
                 bodySet: 0,
                 animations:{wU_anim:[{x:48,y:24,dur:4},{x:32,y:24,dur:4},{x:64,y:24,dur:4},{x:32,y:24,dur:4}],
@@ -1682,7 +1682,8 @@
 						}, 
 				keys:[],
 				wepIndex: 0,
-				weapons:[]
+				weapons:[],
+                maxWeps: 5
     };
     
     ////////////////////////////////augments//////////////////////////////////
@@ -1815,7 +1816,7 @@
 	////////////////////////////////room entities/////////////////////////////
     {
         var ent_aug = {type: 'aug', sprite: [582,583], loc: {x: 9*tileSize, y: 8*tileSize}, collected: false,
-                        action:	function() {
+                        update:	function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
                                 player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                 this.collected == false) {
@@ -1840,7 +1841,7 @@
                         aug: -1
         };
         var ent_key = {type: 'key', sprite: [549], loc: {x: 9*tileSize, y: 8*tileSize}, collected: false,
-                        action:	function() {
+                        update:	function() {
                                     if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
                                         player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                         this.collected == false) {
@@ -1856,7 +1857,7 @@
                                 }
         };
         var ent_drop = {type: 'drop', sprite: [583], loc: {x:-1,y:-1}, collected: false,
-                        action: function() {
+                        update: function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
                                 player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
                                 this.collected == false) {
@@ -1872,7 +1873,7 @@
                 
         };
         var ent_goal = {type: 'goal', sprite: [581], loc: {x: 9.5*tileSize, y: 8*tileSize},
-                        action:	function() {
+                        update:	function() {
                             if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 
                                 && (remKeys == 0 || remMobs == 0)) {
                                 lvlComplete = true;
@@ -1880,8 +1881,8 @@
 								currPal = pals[rand];
 								
                                 player.curse = player.curse*(.25);
-                                rTransition = 4;
-                                roomDrawY = 0-(2*screenHeight+16);
+                                //rTransition = 4;
+                                //roomDrawY = 0-(2*screenHeight+16);
                                 player.keys = [];
                                 buildLevel(expansionFactor, map);
                             }
@@ -1899,7 +1900,7 @@
                     sprite: [705], loc: {x: -1, y:-1}, speed: 1, health: 10, alive: true, exp_reward: 1,
                     damage: 1,
                     cursePenalty: 1,
-                    action:	function() {
+                    update:	function() {
                                 if (this.health <= 0 && this.alive == true) {
                                     player.exp = player.exp+this.exp_reward;
                                     player.curse = player.curse + this.cursePenalty;
@@ -2029,10 +2030,10 @@
                         pressedKeys.push('M');
                         if (paused == true) {
                             menu = false;
-                            bgm.play();
+                            //bgm.play();
                         } else {
                             paused = true;
-                            bgm.pause();
+                            //bgm.pause();
                             menu = true;
                             menuHeight = screenHeight-16;
                         }
@@ -3179,40 +3180,28 @@
                         rTransition = -1;
                     }
                 }
-                if (rTransition == 4) {
-                    player.y =  player.y +10;
-                    roomDrawY = roomDrawY+10;
-                    if (player.y >= 8*tileSize) {
-                        player.y = 8*tileSize;
-                    }
-                    if (roomDrawY >=0) {
-                        roomDrawY = 0;
-                    }
-                    
-                    if ((roomDrawY == 0 && player.y == 8*tileSize)){
-                        rTransition = -1;
-                        bannerCounter = 0;
-                    }
-                    ctx.font="7px monospace";
-                    ctx.fillStyle = 'white';
-                    ctx.fillText('LOADING...', (screenWidth/2)-20, ((screenHeight-16)/2)+32);
-                }
+                
             }
             
+            ctx.fillStyle = '#F1F1F1';
+            //ctx.fillStyle = 'black';
+            ctx.fillRect(0,0,screenWidth,screenHeight-16);
+            
             //render map
-			//curr room background
             for (var i=0; i<currLvl[0].length; i++) {
                 for (var j=0; j<currLvl[0][i].length; j++) {
-                    if (currLvl[0][i][j] !=0) {
+                    //background layer
+                    if (currLvl[0][i][j] !=0 && currLvl[0][i][j] != 190 && currLvl[0][i][j] != 187) {
 						drawSprite(currLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
-                }
-            }
-            //prev room background
-            if (rTransition != -1) {
-                for (var i=0; i<prevLvl[0].length; i++) {
-                    for (var j=0; j<prevLvl[0][i].length; j++) {
-                        if (prevLvl[0][i][j] !=0) {
+                    //collision layer
+                    if (currLvl[1][i][j] !=0) {
+						drawSprite(currLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+					}
+                    
+                    if (rTransition != -1) {
+                        //prev background
+                        if (prevLvl[0][i][j] !=0 && prevLvl[0][i][j] != 190 && prevLvl[0][i][j] != 187) {
                             if (rTransition == 0) {
                                 drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
                             }
@@ -3226,22 +3215,7 @@
                                 drawSprite(prevLvl[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
-                    }
-                }
-            }
-			
-			//curr room collision
-            for (var i=0; i<currLvl[1].length; i++) {
-                for (var j=0; j<currLvl[1][i].length; j++) {
-                    if (currLvl[1][i][j] !=0) {
-						drawSprite(currLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-					}
-                }
-            }
-            //prev room collision
-            if (rTransition != -1) {
-                for (var i=0; i<prevLvl[1].length; i++) {
-                    for (var j=0; j<prevLvl[1][i].length; j++) {
+                        //prev collision
                         if (prevLvl[1][i][j] !=0) {
                             if (rTransition == 0) {
                                 drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
@@ -3256,7 +3230,7 @@
                                 drawSprite(prevLvl[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                             }
                         }
-                    }
+                    }    
                 }
             }
 
@@ -3264,7 +3238,7 @@
 			if (paused == false && rTransition == -1) {	
                 //update contents of room
                 for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
-                    map[mapLoc.y][mapLoc.x].contents[i].action();
+                    map[mapLoc.y][mapLoc.x].contents[i].update();
                 }
                 
                 player.update();    
@@ -3287,26 +3261,18 @@
                     if (currLvl[2][i][j] !=0) {
 						drawSprite(currLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
 					}
-                }
-            }
-            
-            //prev room overlap
-            if (rTransition != -1) {
-                for (var i=0; i<prevLvl[2].length; i++) {
-                    for (var j=0; j<prevLvl[2][i].length; j++) {
-                        if (prevLvl[2][i][j] !=0) {
-                            if (rTransition == 0) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
-                            }
-                            if (rTransition == 1) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-                            }
-                            if (rTransition == 2) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
-                            }
-                            if (rTransition == 3) {
-                                drawSprite(prevLvl[2][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-                            }
+                    if (prevLvl[2][i][j] !=0 && rTransition != -1) {
+                        if (rTransition == 0) {
+                            drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+                        }
+                        if (rTransition == 1) {
+                            drawSprite(prevLvl[2][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+                        }
+                        if (rTransition == 2) {
+                            drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+                        }
+                        if (rTransition == 3) {
+                            drawSprite(prevLvl[2][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
                         }
                     }
                 }
