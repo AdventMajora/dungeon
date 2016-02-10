@@ -1,0 +1,20 @@
+TODO
+
+openable chests
+    openable chests that require a certain amount of keys to be opened
+Locked Doors
+    Locked Doors that require keys
+    Locked Doors that require killing enemies
+    Locked Doors that require buttons/switches to open
+Generated Mobs
+    Mobs taht are put together on level gen
+    Need many AI sets of behaviors to accompany
+Boss Mobs
+    BIG badass mobs
+    Visible health bar
+    SUPER CRAZY
+Weapon Drops
+    Dropped from Boss mobs only
+    picked up like augments
+Weapon cycling
+    Player can cycle through held weapons

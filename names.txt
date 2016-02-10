@@ -50,6 +50,8 @@ Looking Outward, Reaching In
 Each Darkest Fire
 Impulsive Designs
 My Wayward Son
+Last Gleaming
+
 
 ///////////////////////////////////////Lore
 The universe is fading, most of it already gone
@@ -57,3 +59,14 @@ The player must work to reclaim/regrow/regenerate the universe
 The universe is constantly fading. Anything the player removes from the univers (kills/destroys) contributes to it's fade
 The more cycles the player completes, the more the universe is regrown and can be explored.
 eventually, teh universe will reach a critical mass, and will reset/renew. At this point the game can be considered complete.
+
+///////////////////////////////////////Level design
+Chests that need keys
+Monsters that drop keys
+Doors that require keys
+NO TRASH MOBS! ALl mobs should be dangerous and pose a threat to the player
+Once all offerings/keys collected, must fight a boss mob in starting room to finish cycle
+Choose a consistant wall/floor/palette for an entire cycle. 
+Special rooms get special wall/floor/palettes
+100% chance of one power up. 25% chance of a second per level
+New Weapons are dropped by boss mobs
