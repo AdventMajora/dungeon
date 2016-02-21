@@ -53,6 +53,8 @@
     var palettesEnabled = true;         //Flag to enable/disable Pallettes
     var map = [[]];                     //The configuration of the current level
     var mapLoc = {x:0, y:0};            //location of the currently loaded room in the map
+    var availFloors = 2;                //number of available floor tile sets
+    var availWalls = 4;                 //number of available wall tile sets
     
     var spriteSheet = new Image();	    //Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
@@ -1975,6 +1977,7 @@
                         && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
                         && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] ==0) {
                         this.loc.y-=this.speed;
+                        this.dir = 0;
                     }
                 }
                 if (rand == 1) {
@@ -1982,6 +1985,7 @@
                         && currLvl[1][Math.floor((Math.floor(this.loc.y))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0
                         && currLvl[1][Math.ceil(((Math.ceil(this.loc.y)))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0) {
                         this.loc.x-=this.speed;
+                        this.dir = 1;
                     }
                 }
                 if (rand == 2) {
@@ -1989,6 +1993,7 @@
                         && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] == 0
                         && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] == 0) {
                         this.loc.y+=this.speed;
+                        this.dir = 2;
                     }
                 }
                 if (rand == 3) {
@@ -1996,6 +2001,7 @@
                         && currLvl[1][Math.ceil(Math.ceil(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0
                         && currLvl[1][Math.floor(Math.floor(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0) {
                         this.loc.x+=this.speed;
+                        this.dir = 3;
                     }
                 }
                 
@@ -2049,6 +2055,7 @@
                         && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] ==0
                         && currLvl[1][Math.floor((Math.floor(this.loc.y)-.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] ==0) {
                         this.loc.y-=this.speed;
+                        this.dir = 0;
                     }
                 }
                 if (rand == 1) {
@@ -2056,6 +2063,7 @@
                         && currLvl[1][Math.floor((Math.floor(this.loc.y))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0
                         && currLvl[1][Math.ceil(((Math.ceil(this.loc.y)))/8)][Math.floor((Math.floor(this.loc.x)-.5)/8)] == 0) {
                         this.loc.x-=this.speed;
+                        this.dir = 1;
                     }
                 }
                 if (rand == 2) {
@@ -2063,6 +2071,7 @@
                         && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.floor(Math.floor(this.loc.x)/8)] == 0
                         && currLvl[1][Math.ceil((Math.ceil(this.loc.y)+.5)/8)][Math.ceil(Math.ceil(this.loc.x)/8)] == 0) {
                         this.loc.y+=this.speed;
+                        this.dir = 2;
                     }
                 }
                 if (rand == 3) {
@@ -2070,6 +2079,7 @@
                         && currLvl[1][Math.ceil(Math.ceil(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0
                         && currLvl[1][Math.floor(Math.floor(this.loc.y)/8)][Math.ceil((Math.ceil(this.loc.x)+.5)/8)] == 0) {
                         this.loc.x+=this.speed;
+                        this.dir = 3;
                     }
                 }
                 
@@ -2100,7 +2110,7 @@
     ////////////////////////////////mobs//////////////////////////////////////
     var mobs = [//(considered a subtype of room entities and therefore must have all the necessary elements)
        {    type: 'mob', name:'test_mob', 
-            sprite: [1001,969,937,905], loc: {x: -1, y:-1}, speed: 1, health: 10, alive: true, exp_reward: 1,
+            sprite: [906,938,970,1002], loc: {x: -1, y:-1}, speed: 1, dir: 0, health: 10, alive: true, exp_reward: 1,
             damage: 1,
             cursePenalty: 1,
             aiIndex:0,
@@ -2122,7 +2132,7 @@
             draw:	function() {
                 if (this.alive == true) {
                     
-                    drawSprite(this.sprite[Math.floor(Math.random()*this.sprite.length)], this.loc.x, this.loc.y);
+                    drawSprite(this.sprite[this.dir], this.loc.x, this.loc.y);
                 }
             }
         }
@@ -2488,7 +2498,7 @@
         
         //190,191,192,222,223,224,254,255,256
         //make a floor palette
-        rand = Math.floor(Math.random()*2);
+        rand = Math.floor(Math.random()*availFloors);
         seed+=rand+'_';
         
         floorStyle = rand*3;
@@ -2511,7 +2521,7 @@
             floorPal.push(288);
         }
         
-        rand = Math.floor(Math.random()*4);
+        rand = Math.floor(Math.random()*availWalls);
         seed+=rand+'_';
         
         walls = rand*4;
@@ -2974,7 +2984,7 @@
                 for (var k=0; k<3; k++) {
                     for (var i=0; i<level[k].length; i++) {
                         for (var j=0; j<level[k][i].length; j++) {
-                            if (map[mapLoc.y][mapLoc.x].obs[k][i][j] !=0) {
+                            if (map[mapLoc.y][mapLoc.x].obs[k][i][j] !=0 && map[mapLoc.y][mapLoc.x].map[k][i][j] == 0) {
                                 map[mapLoc.y][mapLoc.x].map[k][i][j] = map[mapLoc.y][mapLoc.x].obs[k][i][j];
                             }
                         }
