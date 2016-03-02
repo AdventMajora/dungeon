@@ -13,7 +13,6 @@
 <body bgcolor="#787878" onresize="manageScreen()">
 <canvas id="myCanvas" height="144" width="160" style="border:1px solid black; display:none"></canvas>
 <canvas id="rendCanvas" height="144" width="160" style="border:1px solid black; image-rendering: pixelated;"></canvas>
-<canvas id="loadCanvas" height="256" width="256" style="border:1px solid black; display:none"></canvas>
 
 <script type="text/javascript">
     //music url http://www.beepbox.co/#5s6k6l00e0ftaa7g0fj7i0r0w1111f0000d1111c0000h0060v0003o3210b000w8h4h4g0h4i4zcP8x8y8y4h8y8h8h4x800i4w018p22-FBO9cd6gFO0V6j8Rj3Apllg5cKh9xwQQV0siN2hGMoIOSD83ApdteyCNd3HqTqWwkOV4C6z8kV0sz9AqGqfuPnjIp5dehjAQQwmo589wngChmNmRhJr5rl6QVwhmYnBulZltunI2XR2TvgHKXU_cPcHKXHKXM3dgggA444aXKY-O0Xi7dQrmlhhthhJkm0
@@ -56,7 +55,7 @@
     var mapLoc = {x:0, y:0};            //location of the currently loaded room in the map
     var availFloors = 2;                //number of available floor tile sets
     var availWalls = 4;                 //number of available wall tile sets
-    var currPal;              //holds the current color palette
+    var currPal;                        //holds the current color palette
     var spriteSheet = new Image();	    //Sheet of sprite images
 	spriteSheet.src = 'assets/char_sheet.png';
     
