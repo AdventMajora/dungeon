@@ -1163,9 +1163,10 @@
         cycle = -1;                     //default the cycle counter
         expansionFactor = 1;            //default the expansion factor
         if (type) {
-            buildHub();
-        } else {
             buildLevel(expansionFactor);    //build the first cycle
+        } else {
+            
+            buildHub();
         }
         prevLvl = JSON.parse(JSON.stringify(currLvl));  //set the prev room to the current room (just as an init)
 
