@@ -1151,7 +1151,7 @@
 	//                                                                      //
 	//////////////////////////////////////////////////////////////////////////
     
-    init();                             //initialize the game
+    init(0);                             //initialize the game
     mainLoop();                         //start event loop
     
     //kick off EVERYTHING
@@ -1691,15 +1691,23 @@
                         [0,0,0,0,0,0,0,0,0,0],
                         [0,0,0,0,0,0,0,0,0,0],
                         [0,0,0,0,0,0,0,0,0,0],
-                        [0,0,0,0,0,0,0,0,0,0]]; 
+                        [0,0,0,0,0,0,0,0,0,0]];
+        hubMap[1][1] = JSON.parse(JSON.stringify(open_56));
+        hubMap[1][1].palette = 9;
         hubMap[1][2] = JSON.parse(JSON.stringify(base_2));
         hubMap[1][2].palette = 5;
+        hubMap[2][1] = JSON.parse(JSON.stringify(open_62));
+        hubMap[2][1].palette = 9;
         hubMap[2][2] = JSON.parse(JSON.stringify(base_14));
         hubMap[2][2].palette = 5;
+        hubMap[3][1] = JSON.parse(JSON.stringify(base_6));
+        hubMap[3][1].palette = 9;
         hubMap[3][2] = JSON.parse(JSON.stringify(base_14));
         hubMap[3][2].palette = 5;
         hubMap[3][3] = JSON.parse(JSON.stringify(base_5));
         hubMap[3][3].palette = 5;
+        hubMap[4][1] = JSON.parse(JSON.stringify(base_6));
+        hubMap[4][1].palette = 9;
         hubMap[4][2] = JSON.parse(JSON.stringify(base_6));
         hubMap[4][2].palette = 5;
         hubMap[4][3] = JSON.parse(JSON.stringify(open_53));
@@ -1742,10 +1750,14 @@
         hubMap[7][5].palette = 1;
         hubMap[7][6] = JSON.parse(JSON.stringify(base_9));
         hubMap[7][6].palette = 1;
-        hubMap[8][2] = JSON.parse(JSON.stringify(base_10));
+        hubMap[8][1] = JSON.parse(JSON.stringify(base_4));
+        hubMap[8][1].palette = 10;
+        hubMap[8][2] = JSON.parse(JSON.stringify(base_11));
         hubMap[8][2].palette = 10;
-        hubMap[8][3] = JSON.parse(JSON.stringify(base_9));
+        hubMap[8][3] = JSON.parse(JSON.stringify(base_11));
         hubMap[8][3].palette = 10;
+        hubMap[8][4] = JSON.parse(JSON.stringify(base_3));
+        hubMap[8][4].palette = 10;
         hubMap[8][5] = JSON.parse(JSON.stringify(base_1));
         hubMap[8][5].palette = 1;
         
