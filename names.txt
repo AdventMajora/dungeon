@@ -1,0 +1,72 @@
+///////////////////////////////////////weapon name ideas
+The Walking Shadow
+Oh What Great Heart
+All Riven
+All Given
+This, A Never Ending Riddle
+Where the Stars Touch the Sky
+Yet, Now She Sees the Dragon's Dogma
+Land and Skies, and Seas Yearn
+My Mother, My Flame
+Mildewed and Smoldering
+The Dangers of a Second Guessing
+Not Yet Blessed
+A White Rose Withering
+A Black Rose Burning
+A Song of Me; A Song in Need
+A Verse for Me; A Verse in Need
+A Couragous Symphony
+The Rest is Silence
+Once, So Long Ago
+Poet Without a Rhyme
+Dance a Jig at the Funeral
+Deep Silence Between the Notes
+A Fleeting Moment on an Arc
+An Angels Kiss, Now Fallen
+The Killing Hand
+Revelation Warms a Touch
+Extended a View to Yesterday
+Sipping His Poison, the Raven Sings
+Mercy Dealt With a Losing Hand
+The Unbroken Spirit, Obscured and Disquiet
+The Silence Within You
+Empty Deeds Impress No Longer
+Singing on the Shoulders of an Angel
+The Advent of May
+Heaven Never Touched Earthly Face
+In your Arms, Sweet Death Should Dwell
+For Whom the Prey Weeps
+Kiss under the Waning Moon
+Beneath a Blackened Summer Sky
+Chasing Water From the Sky
+Everything, a Wish for the Night
+Songmaker's Cry
+Someone Like Him
+As My Conscience Slips Away
+Our Sacrificed Sons
+Far Beyond What I Could See
+A Brief Wakening
+Looking Outward, Reaching In
+Each Darkest Fire
+Impulsive Designs
+My Wayward Son
+Last Gleaming
+
+
+///////////////////////////////////////Lore
+The universe is fading, most of it already gone
+The player must work to reclaim/regrow/regenerate the universe
+The universe is constantly fading. Anything the player removes from the univers (kills/destroys) contributes to it's fade
+The more cycles the player completes, the more the universe is regrown and can be explored.
+eventually, teh universe will reach a critical mass, and will reset/renew. At this point the game can be considered complete.
+
+///////////////////////////////////////Level design
+Chests that need keys
+Monsters that drop keys
+Doors that require keys
+NO TRASH MOBS! ALl mobs should be dangerous and pose a threat to the player
+Once all offerings/keys collected, must fight a boss mob in starting room to finish cycle
+Choose a consistant wall/floor/palette for an entire cycle. 
+Special rooms get special wall/floor/palettes
+100% chance of one power up. 25% chance of a second per level
+New Weapons are dropped by boss mobs
