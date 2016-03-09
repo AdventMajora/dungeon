@@ -1152,7 +1152,7 @@
 	//                                                                      //
 	//////////////////////////////////////////////////////////////////////////
     
-    init(0);                             //initialize the game
+    init();                             //initialize the game
     
     mainLoop();                         //start event loop
     
@@ -1163,7 +1163,7 @@
 		player.init();                  //initialize the player
         cycle = -1;                     //default the cycle counter
         expansionFactor = 1;            //default the expansion factor
-        if (type) {
+        if (type != null) {
             buildLevel(expansionFactor);    //build the first cycle
         } else {
       		console.log('BOOP');
