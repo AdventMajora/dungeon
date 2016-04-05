@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-
     <script src="data_0.js" type="text/javascript"></script>
 </head>
 <style>
@@ -17,7 +16,6 @@
 <script type="text/javascript">
     //music url http://www.beepbox.co/#5s6k6l00e0ftaa7g0fj7i0r0w1111f0000d1111c0000h0060v0003o3210b000w8h4h4g0h4i4zcP8x8y8y4h8y8h8h4x800i4w018p22-FBO9cd6gFO0V6j8Rj3Apllg5cKh9xwQQV0siN2hGMoIOSD83ApdteyCNd3HqTqWwkOV4C6z8kV0sz9AqGqfuPnjIp5dehjAQQwmo589wngChmNmRhJr5rl6QVwhmYnBulZltunI2XR2TvgHKXU_cPcHKXHKXM3dgggA444aXKY-O0Xi7dQrmlhhthhJkm0
     //http://www.beepbox.co/#5s6k6l00e0ftaa7g0fj7i0r0w1111f0000d1111c0000h0060v0003o3210b000w8j514g0h4i4zcN8x8y8y4h8y8h8h4x800i4w018p23AFBO9cd6gFO0V6j8Rj3ApllmImjnjA1OaGGEaKC1LFVoI3wqsMetpvlj8QOs1m5cKh9xwQQV0siN2hGMoIOSD83ApdteyCNd3HqTqWwkOV4C6z8kV0sz9AqGqfuPnjIp5dehjAQQwmo589wngChmNmRhJr5rl6QVwhmYnBulZltunI2XR2TvgHKXU_cPcHKXHKXM3dgggA444aXKY-O0Xi7dQrmlhhthhJkm0
-    console.log('PLS2BOOP');
     var blink = true;			        //state of blink
     var frames = 0;				        //A frame count
     var goalTile = {x:-1,y:-1};	        //Exit Tile	
@@ -29,8 +27,6 @@
 	var tileSize = 8;			        //size of tiles
 	var scaleFactor = 5;		        //screen scaling factor (default value)
 	var sheetWidth = 256;		        //width and height of sprite sheet (in pixels)
-    var moves = 0;				        //count of moves
-	var search = [];			        //list of connected tiles
     var fps = 0;				        //count of frames per second
 	var pressedKeys = [];		        //list of accepted key presses at a given time
     var expansionFactor = 2;            //How many times a map is expanded upon when generating
@@ -58,15 +54,19 @@
     var availWalls = 5;                 //number of available wall tile sets
     var currPal;                        //holds the current color palette
     var spriteSheet = new Image();	    //Sheet of sprite images
+	var seed;
 	spriteSheet.src = 'assets/char_sheet.png';
     
     var playerSheet = new Image();      //sheet of player sprites
     playerSheet.src = 'assets/player_sheet.png';
 	
+	var wepSheet = new Image();
+	wepSheet.src = 'assets/weps.png';
+	
     var roomTemplates = new Image();    //sheet of Room data
 	roomTemplates.src = 'assets/RoomTemplates.png';
     
-    var bgm = new Audio('assets/song2.wav');    //bacground music
+    var bgm = new Audio('assets/exploring.wav');    //bacground music
     bgm.loop = true;                    //loop the track
     
     //initiate canvas
@@ -95,11 +95,9 @@
                             newRow = [];
                             for (var j=0; j<map[i].length; j++) {
                                 
-                                if (map[i][j] == 0) {
-                                    newRow.push(1024);
-                                } else {
-                                    newRow.push(map[i][j].mini);
-                                }
+                                
+                                newRow.push(map[i][j].mini);
+                                
                             }
                             minimap.map.push(newRow);
                         }
@@ -107,10 +105,10 @@
     };
     
     ////////////////////////////////player////////////////////////////////////
-    var player={x:9*tileSize,
-                y:8*tileSize,
-                drawX: 9*tileSize,
-                drawY: 9*tileSize,
+    var player={x:9*tileSize,				//x location in the current room
+                y:8*tileSize,				//y location in the current room
+                drawX: 9*tileSize,			//x location on screen to draw
+                drawY: 9*tileSize,			//y location on screen to draw
                 dir:2,
                 strafe: false,
                 moving: false,
@@ -145,28 +143,54 @@
                 headSet: 0,
                 bodySet: 0,
                 animations:{
-                    wU_anim:[{x:48,y:24,dur:4},{x:32,y:24,dur:4},{x:64,y:24,dur:4},{x:32,y:24,dur:4}],
-                    wD_anim:[{x:48,y:0,dur:4},{x:32,y:0,dur:4},{x:64,y:0,dur:4},{x:32,y:0,dur:4}],
-                    wL_anim:[{x:48,y:16,dur:4},{x:32,y:16,dur:4},{x:64,y:16,dur:4},{x:32,y:16,dur:4}],
-                    wR_anim:[{x:48,y:8,dur:4},{x:32,y:8,dur:4},{x:64,y:8,dur:4},{x:32,y:8,dur:4}],
-                    aU_anim:[{x:80,y:24,dur:1},{x:96,y:24,dur:1},{x:112,y:24,dur:8}],
-                    aD_anim:[{x:80,y:0,dur:1},{x:96,y:0,dur:1},{x:112,y:0,dur:8}],
-                    aL_anim:[{x:80,y:16,dur:1},{x:96,y:16,dur:1},{x:112,y:16,dur:8}],
-                    aR_anim:[{x:80,y:8,dur:1},{x:96,y:8,dur:1},{x:112,y:8,dur:8}]
+					h_idle:[
+						[{x:16,y:0,h:16,w:16,dur:4}],
+						[{x:0,y:16,h:16,w:16,dur:4}],
+						[{x:0,y:0,h:16,w:16,dur:4}],
+						[{x:16,y:16,h:16,w:16,dur:4}]
+					],
+                    b_idle:[
+						[{x:32,y:24,h:8,w:16,dur:4}],
+						[{x:32,y:16,h:8,w:16,dur:4}],
+						[{x:32,y:0,h:8,w:16,dur:4}],
+						[{x:32,y:8,h:8,w:16,dur:4}]
+					],
+                    b_walk:[
+						[{x:48,y:24,h:8,w:16,dur:4},{x:32,y:24,h:8,w:16,dur:4},	{x:64,y:24,h:8,w:16,dur:4},	{x:32,y:24,h:8,w:16,dur:4}],
+						[{x:48,y:16,h:8,w:16,dur:4},{x:32,y:16,h:8,w:16,dur:4},	{x:64,y:16,h:8,w:16,dur:4},	{x:32,y:16,h:8,w:16,dur:4}],
+						[{x:48,y:0,h:8,w:16,dur:4},	{x:32,y:0,h:8,w:16,dur:4},	{x:64,y:0,h:8,w:16,dur:4},	{x:32,y:0,h:8,w:16,dur:4}],
+						[{x:48,y:8,h:8,w:16,dur:4},	{x:32,y:8,h:8,w:16,dur:4},	{x:64,y:8,h:8,w:16,dur:4},	{x:32,y:8,h:8,w:16,dur:4}]
+					],
+                    b_attack:[
+						[{x:80,y:24,h:8,w:16,dur:5},{x:96,y:24,h:8,w:16,dur:5},	{x:112,y:24,h:8,w:16,dur:12}],
+						[{x:80,y:16,h:8,w:16,dur:5},{x:96,y:16,h:8,w:16,dur:5},	{x:112,y:16,h:8,w:16,dur:12}],
+						[{x:80,y:0,h:8,w:16,dur:6},	{x:96,y:0,h:8,w:16,dur:6},	{x:112,y:0,h:8,w:16,dur:12}],
+						[{x:80,y:8,h:8,w:16,dur:5},	{x:96,y:8,h:8,w:16,dur:5},	{x:112,y:8,h:8,w:16,dur:12}]
+					] 
                 },
-                anim_index:0,
-                animCounter:-1,
-                update: function (){   
+                h_currAnim: [],
+                b_currAnim: [],
+                h_anim_index:0,
+                b_anim_index:0,
+                h_animCounter:-1,
+                b_animCounter:-1,
+				headbob:0,
+                state:['idle'],
+				selected_state:'idle',
+                update: function (){  
+                    
                     this.drawX = this.x;
                     this.drawY = this.y;
                     
                     //invincibility counter
-                    if (this.invincible == true) {
+                    if (this.state.indexOf('invincible') > -1) {
                         this.invincCounter++;
-                    }
-                    if (this.invincCounter > this.invincLimit) {
-                        this.invincible = false;
-                        this.invincCounter = 0;
+                        if (this.invincCounter > this.invincLimit) {
+							if (this.state.indexOf('invincible') > -1) {
+								this.state.splice(this.state.indexOf('invincible'),1);
+							}
+                            this.invincCounter = 0;
+                        }
                     }
                     
                     //speed limit b/c 2fast4me
@@ -203,44 +227,17 @@
                         this.lvlUp = Math.ceil(this.lvl/2);
                     }
                     
-                    //check if player should be moving
-                    if (pressedKeys.indexOf('W') > -1 || pressedKeys.indexOf('A') > -1 ||
-                        pressedKeys.indexOf('S') > -1 || pressedKeys.indexOf('D') > -1) {
-                        
-                        this.moving = true;
-                        if (this.animCounter == -1) {
-                            this.animCounter = 0;
-                        }
-                    } else {
-                        this.moving = false;
-                    }
-                    
                     //check if/where the player should be facing
                     if (pressedKeys.indexOf('J') > -1) {
-                        this.strafe = true;
-                    } else {
-                        this.strafe = false;
-                    }
-                    
-                    //use weapon or regen spirit
-                    if (this.attacking == true) {
-                        if (this.moveWhileAttacking == false) {
-                            this.moving  = false;
-                        }
-                        if (this.weapons[this.wepIndex].cont == false && this.weapons[this.wepIndex].swung == false) {
-                            this.weapons[this.wepIndex].action();
-                        } else if (this.weapons[this.wepIndex].cont == true) {
-                            this.weapons[this.wepIndex].action();
-                        }
-                        
-                        if (this.animCounter == -1) {
-                            this.animCounter = 0;
-                            this.anim_index = 0;
+                        if (this.state.indexOf('strafe') < 0) {
+                            this.state.push('strafe');
                         }
                     } else {
-                        this.spirit = this.spirit+this.spiritGen;
+                        if (this.state.indexOf('strafe') > -1) {
+                            this.state.splice(this.state.indexOf('strafe'), 1);
+                        }
                     }
-                    
+                                       
                     if (pressedKeys.indexOf('_') < 0 && this.weapons[this.wepIndex].swung == true) {
                         this.weapons[this.wepIndex].swung = false;
                     }
@@ -248,155 +245,250 @@
                     //update the weapon
                     this.weapons[this.wepIndex].update();
                     
+                    //spirit max
                     if (this.spirit > this.maxSpirit) {
                         this.spirit = this.maxSpirit;
                     }
                     
-                    if (this.moving == false && this.attacking == false) {
-                        this.animCounter = -1;
+                    //input actions
+                    
+                    if (pressedKeys.indexOf('W') > -1 || pressedKeys.indexOf('A')>-1||
+                        pressedKeys.indexOf('S') > -1 || pressedKeys.indexOf('D') > -1) {
+                        
+                        if (pressedKeys.indexOf('W') > -1) {
+                            if (this.state.indexOf('moving') < 0 && this.state.indexOf('attacking') < 0) {
+                                if (this.state.indexOf('idle') > -1) {
+                                    this.state.splice(this.state.indexOf('idle'),1);
+                                }
+                                this.state.push('moving');
+                            }
+                            if (this.b_animCounter == -1) {
+                                this.b_animCounter = 0;
+                            }
+                            if (this.h_animCounter == -1) {
+                                this.h_animCounter = 0;
+                            }
+                            this.move(0);
+                        }
+                        
+                        if (pressedKeys.indexOf('A') > -1) {
+                            if (this.state.indexOf('moving') < 0 && this.state.indexOf('attacking') < 0) {
+                                if (this.state.indexOf('idle') > -1) {
+                                    this.state.splice(this.state.indexOf('idle'),1);
+                                }
+                                this.state.push('moving');
+                            }
+                            if (this.b_animCounter == -1) {
+                                this.b_animCounter = 0;
+                            }
+                            if (this.h_animCounter == -1) {
+                                this.h_animCounter = 0;
+                            }
+                            this.move(1);
+                        }
+                        
+                        if (pressedKeys.indexOf('S') > -1) {
+                            if (this.state.indexOf('moving') < 0 && this.state.indexOf('attacking') < 0) {
+                                if (this.state.indexOf('idle') > -1) {
+                                    this.state.splice(this.state.indexOf('idle'),1);
+                                }
+                                this.state.push('moving');
+                            }
+                            if (this.b_animCounter == -1) {
+                                this.b_animCounter = 0;
+                            }
+                            if (this.h_animCounter == -1) {
+                                this.h_animCounter = 0;
+                            }
+                            this.move(2);
+                        }
+                        
+                        if (pressedKeys.indexOf('D') > -1) {
+                            if (this.state.indexOf('moving') < 0 && this.state.indexOf('attacking') < 0) {
+                                if (this.state.indexOf('idle') > -1) {
+                                    this.state.splice(this.state.indexOf('idle'),1);
+                                }
+                                this.state.push('moving');
+                            }
+                            if (this.b_animCounter == -1) {
+                                this.b_animCounter = 0;
+                            }
+                            if (this.h_animCounter == -1) {
+                                this.h_animCounter = 0;
+                            }
+                            this.move(3);
+                        }
+                        
+                    } else {
+                        if (this.state.indexOf('moving') > -1) {
+                            this.state.splice(this.state.indexOf('moving'),1);
+                        }
+                    }
+                    //use weapon or regen spirit
+                    if (this.state.indexOf('attacking') > -1) {
+                        if (this.moveWhileAttacking == false) {
+                            if (this.state.indexOf('moving') > -1) {
+                                this.state.splice(this.state.indexOf('moving'),1);
+                            }
+                        }
+                        if (this.weapons[this.wepIndex].cont == false && this.weapons[this.wepIndex].swung == false) {
+                            this.weapons[this.wepIndex].action();
+                        } else if (this.weapons[this.wepIndex].cont == true) {
+                            this.weapons[this.wepIndex].action();
+                        }
+                        
+                        if (this.b_animCounter == -1) {
+                            this.b_animCounter = 0;
+                            this.b_anim_index = 0;
+                        }
+                        if (this.h_animCounter == -1) {
+                            this.h_animCounter = 0;
+                            this.h_anim_index = 0;
+                        }
+                    } else {
+                        this.spirit = this.spirit+this.spiritGen;
+                    } 
+                    
+                    if (pressedKeys.indexOf('_') > -1) {
+                        //not attacking -> attacking
+                        if (this.state.indexOf('attacking') < 0 && this.spirit>=this.weapons[this.wepIndex].init_cost && this.weapons[this.wepIndex].swung == false) {
+                            this.b_anim_index = 0;
+                            this.b_animCounter = 0;
+                            this.h_anim_index = 0;
+                            this.h_animCounter = 0;
+                            //this.attacking = true;
+                            this.state.push('attacking');
+                            this.spirit = this.spirit-this.weapons[this.wepIndex].init_cost;
+                        }
+                        //attacking -> still attacking
+                        if (this.state.indexOf('attacking') > -1 && player.weapons[this.wepIndex].cont == true){
+                            this.spirit = this.spirit-player.weapons[this.wepIndex].use_cost;
+                            if (this.spirit < -1) {
+                                this.state.splice(this.state.indexOf('attacking'),1);
+                                this.spirit = -1;
+                            }
+                        }
+                        
                     }
                     
-                    for (var i=0; i<pressedKeys.length; i++) {
-                        switch (pressedKeys[i]) {
-                            case    'W':    if (this.moving == true) {
-                                                this.move(0);
-                                            }
-                                            break;
-                            case    'A':    if (this.moving == true) {
-                                                this.move(1);
-                                            }
-                                            break;
-                            case    'S':    if (this.moving == true) {
-                                                this.move(2);
-                                            }
-                                            break;
-                            case    'D':    if (this.moving == true) {
-                                                this.move(3);
-                                            }
-                                            break;
-                            case	'_':	if (this.attacking == false && this.spirit>=this.weapons[this.wepIndex].init_cost && this.weapons[this.wepIndex].swung == false) {
-                                                this.anim_index = 0;
-                                                this.attacking = true;
-                                                this.spirit = this.spirit-this.weapons[this.wepIndex].init_cost;
-                                            }
-                                            if (this.attacking == true && player.weapons[this.wepIndex].cont == true){
-                                                this.spirit = this.spirit-player.weapons[this.wepIndex].use_cost;
-                                                if (this.spirit < -1) {
-                                                    this.attacking = false;
-                                                    this.spirit = -1;
-                                                }
-                                            }
-                                            
-                                            break;
-                        }
+                    if (this.state.indexOf('moving') < 0 && this.state.indexOf('attacking') < 0 && this.state.indexOf('idle') < 0) {
+                        this.state.push('idle');
                     }
                 },
                 move:   function (dir) {
-                            if (dir == 0) {
-                                if (this.strafe == false) {
-                                    this.dir = 0;
-                                }
-                                var canMove = this.speed;
-                                if (this.y-this.speed <= 0) {
-                                    canMove = 0 - (this.y-this.speed);
-                                    if (canMove < 0) {
-                                        canMove = 0;
-                                    }
-                                    this.y-=canMove;
-                                } else {
-                                    canMove =  .25;
-                                    while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
-                                            currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
-                                            this.y-=.25;
-                                        } else {
-                                            break;
-                                        }
-                                        canMove+=.25;
-                                    }
-                                }
-                                
+                    if (this.state.indexOf('moving') > -1) {
+                    
+                        if (dir == 0) {
+                            if (this.strafe == false) {
+                                this.dir = 0;
                             }
-                            if (dir == 1) {
-                                if (this.strafe == false) {
-                                    this.dir = 1;
+                            var canMove = this.speed;
+                            if (this.y-this.speed <= 0) {
+                                canMove = 0 - (this.y-this.speed);
+                                if (canMove < 0) {
+                                    canMove = 0;
                                 }
-                                var canMove = this.speed;
-                                if (this.x-this.speed <= 0) {
-                                    canMove = 0 - (this.x-this.speed);
-                                    if (canMove < 0) {
-                                        canMove = 0;
+                                this.y-=canMove;
+                            } else {
+                                canMove =  .25;
+                                while (canMove <= this.speed) {
+                                    if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
+                                        currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
+                                        this.y-=.25;
+                                    } else {
+                                        break;
                                     }
-                                    this.x-=canMove;
-                                } else {
-                                    canMove = .25;
-                                    while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
-                                            currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
-                                            
-                                            this.x-=.25;
-                                        } else {
-                                            break;
-                                        }
-                                        canMove+=.25;
-                                    }
+                                    canMove+=.25;
                                 }
-                                
                             }
-                            if (dir == 2) {
-                                if (this.strafe == false) {
-                                    this.dir = 2;
-                                }
-                                var canMove = this.speed;
-                                if (this.y+this.speed+8 >= screenHeight-16) {
-                                    canMove = (this.y+this.speed) - screenHeight-16;
-                                    if (canMove < 0) {
-                                        canMove = 0;
-                                    }
-                                    this.y+=canMove;
-                                } else {
-                                    canMove = .25;
-                                    while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
-                                            currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
-                                            
-                                            this.y+=.25;
-                                        } else {
-                                            break;
-                                        }
-                                        canMove+=.25;
-                                    }
-                                }
-                                
+                            
+                        }
+                        if (dir == 1) {
+                            if (this.strafe == false) {
+                                this.dir = 1;
                             }
-                            if (dir == 3) {
-                                if (this.strafe == false) {
-                                    this.dir = 3;
+                            var canMove = this.speed;
+                            if (this.x-this.speed <= 0) {
+                                canMove = 0 - (this.x-this.speed);
+                                if (canMove < 0) {
+                                    canMove = 0;
                                 }
-                                var canMove = this.speed;
-                                if (this.x+this.speed+8 >= screenWidth) {
-                                    canMove = (this.x+this.speed) - screenWidth;
-                                    if (canMove < 0) {
-                                        canMove = 0;
-                                    }
-                                    this.x+=canMove;
-                                } else {
-                                    canMove = .25;
-                                    while (canMove <= this.speed) {
-                                        if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
-                                            currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
+                                this.x-=canMove;
+                            } else {
+                                canMove = .25;
+                                while (canMove <= this.speed) {
+                                    if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
+                                        currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
                                         
-                                            this.x+=.25;
-                                        } else {
-                                            break;
-                                        }
-                                        canMove+=.25;
+                                        this.x-=.25;
+                                    } else {
+                                        break;
                                     }
+                                    canMove+=.25;
                                 }
                             }
-                        },
-                draw:   function(){      
+                            
+                        }
+                        if (dir == 2) {
+                            if (this.strafe == false) {
+                                this.dir = 2;
+                            }
+                            var canMove = this.speed;
+                            if (this.y+this.speed+8 >= screenHeight-16) {
+                                canMove = (this.y+this.speed) - screenHeight-16;
+                                if (canMove < 0) {
+                                    canMove = 0;
+                                }
+                                this.y+=canMove;
+                            } else {
+                                canMove = .25;
+                                while (canMove <= this.speed) {
+                                    if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
+                                        currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
+                                        
+                                        this.y+=.25;
+                                    } else {
+                                        break;
+                                    }
+                                    canMove+=.25;
+                                }
+                            }
+                            
+                        }
+                        if (dir == 3) {
+                            if (this.strafe == false) {
+                                this.dir = 3;
+                            }
+                            var canMove = this.speed;
+                            if (this.x+this.speed+8 >= screenWidth) {
+                                canMove = (this.x+this.speed) - screenWidth;
+                                if (canMove < 0) {
+                                    canMove = 0;
+                                }
+                                this.x+=canMove;
+                            } else {
+                                canMove = .25;
+                                while (canMove <= this.speed) {
+                                    if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
+                                        currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
+                                    
+                                        this.x+=.25;
+                                    } else {
+                                        break;
+                                    }
+                                    canMove+=.25;
+                                }
+                            }
+                        }
+                    
+                    }
+                    
+                },
+                draw:   function(){  
+					this.selected_state = 'idle';
                     if (this.invincCounter%2 == 0) {
+                        
+                        //draw player status/pickup
                         if (this.statusCount > -1) {
                             drawSprite(this.newStatus, this.x, this.y-20);
                             this.statusCount = this.statusCount-1;
@@ -405,179 +497,66 @@
                             }
                         }
                         
-                        if (this.dir == 0) {
-                            if (this.moving == true && paused == false) {
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.wU_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.wU_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                                ctx.drawImage(playerSheet, this.animations.wU_anim[this.anim_index].x,this.animations.wU_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                for (var i=0; i<this.augments.length; i++) {
-                                    ctx.drawImage(playerSheet, 144,0+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
-                                    ctx.drawImage(playerSheet, 128+this.animations.wU_anim[this.anim_index].x,this.animations.wU_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                }
-                            } else if (this.attacking == true && paused == false){
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.aU_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.aU_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                
-                                ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                                ctx.drawImage(playerSheet, this.animations.aU_anim[this.anim_index].x,this.animations.aU_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                
-                            } else {
-                                ctx.drawImage(playerSheet, 16,0+this.bodySet,16,16,this.x-4, this.y-16,16,16);
-                                ctx.drawImage(playerSheet, 32,24+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                for (var i=0; i<this.augments.length; i++) {
-                                    ctx.drawImage(playerSheet, 128+16,0+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
-                                    ctx.drawImage(playerSheet, 128+32,24+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                }
-                            }
-                            
+                        if (this.state.indexOf('idle') > -1) {
+							this.h_currAnim = this.animations.h_idle;
+                            this.b_currAnim = this.animations.b_idle;
                         }
-                        if (this.dir == 1) {
-                            if (this.moving == true && paused == false) {
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.wL_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.wL_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, this.animations.wL_anim[this.anim_index].x,this.animations.wL_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                                for (var i=0; i<this.augments.length; i++) {     
-                                    ctx.drawImage(playerSheet, 128+this.animations.wL_anim[this.anim_index].x,this.animations.wL_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                    ctx.drawImage(playerSheet, 128+0,16+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
-                                }
-                            } else if (this.attacking == true && paused == false){
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;  
-                                    if (this.animCounter > this.animations.aL_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.aL_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, this.animations.aL_anim[this.anim_index].x,this.animations.aL_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                            } else {
-                                ctx.drawImage(playerSheet, 0,16+this.bodySet,16,16,this.x-4, this.y-16,16,16);
-                                ctx.drawImage(playerSheet, 32,16+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                for (var i=0; i<this.augments.length; i++) {     
-                                    ctx.drawImage(playerSheet, 128+0,16+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
-                                    ctx.drawImage(playerSheet, 128+32,16+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                }
-                            }
-                            
+                        
+                        if (this.state.indexOf('moving') > -1) {
+							this.h_currAnim = this.animations.h_idle;
+                            this.b_currAnim = this.animations.b_walk;
+							this.selected_state = 'moving';
                         }
-                        if (this.dir == 2) {
-                            if (this.moving == true && paused == false) {
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.wD_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.wD_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, this.animations.wD_anim[this.anim_index].x,this.animations.wD_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                                for (var i=0; i<this.augments.length; i++) {     
-                                    ctx.drawImage(playerSheet, 128+this.animations.wD_anim[this.anim_index].x,this.animations.wD_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                    ctx.drawImage(playerSheet, 128+0,0+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
-                                }
-                            } else if (this.attacking == true && paused == false){
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.aD_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.aD_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, this.animations.aD_anim[this.anim_index].x,this.animations.aD_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                            } else {
-                                ctx.drawImage(playerSheet, 0,0+this.bodySet,16,16,this.x-4, this.y-16,16,16);
-                                ctx.drawImage(playerSheet,32,0+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                for (var i=0; i<this.augments.length; i++) {     
-                                    ctx.drawImage(playerSheet, 128+32,0+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                    ctx.drawImage(playerSheet, 128+0,0+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
-                                }
+                        
+                        if (this.state.indexOf('attacking') > -1) {
+							this.h_currAnim = this.animations.h_idle;
+                            this.b_currAnim = this.animations.b_attack;
+							this.selected_state = 'attacking';
+                        }
+                        
+						if (this.state.indexOf('idle') < 0) {
+                            headbob = 1;
+                        } else {
+                            headbob = 0;
+                        }  
+						
+                        //ensure we're within the current animation
+                        if (this.b_anim_index >= this.b_currAnim[this.dir].length) {
+                            this.b_anim_index = 0;
+                        }
+                        if (this.h_anim_index >= this.h_currAnim[this.dir].length) {
+                            this.h_anim_index = 0;
+                        }
+                        
+                        //progress current animation 
+                        this.b_animCounter++;
+                        if (this.b_animCounter >= this.b_currAnim[this.dir][this.b_anim_index].dur && paused == false) {
+                            this.b_animCounter = 0;
+                            this.b_anim_index++;
+                            if (this.b_anim_index >= this.b_currAnim[this.dir].length) {
+                                this.b_anim_index = 0;
                             }
                         }
-                        if (this.dir == 3) {
-                            if (this.moving == true && paused == false) {   
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.wR_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.wR_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, this.animations.wR_anim[this.anim_index].x,this.animations.wR_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                                for (var i=0; i<this.augments.length; i++) {     
-                                    ctx.drawImage(playerSheet, 128+this.animations.wR_anim[this.anim_index].x,this.animations.wR_anim[this.anim_index].y+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                    ctx.drawImage(playerSheet, 128+16,16+this.augments[i].drawCol,16,16,this.x-4, this.y-15,16,16);
-                                }
-                            } else if (this.attacking == true && paused == false){
-                                if (this.animCounter > -1) {
-                                    this.animCounter++;
-                                    if (this.animCounter > this.animations.aR_anim[this.anim_index].dur) {
-                                        this.animCounter = 0;
-                                        this.anim_index++;
-                                        if (this.anim_index >= this.animations.aR_anim.length) {
-                                            this.anim_index = 0;
-                                        }
-                                    }
-                                }
-                                
-                                ctx.drawImage(playerSheet, this.animations.aR_anim[this.anim_index].x,this.animations.aR_anim[this.anim_index].y+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,this.x-4, this.y-15,16,16);
-                            } else {
-                                ctx.drawImage(playerSheet, 16,16+this.bodySet,16,16,this.x-4, this.y-16,16,16);
-                                ctx.drawImage(playerSheet, 32,8+this.bodySet,16,8,this.x-4, this.y,16,8);
-                                for (var i=0; i<this.augments.length; i++) {     
-                                    ctx.drawImage(playerSheet, 128+32,8+this.augments[i].drawCol,16,8,this.x-4, this.y,16,8);
-                                    ctx.drawImage(playerSheet, 128+16,16+this.augments[i].drawCol,16,16,this.x-4, this.y-16,16,16);
-                                }
+                        this.h_animCounter++;
+                        if (this.h_animCounter >= this.h_currAnim[this.dir][this.h_anim_index].dur && paused == false) {
+                            this.h_animCounter = 0;
+                            this.h_anim_index++;
+                            if (this.h_anim_index >= this.h_currAnim[this.dir].length) {
+                                this.h_anim_index = 0;
                             }
                         }
                         
+						ctx.drawImage(playerSheet, 	this.b_currAnim[this.dir][this.b_anim_index].x,	this.b_currAnim[this.dir][this.b_anim_index].y+this.bodySet,
+													this.b_currAnim[this.dir][this.b_anim_index].w,	this.b_currAnim[this.dir][this.b_anim_index].h,this.x-4, this.y,16,8);
+						ctx.drawImage(playerSheet, 	this.h_currAnim[this.dir][this.h_anim_index].x,	this.h_currAnim[this.dir][this.h_anim_index].y+this.headSet,
+													this.h_currAnim[this.dir][this.h_anim_index].w,	this.h_currAnim[this.dir][this.h_anim_index].h,this.x-4, this.y-16+headbob,16,16);
+						
+						for (var i=0; i<this.augments.length; i++) {
+							ctx.drawImage(playerSheet, 	this.augments[i].draw(this.selected_state, this.dir).b[this.b_anim_index].x,	this.augments[i].draw(this.selected_state, this.dir).b[this.b_anim_index].y+this.augments[i].drawCol,
+														this.augments[i].draw(this.selected_state, this.dir).b[this.b_anim_index].w,	this.augments[i].draw(this.selected_state, this.dir).b[this.b_anim_index].h,this.x-4, this.y,16,8);
+							ctx.drawImage(playerSheet, 	this.augments[i].draw(this.selected_state, this.dir).h[this.h_anim_index].x,	this.augments[i].draw(this.selected_state, this.dir).h[this.h_anim_index].y+this.augments[i].drawCol,
+														this.augments[i].draw(this.selected_state, this.dir).h[this.h_anim_index].w,	this.augments[i].draw(this.selected_state, this.dir).h[this.h_anim_index].h,this.x-4, this.y-15+headbob,16,16);
+						}
                     }
                 },
                 init: 	function() {
@@ -607,10 +586,11 @@
 							this.augments = [];
 							this.keys = [];
 							
-							this.anim_index = 0;
-							this.animCounter = -1;
+							this.b_anim_index = 0;
+							this.b_animCounter = -1;
 							
 							this.wepIndex = 0;
+                            this.b_currAnim = this.animations.b_iD_anim;
 						}, 
 				keys:[],
 				wepIndex: 0,
@@ -623,13 +603,92 @@
         {   name: 'Scarf', sprite: 993,
             effectText: '+.25 spd', 
             drawCol: 0, 
-            onPickup:   function() {player.speed = player.speed+.25;},
-            onDrop:     function() {player.speed = player.speed-.25;},
-            action:     function() {}
+			animations:{
+				h:[
+					[{x:144,y:0,h:16,w:16,dur:4}],
+					[{x:128,y:16,h:16,w:16,dur:4}],
+					[{x:128,y:0,h:16,w:16,dur:4}],
+					[{x:144,y:16,h:16,w:16,dur:4}]
+				],
+				b_idle:[
+					[{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_walk:[
+					[{x:176,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4},	{x:192,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:176,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4},	{x:192,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:176,y:0,h:8,w:16,dur:4},	{x:160,y:0,h:8,w:16,dur:4},		{x:192,y:0,h:8,w:16,dur:4},		{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:176,y:8,h:8,w:16,dur:4},	{x:160,y:8,h:8,w:16,dur:4},		{x:192,y:8,h:8,w:16,dur:4},		{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_attack:[
+					[{x:208,y:24,h:8,w:16,dur:3},	{x:224,y:24,h:8,w:16,dur:3},	{x:240,y:24,h:8,w:16,dur:10}],
+					[{x:208,y:16,h:8,w:16,dur:3},	{x:224,y:16,h:8,w:16,dur:3},	{x:240,y:16,h:8,w:16,dur:10}],
+					[{x:208,y:0,h:8,w:16,dur:3},	{x:224,y:0,h:8,w:16,dur:3},		{x:240,y:0,h:8,w:16,dur:10}],
+					[{x:208,y:8,h:8,w:16,dur:3},	{x:224,y:8,h:8,w:16,dur:3},		{x:240,y:8,h:8,w:16,dur:10}]
+				]
+				
+			},
+			draw: function(state, dir) {
+				switch(state) {
+					case	'idle':	return {h:this.animations.h[dir], b:this.animations.b_idle[dir]};
+									break;
+					case	'moving':	return {h:this.animations.h[dir], b:this.animations.b_walk[dir]};
+									break;
+					case	'attacking':	return {h:this.animations.h[dir], b:this.animations.b_attack[dir]};
+									break;
+				}
+			},
+            onPickup:   function() {
+				player.speed = player.speed+.25;
+			},
+            onDrop:     function() {
+				player.speed = player.speed-.25;
+			},
+            action:     function() {
+			}
         },
         {   name: 'Pin', sprite: 994,
             effectText: '+.005 hpr',
             drawCol: 32,
+			animations:{
+				h:[
+					[{x:144,y:0,h:16,w:16,dur:4}],
+					[{x:128,y:16,h:16,w:16,dur:4}],
+					[{x:128,y:0,h:16,w:16,dur:4}],
+					[{x:144,y:16,h:16,w:16,dur:4}]
+				],
+				b_idle:[
+					[{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_walk:[
+					[{x:176,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4},	{x:192,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:176,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4},	{x:192,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:176,y:0,h:8,w:16,dur:4},	{x:160,y:0,h:8,w:16,dur:4},		{x:192,y:0,h:8,w:16,dur:4},		{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:176,y:8,h:8,w:16,dur:4},	{x:160,y:8,h:8,w:16,dur:4},		{x:192,y:8,h:8,w:16,dur:4},		{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_attack:[
+					[{x:208,y:24,h:8,w:16,dur:3},	{x:224,y:24,h:8,w:16,dur:3},	{x:240,y:24,h:8,w:16,dur:10}],
+					[{x:208,y:16,h:8,w:16,dur:3},	{x:224,y:16,h:8,w:16,dur:3},	{x:240,y:16,h:8,w:16,dur:10}],
+					[{x:208,y:0,h:8,w:16,dur:3},	{x:224,y:0,h:8,w:16,dur:3},		{x:240,y:0,h:8,w:16,dur:10}],
+					[{x:208,y:8,h:8,w:16,dur:3},	{x:224,y:8,h:8,w:16,dur:3},		{x:240,y:8,h:8,w:16,dur:10}]
+				]
+				
+			},
+			draw: function(state, dir) {
+				switch(state) {
+					case	'idle':	return {h:this.animations.h[dir], b:this.animations.b_idle[dir]};
+									break;
+					case	'moving':	return {h:this.animations.h[dir], b:this.animations.b_walk[dir]};
+									break;
+					case	'attacking':	return {h:this.animations.h[dir], b:this.animations.b_attack[dir]};
+									break;
+				}
+			},
             onPickup:   function() {player.healthGen = player.healthGen+.005;}, 	
             onDrop:     function() {player.healthGen = player.healthGen-.005;},
             action:     function() {}
@@ -637,6 +696,43 @@
         {   name: 'Brace', sprite: 995,
             effectText: '+.1 spr',
             drawCol: 64, 
+			animations:{
+				h:[
+					[{x:144,y:0,h:16,w:16,dur:4}],
+					[{x:128,y:16,h:16,w:16,dur:4}],
+					[{x:128,y:0,h:16,w:16,dur:4}],
+					[{x:144,y:16,h:16,w:16,dur:4}]
+				],
+				b_idle:[
+					[{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_walk:[
+					[{x:176,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4},	{x:192,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:176,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4},	{x:192,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:176,y:0,h:8,w:16,dur:4},	{x:160,y:0,h:8,w:16,dur:4},		{x:192,y:0,h:8,w:16,dur:4},		{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:176,y:8,h:8,w:16,dur:4},	{x:160,y:8,h:8,w:16,dur:4},		{x:192,y:8,h:8,w:16,dur:4},		{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_attack:[
+					[{x:208,y:24,h:8,w:16,dur:3},	{x:224,y:24,h:8,w:16,dur:3},	{x:240,y:24,h:8,w:16,dur:10}],
+					[{x:208,y:16,h:8,w:16,dur:3},	{x:224,y:16,h:8,w:16,dur:3},	{x:240,y:16,h:8,w:16,dur:10}],
+					[{x:208,y:0,h:8,w:16,dur:3},	{x:224,y:0,h:8,w:16,dur:3},		{x:240,y:0,h:8,w:16,dur:10}],
+					[{x:208,y:8,h:8,w:16,dur:3},	{x:224,y:8,h:8,w:16,dur:3},		{x:240,y:8,h:8,w:16,dur:10}]
+				]
+				
+			},
+			draw: function(state, dir) {
+				switch(state) {
+					case	'idle':	return {h:this.animations.h[dir], b:this.animations.b_idle[dir]};
+									break;
+					case	'moving':	return {h:this.animations.h[dir], b:this.animations.b_walk[dir]};
+									break;
+					case	'attacking':	return {h:this.animations.h[dir], b:this.animations.b_attack[dir]};
+									break;
+				}
+			},
             onPickup:   function() {player.spiritGen = player.spiritGen+.1;},
             onDrop:     function() {player.spiritGen = player.spiritGen-.1;},
             action:     function() {}
@@ -644,6 +740,43 @@
         {   name: 'Tabard', sprite: 996,
             effectText: '+move+atk',
             drawCol: 96, 
+			animations:{
+				h:[
+					[{x:144,y:0,h:16,w:16,dur:4}],
+					[{x:128,y:16,h:16,w:16,dur:4}],
+					[{x:128,y:0,h:16,w:16,dur:4}],
+					[{x:144,y:16,h:16,w:16,dur:4}]
+				],
+				b_idle:[
+					[{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_walk:[
+					[{x:176,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4},	{x:192,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:176,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4},	{x:192,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:176,y:0,h:8,w:16,dur:4},	{x:160,y:0,h:8,w:16,dur:4},		{x:192,y:0,h:8,w:16,dur:4},		{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:176,y:8,h:8,w:16,dur:4},	{x:160,y:8,h:8,w:16,dur:4},		{x:192,y:8,h:8,w:16,dur:4},		{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_attack:[
+					[{x:208,y:24,h:8,w:16,dur:3},	{x:224,y:24,h:8,w:16,dur:3},	{x:240,y:24,h:8,w:16,dur:10}],
+					[{x:208,y:16,h:8,w:16,dur:3},	{x:224,y:16,h:8,w:16,dur:3},	{x:240,y:16,h:8,w:16,dur:10}],
+					[{x:208,y:0,h:8,w:16,dur:3},	{x:224,y:0,h:8,w:16,dur:3},		{x:240,y:0,h:8,w:16,dur:10}],
+					[{x:208,y:8,h:8,w:16,dur:3},	{x:224,y:8,h:8,w:16,dur:3},		{x:240,y:8,h:8,w:16,dur:10}]
+				]
+				
+			},
+			draw: function(state, dir) {
+				switch(state) {
+					case	'idle':	return {h:this.animations.h[dir], b:this.animations.b_idle[dir]};
+									break;
+					case	'moving':	return {h:this.animations.h[dir], b:this.animations.b_walk[dir]};
+									break;
+					case	'attacking':	return {h:this.animations.h[dir], b:this.animations.b_attack[dir]};
+									break;
+				}
+			},
             onPickup:   function() {player.moveWhileAttacking = true;},
             onDrop:	    function() {player.moveWhileAttacking = false;},
             action:     function() {}
@@ -651,6 +784,43 @@
         {   name: 'Robe', sprite: 997,
             effectText: '+1 def',
             drawCol: 128, 
+			animations:{
+				h:[
+					[{x:144,y:0,h:16,w:16,dur:4}],
+					[{x:128,y:16,h:16,w:16,dur:4}],
+					[{x:128,y:0,h:16,w:16,dur:4}],
+					[{x:144,y:16,h:16,w:16,dur:4}]
+				],
+				b_idle:[
+					[{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_walk:[
+					[{x:176,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4},	{x:192,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:176,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4},	{x:192,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:176,y:0,h:8,w:16,dur:4},	{x:160,y:0,h:8,w:16,dur:4},		{x:192,y:0,h:8,w:16,dur:4},		{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:176,y:8,h:8,w:16,dur:4},	{x:160,y:8,h:8,w:16,dur:4},		{x:192,y:8,h:8,w:16,dur:4},		{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_attack:[
+					[{x:208,y:24,h:8,w:16,dur:3},	{x:224,y:24,h:8,w:16,dur:3},	{x:240,y:24,h:8,w:16,dur:10}],
+					[{x:208,y:16,h:8,w:16,dur:3},	{x:224,y:16,h:8,w:16,dur:3},	{x:240,y:16,h:8,w:16,dur:10}],
+					[{x:208,y:0,h:8,w:16,dur:3},	{x:224,y:0,h:8,w:16,dur:3},		{x:240,y:0,h:8,w:16,dur:10}],
+					[{x:208,y:8,h:8,w:16,dur:3},	{x:224,y:8,h:8,w:16,dur:3},		{x:240,y:8,h:8,w:16,dur:10}]
+				]
+				
+			},
+			draw: function(state, dir) {
+				switch(state) {
+					case	'idle':	return {h:this.animations.h[dir], b:this.animations.b_idle[dir]};
+									break;
+					case	'moving':	return {h:this.animations.h[dir], b:this.animations.b_walk[dir]};
+									break;
+					case	'attacking':	return {h:this.animations.h[dir], b:this.animations.b_attack[dir]};
+									break;
+				}
+			},
             onPickup:   function() {player.base_defense = player.base_defense+1}, 
             onDrop:     function() {player.base_defense = player.base_defense-1},
             action:     function(){}
@@ -658,6 +828,43 @@
         {   name: 'Horns', sprite: 998,
             effectText: '+1 dmg',
             drawCol: 160,
+			animations:{
+				h:[
+					[{x:144,y:0,h:16,w:16,dur:4}],
+					[{x:128,y:16,h:16,w:16,dur:4}],
+					[{x:128,y:0,h:16,w:16,dur:4}],
+					[{x:144,y:16,h:16,w:16,dur:4}]
+				],
+				b_idle:[
+					[{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_walk:[
+					[{x:176,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4},	{x:192,y:24,h:8,w:16,dur:4},	{x:160,y:24,h:8,w:16,dur:4}],
+					[{x:176,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4},	{x:192,y:16,h:8,w:16,dur:4},	{x:160,y:16,h:8,w:16,dur:4}],
+					[{x:176,y:0,h:8,w:16,dur:4},	{x:160,y:0,h:8,w:16,dur:4},		{x:192,y:0,h:8,w:16,dur:4},		{x:160,y:0,h:8,w:16,dur:4}],
+					[{x:176,y:8,h:8,w:16,dur:4},	{x:160,y:8,h:8,w:16,dur:4},		{x:192,y:8,h:8,w:16,dur:4},		{x:160,y:8,h:8,w:16,dur:4}]
+				],
+				b_attack:[
+					[{x:208,y:24,h:8,w:16,dur:3},	{x:224,y:24,h:8,w:16,dur:3},	{x:240,y:24,h:8,w:16,dur:10}],
+					[{x:208,y:16,h:8,w:16,dur:3},	{x:224,y:16,h:8,w:16,dur:3},	{x:240,y:16,h:8,w:16,dur:10}],
+					[{x:208,y:0,h:8,w:16,dur:3},	{x:224,y:0,h:8,w:16,dur:3},		{x:240,y:0,h:8,w:16,dur:10}],
+					[{x:208,y:8,h:8,w:16,dur:3},	{x:224,y:8,h:8,w:16,dur:3},		{x:240,y:8,h:8,w:16,dur:10}]
+				]
+				
+			},
+			draw: function(state, dir) {
+				switch(state) {
+					case	'idle':	return {h:this.animations.h[dir], b:this.animations.b_idle[dir]};
+									break;
+					case	'moving':	return {h:this.animations.h[dir], b:this.animations.b_walk[dir]};
+									break;
+					case	'attacking':	return {h:this.animations.h[dir], b:this.animations.b_attack[dir]};
+									break;
+				}
+			},
             onPickup:   function() {player.base_damage = player.base_damage+1},
             onDrop:	    function() {player.base_damage = player.base_damage-1},
             action:     function(){}
@@ -667,17 +874,23 @@
     ////////////////////////////////weapons///////////////////////////////////
     var weps = [
         {   name:'wep_test',
-            init_cost: 4,
+            init_cost: 3,
             cont: false,
             swung: false,
             use_cost: .1,
             knockback: 8,
             curseScale: 1.5,
-            aoe: [[{x: -12, y: -2, sprite: 33, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -10, sprite: 1, dur:1, dirXadj: 8, dirYadj: 8},{x: 0, y: -14, sprite: 2, dur:8, dirXadj: 0, dirYadj: 8}],
-                  [{x: +2, y: +8, sprite: 66, dur:1, dirXadj: 0, dirYadj: 0},{x: -10, y: +8, sprite: 65, dur:1, dirXadj: 8, dirYadj: 0},{x: -12, y: -2, sprite: 33, dur:8, dirXadj: 8, dirYadj: 8}],
-                  [{x: +12, y: -2, sprite: 35, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: +8, sprite: 67, dur:1, dirXadj: 0, dirYadj: 0},{x: +2, y: +8, sprite: 66, dur:8, dirXadj: 8, dirYadj: 0}],
-                  [{x: +2, y: -8, sprite: 2, dur:1, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, sprite: 3, dur:1, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, sprite: 35, dur:8, dirXadj: 0, dirYadj: 8}]
+            aoe: [[{x: 0, y: -14, dur:4, dirXadj: 0, dirYadj: 8},{x: -12, y: -10, dur:4, dirXadj: 8, dirYadj: 8},{x: -12, y: -2, dur:4, dirXadj: 8, dirYadj: 0}],
+                  [{x: +2, y: -8, dur:4, dirXadj: 8, dirYadj: 8},{x: -8, y: -8, dur:4, dirXadj: 0, dirYadj: 8},{x: -12, y: -2, dur:4, dirXadj: 0, dirYadj: 8}],
+                  [{x: +2, y: +8, dur:4, dirXadj: 8, dirYadj: 0},{x: +12, y: +8, dur:4, dirXadj: 0, dirYadj: 0},{x: +12, y: -2, dur:4, dirXadj: 0, dirYadj: 8}],
+                  [{x: +2, y: -8, dur:4, dirXadj: 8, dirYadj: 8},{x: +8, y: -8, dur:4, dirXadj: 0, dirYadj: 8},{x: +12, y: -2, dur:4, dirXadj: 0, dirYadj: 8}]
                  ],
+			animations: [
+				[{x:0,y:0,w:32,h:32},{x:32,y:0,w:32,h:32},{x:64,y:0,w:32,h:32}],
+				[{x:0,y:32,w:32,h:32},{x:32,y:32,w:32,h:32},{x:64,y:32,w:32,h:32}],
+				[{x:0,y:64,w:32,h:32},{x:32,y:64,w:32,h:32},{x:64,y:64,w:32,h:32}],
+				[{x:0,y:96,w:32,h:32},{x:32,y:96,w:32,h:32},{x:64,y:96,w:32,h:32}]
+			],
             damage: 1,
             durCount:0,
             atkIndex:0,
@@ -687,7 +900,12 @@
                         if (this.actioning == true) {
                             this.durCount++;
                             
-                            drawSprite(this.aoe[player.dir][this.atkIndex].sprite, player.x+this.aoe[player.dir][this.atkIndex].x, player.y+this.aoe[player.dir][this.atkIndex].y);
+                            //drawSprite(this.aoe[player.dir][this.atkIndex].sprite, player.x+this.aoe[player.dir][this.atkIndex].x, player.y+this.aoe[player.dir][this.atkIndex].y);
+							ctx.drawImage(wepSheet, this.animations[player.dir][this.atkIndex].x, this.animations[player.dir][this.atkIndex].y, 
+													this.animations[player.dir][this.atkIndex].w, this.animations[player.dir][this.atkIndex].h,
+													player.x-12, player.y-16, 
+													this.animations[player.dir][this.atkIndex].w, this.animations[player.dir][this.atkIndex].h);
+							//ctx.fillRect(player.x+this.aoe[player.dir][this.atkIndex].x, player.y+this.aoe[player.dir][this.atkIndex].y, 8,8);
                             for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
                                 if (map[mapLoc.y][mapLoc.x].contents[i].type == 'mob') {
                                     
@@ -728,7 +946,9 @@
                                     this.atkIndex = 0;
                                     this.actioning = false;
                                     if (this.cont == false) {
-                                        player.attacking = false;
+                                        if (player.state.indexOf('attacking') > -1) {
+                                            player.state.splice(player.state.indexOf('attacking'),1);
+                                        }
                                     }
                                 }
                             }
@@ -929,22 +1149,24 @@
                     }
                 }
                 
-                if (player.invincible == false && player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
-                    player.health = player.health-(this.damage-player.base_defense/10);
-                    
-                    if (player.invincible == false && player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                if (player.state.indexOf('invincible') <0 && player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
+					if (this.damage-(player.base_defense-1) > 0) {
+						player.health = player.health-(this.damage-(player.base_defense-1));
+					}
+					
+                    if (player.state.indexOf('invincible') <0 && player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                         player.y+=8;
                     }
-                    if (player.invincible == false && player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
                         player.x+=8;
                     }
-                    if (player.invincible == false && player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                         player.y-=8;
                     }
-                    if (player.invincible == false && player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
                         player.x-=8;
                     }
-                    player.invincible = true;
+                    player.state.push('invincible');
                     player.invincCounter = 0;
                 }
             }
@@ -1007,22 +1229,24 @@
                     }
                 }
                 
-                if (player.invincible == false && player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
-                    player.health = player.health-(this.damage-player.base_defense/10);
+                if (player.state.indexOf('invincible') <0 && player.x <= (this.loc.x)+8 &&  player.x > (this.loc.x)-8 && player.y <= (this.loc.y)+8 &&  player.y > (this.loc.y)-8) {
+                    if (this.damage-(player.base_defense-1) > 0) {
+						player.health = player.health-(this.damage-(player.base_defense-1));
+					}
                     
-                    if (player.invincible == false && player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 0 && currLvl[1][Math.floor((player.y+8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                         player.y+=8;
                     }
-                    if (player.invincible == false && player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 1 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x+8)/tileSize)] == 0) {
                         player.x+=8;
                     }
-                    if (player.invincible == false && player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 2 && currLvl[1][Math.floor((player.y-8)/tileSize)][Math.floor((player.x)/tileSize)] == 0) {
                         player.y-=8;
                     }
-                    if (player.invincible == false && player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
+                    if (player.state.indexOf('invincible') <0 && player.dir == 3 && currLvl[1][Math.floor((player.y)/tileSize)][Math.floor((player.x-8)/tileSize)] == 0) {
                         player.x-=8;
                     }
-                    player.invincible = true;
+                    player.state.push('invincible');
                     player.invincCounter = 0;
                 }
             }
@@ -1035,7 +1259,7 @@
     var mobs = [//(considered a subtype of room entities and therefore must have all the necessary elements)
        {    type: 'mob', name:'test_mob', 
             sprite: [906,938,970,1002], loc: {x: -1, y:-1}, speed: 1, dir: 0, health: 10, alive: true, exp_reward: 1,
-            damage: 10,
+            damage: 1,
             cursePenalty: 1,
             aiIndex:0,
             ai: ais[1].behavoir,
@@ -1061,7 +1285,6 @@
             }
         }
     ];
-    
     
     
     
@@ -1144,7 +1367,7 @@
     
     
     
-       
+	
     
 	//////////////////////////////////////////////////////////////////////////
 	//                                                                      //
@@ -1153,8 +1376,6 @@
 	//////////////////////////////////////////////////////////////////////////
     
     init(0);                             //initialize the game
-    
-    mainLoop();                         //start event loop
     
     //kick off EVERYTHING
     function init(type) {
@@ -1175,6 +1396,7 @@
         var rand = Math.floor(Math.random()*pals.length);
         
         manageScreen();
+		mainLoop();                         //start event loop
     }
     
     //fetch a room config
@@ -1200,10 +1422,10 @@
     
     //generate a level
 	function buildLevel(size, prev) {
-        player.keys = [];
+        player.keys = [];			//clear the players keys
         cycle++;                    //increment the cycle
         remKeys = 0;                //reset the remaining keys
-        remMobs = 0;                //reset the remaingin mobs
+        remMobs = 0;                //reset the remaining mobs
         if (prev == null) {         //if a fresh map, initialize it
             map = [ [0,0,0],
                     [0,empty,0],
@@ -1212,58 +1434,39 @@
 		if (!prev) {                //init the starting point if fresh
             mapLoc = {x:1, y:1};
         }
-		
+		if (seed == null) {			//gen a seed if needed
+			seed = Math.floor(Math.random()*1000000);
+		}
+		console.log('Seed: '+seed);	
         var emptList = [];          //holds the list of "empty" rooms needing to be expanded from
         var rand;                   //for RNG
         var i,j,k;                  //iterators
-        var seed = '';              //holds the seed to be generated for this level
         var genIndex = 0;           //iterator for number of generations
         var minRooms = 3+size;      //the minimum required number of rooms (for the current build)
         var numRooms = 0;           //the current number of rooms in the map (for the current build)
+		var numAugs = 0;
+		var numChests = 0;
+		var numKeys = 0;
         var floorPal = [190];       //list of base tiles available for the floor pallettes in this level (always has 190)
         var posFloors = [191,192,222,223,224,254,255,256];  //list of available base tiles to pic from
         var walls = 0;              //indicates the wallset for this level
         var floorStyle = 0;         //indicates the floor style for this level
         var lvlPal = 0;             //indicates the color pallette for this level
-        seed+=size+'_';
         
-        //190,191,192,222,223,224,254,255,256
-        //make a floor palette
-        rand = Math.floor(Math.random()*availFloors);
-        seed+=rand+'_';
-        
-        floorStyle = rand*3;
-        
+		//make a floor palette
+        floorStyle = Math.floor(sRandom()*availFloors)*3;			//pick a tile set for the floor
         for (i=0; i<2; i++) {
-            rand = Math.floor(Math.random()*posFloors.length);
-            seed+=rand+'_';
-            floorPal.push(posFloors[rand]);
-            posFloors.splice(rand, 1);
-        }
-        rand = Math.floor(Math.random()*3);
-        seed+=rand+'_';
-        if (rand == 0) {
-            floorPal.push(286);
-        }
-        if (rand == 1) {
-            floorPal.push(287);
-        }
-        if (rand == 2) {
-            floorPal.push(288);
-        }
+            rand = Math.floor(sRandom()*posFloors.length);	//pick random tile
+            floorPal.push(posFloors[rand]);					//add to working pallette
+            posFloors.splice(rand, 1);						//remove tile (so no repeats)
+        }				
+        floorPal.push(286+Math.floor(sRandom()*3));			//pick an animated tile
+        walls = Math.floor(sRandom()*availWalls)*4;			//pick a tile set for the walls
+        lvlPal = Math.floor(sRandom()*pals.length);			//pick a color pallette			
         
-        rand = Math.floor(Math.random()*availWalls);
-        seed+=rand+'_';
-        
-        walls = rand*4;
-        
-        rand = Math.floor(Math.random()*pals.length);
-        seed+=rand+'_';
-        
-        lvlPal = rand;
-        
-        function expandMap(y, x) {
-            //expand map if needed
+		
+        function expandMap(y, x) {	//expands the map
+            
             if (y == 0) {
                 var newRow = [];
                 for (c=0; c<map[0].length; c++) {
@@ -1298,15 +1501,14 @@
             }
         } 
         
-        function genFloor(y, x) {
+        function genFloor(y, x) {	//generates a floor
             var floorRow = [];
             var floorRand;
             for (var k=0; k<16; k++) {
                 floorRow = [];
                 for (var l=0; l<20; l++) {
                     
-                    floorRand = Math.floor(Math.random()*8);
-                    seed+=floorRand+'_'; 
+                    floorRand = Math.floor(sRandom()*8);
                     
                     if (floorRand == 0) {
                         floorRow.push(floorPal[3]);
@@ -1326,7 +1528,8 @@
         }
         
         for (i=0; i<size; i++) {
-            //build list of expandable rooms
+            
+			//build list of expandable rooms
             for (j=0; j<map.length; j++) {
                 for (k=0; k<map[j].length; k++) {
                     if (map[j][k].type == 'empty' ||
@@ -1345,7 +1548,8 @@
 			
             //expand every empty room in list
             for (j=0; j<emptList.length; j++) {
-                //check configs of surrounding rooms;
+                
+				//check configs of surrounding rooms;
                 var matchConfig = [];
                 
                 if (map[emptList[j].y-1][emptList[j].x] == 0) {   //above
@@ -1381,8 +1585,7 @@
                 }
                 
                 //pick a room
-                rand = Math.floor(Math.random()*appList.length);
-                seed+=rand+'_';
+                rand = Math.floor(sRandom()*appList.length);
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(appList[rand]));
                 numRooms++;
                 
@@ -1464,9 +1667,7 @@
                     }
                 }
                 //pick a room
-                rand = Math.floor(Math.random()*capList.length);
-                
-                seed+=rand+'_';
+                rand = Math.floor(sRandom()*capList.length);
                 map[emptList[j].y][emptList[j].x] = JSON.parse(JSON.stringify(capList[rand]));
                 numRooms++;
                 
@@ -1566,8 +1767,7 @@
             }
         }
         
-        
-        var rList = [];
+        var rList = [];	//list of rooms to put things in
         for (i=0; i<map.length; i++) {
             for (j=0; j<map[i].length; j++) {
                 if (map[i][j]!=0 && !(i == mapLoc.y && j == mapLoc.x) && map[i][j].obs == -1) {
@@ -1579,44 +1779,68 @@
         //put goal in map
         map[mapLoc.y][mapLoc.x].contents.push(Object.assign({}, ent_goal));
         map[mapLoc.y][mapLoc.x].obs = buildConfig('config_goal');
-        map[mapLoc.y][mapLoc.x].palette = 0;
+        //map[mapLoc.y][mapLoc.x].palette = 0;
         map[mapLoc.y][mapLoc.x].contents[0].diff = Math.ceil((rList.length-1)/2);
         goalTile.x = parseInt(mapLoc.x);
         goalTile.y = parseInt(mapLoc.y);
         
-        
-		var numKeys = Math.ceil((rList.length-1)/2);
+		numKeys = Math.ceil((rList.length-1)/2)-1;
 		rList.splice(rand, 1);
         
 		//put in keys
         remKeys = numKeys;
 		for (i=0; i<numKeys; i++) {
-            rand = Math.floor(Math.random()*rList.length);
-			seed+=rand+'_';
+            rand = Math.floor(sRandom()*rList.length);
 			map[rList[rand].y][rList[rand].x].contents.push(Object.assign(true, {}, ent_key));
 			rList.splice(rand,1);
 			
 		}
+		
+		//ensure at least one power up in the level
+		rand = Math.floor(sRandom()*rList.length);
+		map[rList[rand].y][rList[rand].x].contents.push(Object.assign(true, {}, ent_aug));
+		map[rList[rand].y][rList[rand].x].obs = buildConfig('config_item');
+		map[rList[rand].y][rList[rand].x].palette = 0;
+		map[rList[rand].y][rList[rand].x].contents[map[rList[rand].y][rList[rand].x].contents.length-1].aug = rand;
+		rList.splice(rand,1);
+		
+		//put powerups in rooms
+        /*for (i=0; i<map.length; i++) {
+            for (j=0; j<map[i].length; j++) {
+                if (map[i][j] != 0 && !(i == mapLoc.y && j == mapLoc.x)) {
+                    if (map[i][j].contents.length < 1) {
+                        rand = Math.floor(sRandom()*8);
+                        if (rand == 0) {
+                            rand = Math.floor(sRandom()*augments.length);
+                            map[i][j].contents.push(Object.assign(true, {}, ent_aug));
+                            map[i][j].obs = buildConfig('config_item');
+                            map[i][j].palette = 0;
+                            map[i][j].contents[map[i][j].contents.length-1].aug = rand;
+                        }
+                    } 
+                }
+            }
+        }*/
+		
         //put chests
-        for (i=0; i<map.length; i++) {
-			for (j=0; j<map[i].length; j++) {
-				if (map[i][j] != 0 && !(i == mapLoc.y && j == mapLoc.x)) {
-                    rand = Math.floor(Math.random()*2);
-					seed+=rand+'_';
-					if (rand == 0) {
-						seed+=rand+'_';
-                        var keyChest = false;
-                        for (k=0; k<map[i][j].contents.length; k++) {
-                            if (map[i][j].contents[k].type == 'key') {
-                                keyChest = true;
-                                map[i][j].contents.splice(k,1);
-                                console.log('key_chest');
-                            }
-                        }
-						map[i][j].contents.push(Object.assign(true, {}, ent_chest));
-                        if (keyChest == true) {
-                            map[i][j].contents[map[i][j].contents.length-1].contents = 'key';
-                        }
+		for (i=0; i<rList.length; i++) {
+			rand = Math.floor(sRandom()*5);
+			if (rand == 0) {
+				var keyChest = false;
+				var hasAug = false;
+				for (k=0; k<map[rList[rand].y][rList[rand].x].contents.length; k++) {
+					if (map[rList[rand].y][rList[rand].x].contents[k].type == 'key') {
+						keyChest = true;
+						map[rList[rand].y][rList[rand].x].contents.splice(k,1);
+					}
+					if (map[rList[rand].y][rList[rand].x].contents[k].type == 'aug') {
+						hasAug = true;
+					}
+				}
+				if (!hasAug) {
+					map[rList[rand].y][rList[rand].x].contents.push(Object.assign(true, {}, ent_chest));
+					if (keyChest == true) {
+						map[rList[rand].y][rList[rand].x].contents[map[rList[rand].y][rList[rand].x].contents.length-1].contents = 'key';
 					}
 				}
 			}
@@ -1626,50 +1850,23 @@
 		for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
 				if (map[i][j] != 0 && !(i == mapLoc.y && j == mapLoc.x)) {
-                    rand = Math.floor(Math.random()*2);
-					seed+=rand+'_';
+                    rand = Math.floor(sRandom()*2);
 					if (rand == 0) {
-                        rand = Math.floor(Math.random()*mobs.length);
-						seed+=rand+'_';
-						map[i][j].contents.push(Object.assign(true, {}, mobs[rand]));
-                        rand = Math.floor(Math.random()*ais.length);
-                        map[i][j].contents[map[i][j].contents.length-1].ai = ais[rand].behavoir;
-                        remMobs++;
+						map[i][j].contents.push(Object.assign(true, {}, mobs[Math.floor(sRandom()*mobs.length)]));
+						map[i][j].contents[map[i][j].contents.length-1].ai = ais[Math.floor(sRandom()*ais.length)].behavoir;
+						map[i][j].contents[map[i][j].contents.length-1].loc.y = Math.floor(sRandom()*12)+2;
+						map[i][j].contents[map[i][j].contents.length-1].loc.x = Math.floor(sRandom()*16)+2;
+						remMobs++;
 					}
 				}
 			}
 		}
-        
-        //put powerups in rooms
-        for (i=0; i<map.length; i++) {
-            for (j=0; j<map[i].length; j++) {
-                if (map[i][j] != 0 && !(i == mapLoc.y && j == mapLoc.x)) {
-                    if (map[i][j].contents.length < 1) {
-                        rand = Math.floor(Math.random()*2);
-                        seed+=rand+'_';
-                        if (rand == 0) {
-                            rand = Math.floor(Math.random()*augments.length);
-                            seed+=rand+'_';
-                            map[i][j].contents.push(Object.assign(true, {}, ent_aug));
-                            map[i][j].obs = buildConfig('config_item');
-                            map[i][j].palette = 0;
-                            map[i][j].contents[map[i][j].contents.length-1].aug = rand;
-                        }
-                    } 
-                }
-            }
-        }
-        //console.log(seed);
-        minimap.update();
-        player.x = 9*tileSize;
-        player.y = 8*tileSize;
-        
+		
         //assign obstacle configs
         for (i=0; i<map.length; i++) {
 			for (j=0; j<map[i].length; j++) {
                 if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
-                    rand = Math.floor(Math.random()*configs.length);
-                    seed+=rand+'_';
+                    rand = Math.floor(sRandom()*configs.length);
                     if (configs[rand].name != 'config_goal' && configs[rand].name != 'config_item' && configs[rand].name !='config_6') {
                         map[i][j].obs = buildConfig('config_'+rand);
                     }
@@ -1677,7 +1874,11 @@
                 }
             }
         }
-        //console.log(seed)
+
+		minimap.update();
+        player.x = 9*tileSize;
+        player.y = 8*tileSize;
+		
         loadRoom(map[mapLoc.y][mapLoc.x].map);
         lvlComplete = false;
 	}
@@ -2451,7 +2652,7 @@
         window.requestAnimationFrame(mainLoop);
 	}
     
-    //Fisher-Yates shuffle
+    //Fisher-Yates shuffle (as is tradition)
     function shuffle(array) {
         var m = array.length, t, i;
 
@@ -2467,5 +2668,13 @@
             array[i] = t;
         }
     }
+	
+	//from Antti Sykäri on Stack overflow (with modification by me)
+	function sRandom() {
+		var x = Math.sin(seed++) * 10000;
+		x = x - Math.floor(x);
+		x = Math.abs(x);
+		return x; 
+	}
 </script>
 </html>
