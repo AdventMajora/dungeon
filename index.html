@@ -67,7 +67,7 @@
     var roomTemplates = new Image();    //sheet of Room data
 	roomTemplates.src = 'assets/RoomTemplates.png';
     
-    var bgm = new Audio('assets/exploring.wav');    //bacground music
+    var bgm = new Audio('assets/song2.wav');    //bacground music
     bgm.loop = true;                    //loop the track
     
     //initiate canvas
@@ -880,7 +880,7 @@
             swung: false,
             use_cost: .1,
             knockback: 8,
-            curseScale: 1.5,
+            curseScale: 0,
             aoe: [[{x: 0, y: -14, dur:2, dirXadj: 0, dirYadj: 8},{x: -12, y: -10, dur:2, dirXadj: 8, dirYadj: 8},{x: -12, y: -2, dur:2, dirXadj: 8, dirYadj: 0}],
                   [{x: +2, y: -8, dur:2, dirXadj: 8, dirYadj: 8},{x: -8, y: -8, dur:2, dirXadj: 0, dirYadj: 8},{x: -12, y: -2, dur:2, dirXadj: 0, dirYadj: 8}],
                   [{x: +2, y: +8, dur:2, dirXadj: 8, dirYadj: 0},{x: +12, y: +8, dur:2, dirXadj: 0, dirYadj: 0},{x: +12, y: -2, dur:2, dirXadj: 0, dirYadj: 8}],
@@ -923,6 +923,7 @@
                                         map[mapLoc.y][mapLoc.x].contents[i].health = map[mapLoc.y][mapLoc.x].contents[i].health-((player.base_damage+this.damage)+player.curse*this.curseScale);
                                         ctx.fillStyle = 'red';
                                         ctx.fillRect(map[mapLoc.y][mapLoc.x].contents[i].loc.x, map[mapLoc.y][mapLoc.x].contents[i].loc.y, tileSize, tileSize);
+										
                                         if (player.dir == 0 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
                                             map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y-this.knockback;
                                         }
@@ -1259,7 +1260,10 @@
     ////////////////////////////////mobs//////////////////////////////////////
     var mobs = [//(considered a subtype of room entities and therefore must have all the necessary elements)
        {    type: 'mob', name:'test_mob', 
-            sprite: [906,938,970,1002], loc: {x: -1, y:-1}, speed: 1, dir: 0, health: 10, alive: true, exp_reward: 1,
+            sprite: [906,938,970,1002], loc: {x: -1, y:-1}, speed: 1, dir: 0, health: 4, alive: true, exp_reward: 1,
+			animations:{
+				
+			},
             damage: 1,
             cursePenalty: 1,
             aiIndex:0,
@@ -1270,7 +1274,7 @@
                         player.exp = player.exp+this.exp_reward;
                         player.curse = player.curse + this.cursePenalty;
                         remMobs--;
-                        map[mapLoc.y][mapLoc.x].contents.push(Object.assign(true, {}, ent_drop));
+                        map[mapLoc.y][mapLoc.x].contents.push($.extend(true, {}, ent_drop));
                         map[mapLoc.y][mapLoc.x].contents[map[mapLoc.y][mapLoc.x].contents.length-1].loc.x = this.loc.x;
                         map[mapLoc.y][mapLoc.x].contents[map[mapLoc.y][mapLoc.x].contents.length-1].loc.y = this.loc.y;
                         this.alive = false;
@@ -1280,7 +1284,11 @@
             },
             draw:	function() {
                 if (this.alive == true) {
-                    
+					ctx.fillStyle = 'red';
+					ctx.font="4px monospace"
+                    for (var i=0; i<this.health; i++) {
+						ctx.fillRect(this.loc.x+(2*i), this.loc.y-4, 1,4);
+					}
                     drawSprite(this.sprite[this.dir], this.loc.x, this.loc.y);
                 }
             }
@@ -1379,7 +1387,7 @@
     init(0);                             //initialize the game
     
     //kick off EVERYTHING
-    function init(type) {
+    function init(type, game_over) {
         currPal = pals[0];
         bgm.play();                     //start the bgm
 		player.init();                  //initialize the player
@@ -1397,7 +1405,10 @@
         var rand = Math.floor(Math.random()*pals.length);
         
         manageScreen();
-		mainLoop();                         //start event loop
+		if (game_over == null) {
+			mainLoop();                         //start event loop
+		}
+		
     }
     
     //fetch a room config
@@ -2212,7 +2223,7 @@
     function menuSystem() {
         var sX,sY;
         var augList = [];
-        rctx.font="7px monospace";
+        rctx.font="6px monospace";
         if (bannerCounter > -1) {
             bannerCounter++;
             if (bannerCounter > 120) {
@@ -2251,20 +2262,26 @@
             //spd crs
             //hp  sp
             rctx.fillStyle = 'white';
-            rctx.fillText('lvl: '+player.lvl,Math.floor(screenWidth/2)+4,menuHeight+24);
-            rctx.fillText('cycle: '+cycle,Math.floor(screenWidth/2)+40,menuHeight+24);
-            rctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+32);
-            rctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+32);
-            rctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+40);
-            rctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+40);
-            rctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+4,menuHeight+48);
-            rctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+40,menuHeight+48);
+			rctx.fillText('cycle:  '+cycle,Math.floor(screenWidth/2)+5,menuHeight+20);
             
-            rctx.fillText('Augments:',Math.floor(screenWidth/2)+4,menuHeight+60);
+			rctx.fillRect(Math.floor(screenWidth/2)+3,menuHeight+23, 75, 26);
+			rctx.fillStyle = 'black';
+			rctx.fillRect(Math.floor(screenWidth/2)+4,menuHeight+24, 73, 24);
+			rctx.fillStyle = 'white';
+			
+			rctx.fillText('lvl:    '+player.lvl,Math.floor(screenWidth/2)+5,menuHeight+30);
+			rctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+5,menuHeight+35);
+            rctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+45,menuHeight+35);
+            rctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+5,menuHeight+40);
+            rctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+45,menuHeight+40);
+            rctx.fillText('hpr: '+(100*player.healthGen).toFixed(2),Math.floor(screenWidth/2)+5,menuHeight+45);
+            rctx.fillText('spr: '+(10*player.spiritGen).toFixed(2),Math.floor(screenWidth/2)+45,menuHeight+45);
+            
+            rctx.fillText('augments:',Math.floor(screenWidth/2)+5,menuHeight+55);
             
             for (var i=0; i<player.augments.length; i++) {
-                rctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+4,menuHeight+68+(i*8));
-				rctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+40,menuHeight+68+(i*8));
+                rctx.fillText(player.augments[i].name,Math.floor(screenWidth/2)+5,menuHeight+60+(i*5));
+				rctx.fillText(player.augments[i].effectText,Math.floor(screenWidth/2)+40,menuHeight+60+(i*5));
             }
         
             //minimap
@@ -2591,15 +2608,15 @@
 			//render game over screen
             //bgm.stop();
             if (player.health <=0) {
-                ctx.font="7px monospace";
-                ctx.fillStyle = 'black';
-                ctx.fillRect(0,0,screenWidth,screenHeight-16);
-                ctx.fillStyle = 'white';
-                ctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
-                ctx.fillText('Press Space to Retry', (screenWidth/2)-40, ((screenHeight-16)/2)+8);
+                rctx.font="7px monospace";
+                rctx.fillStyle = 'black';
+                rctx.fillRect(0,0,screenWidth,screenHeight-16);
+                rctx.fillStyle = 'white';
+                rctx.fillText('GAME OVER', (screenWidth/2)-20, ((screenHeight-16)/2));
+                rctx.fillText('Press Space to Retry', (screenWidth/2)-40, ((screenHeight-16)/2)+8);
                 
                 if (pressedKeys.indexOf('_') > -1) {
-                    init(0);
+                    init(0, true);
                 }
             } else {
             
