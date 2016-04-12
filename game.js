@@ -1818,7 +1818,7 @@ function buildLevel(size, prev) {
 	map[rList[rand].y][rList[rand].x].contents.push($.extend(true, {}, ent_aug));
 	map[rList[rand].y][rList[rand].x].obs = buildConfig('config_item');
 	map[rList[rand].y][rList[rand].x].palette = 0;
-	map[rList[rand].y][rList[rand].x].contents[map[rList[rand].y][rList[rand].x].contents.length-1].aug = rand;
+	map[rList[rand].y][rList[rand].x].contents[map[rList[rand].y][rList[rand].x].contents.length-1].aug = Math.floor(sRandom()*augments.length);
 	rList.splice(rand,1);
 	
 	//put powerups in rooms
@@ -2377,9 +2377,7 @@ function menuSystem() {
 		}
 	}
 	rctx.fillText(']',screenWidth-50+(10+5.5)*2,screenHeight-10);
-	
-	rctx.fillStyle = 'red';
-	rctx.fillText(player.currSpeed, 20,20);
+
 }
 
 //main loop
