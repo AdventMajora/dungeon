@@ -104,6 +104,7 @@ var player={
 	invincLimit:60,
 	moveWhileAttacking: false,
 	speed: 1,
+	currSpeed: .25,
 	speedLimit: 4,
 	base_damage:1,
 	base_defense:1,
@@ -306,6 +307,7 @@ var player={
 			}
 			
 		} else {
+			this.currSpeed = .0625;
 			if (this.state.indexOf('moving') > -1) {
 				this.state.splice(this.state.indexOf('moving'),1);
 			}
@@ -363,21 +365,25 @@ var player={
 	},
 	move:   function (dir) {
 		if (this.state.indexOf('moving') > -1) {
-		
+			
+			if (this.currSpeed < this.speed) {
+				this.currSpeed+=.0625;
+			}
+			
 			if (dir == 0) {
 				if (this.strafe == false) {
 					this.dir = 0;
 				}
-				var canMove = this.speed;
-				if (this.y-this.speed <= 0) {
-					canMove = 0 - (this.y-this.speed);
+				var canMove = this.currSpeed;
+				if (this.y-this.currSpeed <= 0) {
+					canMove = 0 - (this.y-this.currSpeed);
 					if (canMove < 0) {
 						canMove = 0;
 					}
 					this.y-=canMove;
 				} else {
 					canMove =  .25;
-					while (canMove <= this.speed) {
+					while (canMove <= this.currSpeed) {
 						if (currLvl[1][Math.floor((this.y-(.25))/8)][Math.floor(Math.floor(this.x)/8)] ==0 &&
 							currLvl[1][Math.floor((this.y-(.25))/8)][Math.ceil(Math.ceil(this.x)/8)] ==0) {
 							this.y-=.25;
@@ -393,16 +399,16 @@ var player={
 				if (this.strafe == false) {
 					this.dir = 1;
 				}
-				var canMove = this.speed;
-				if (this.x-this.speed <= 0) {
-					canMove = 0 - (this.x-this.speed);
+				var canMove = this.currSpeed;
+				if (this.x-this.currSpeed <= 0) {
+					canMove = 0 - (this.x-this.currSpeed);
 					if (canMove < 0) {
 						canMove = 0;
 					}
 					this.x-=canMove;
 				} else {
 					canMove = .25;
-					while (canMove <= this.speed) {
+					while (canMove <= this.currSpeed) {
 						if (currLvl[1][Math.floor((Math.floor(this.y))/8)][Math.floor((this.x-.25)/8)] == 0 &&
 							currLvl[1][Math.ceil(((Math.ceil(this.y)))/8)][Math.floor((this.x-.25)/8)] == 0) {
 							
@@ -419,16 +425,16 @@ var player={
 				if (this.strafe == false) {
 					this.dir = 2;
 				}
-				var canMove = this.speed;
-				if (this.y+this.speed+8 >= screenHeight-16) {
-					canMove = (this.y+this.speed) - screenHeight-16;
+				var canMove = this.currSpeed;
+				if (this.y+this.currSpeed+8 >= screenHeight-16) {
+					canMove = (this.y+this.currSpeed) - screenHeight-16;
 					if (canMove < 0) {
 						canMove = 0;
 					}
 					this.y+=canMove;
 				} else {
 					canMove = .25;
-					while (canMove <= this.speed) {
+					while (canMove <= this.currSpeed) {
 						if (currLvl[1][Math.ceil((this.y+.25)/8)][Math.floor(Math.floor(this.x)/8)] == 0 &&
 							currLvl[1][Math.ceil((this.y+.25)/8)][Math.ceil(Math.ceil(this.x)/8)] == 0) {
 							
@@ -445,16 +451,16 @@ var player={
 				if (this.strafe == false) {
 					this.dir = 3;
 				}
-				var canMove = this.speed;
-				if (this.x+this.speed+8 >= screenWidth) {
-					canMove = (this.x+this.speed) - screenWidth;
+				var canMove = this.currSpeed;
+				if (this.x+this.currSpeed+8 >= screenWidth) {
+					canMove = (this.x+this.currSpeed) - screenWidth;
 					if (canMove < 0) {
 						canMove = 0;
 					}
 					this.x+=canMove;
 				} else {
 					canMove = .25;
-					while (canMove <= this.speed) {
+					while (canMove <= this.currSpeed) {
 						if (currLvl[1][Math.ceil(Math.ceil(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0 &&
 							currLvl[1][Math.floor(Math.floor(this.y)/8)][Math.ceil((this.x+.25)/8)] == 0) {
 						
@@ -466,7 +472,6 @@ var player={
 					}
 				}
 			}
-		
 		}
 		
 	},
@@ -866,11 +871,12 @@ var weps = [
 		use_cost: .1,
 		knockback: 8,
 		curseScale: 0,
-		aoe: [[{x: 0, y: -16, w:16, h:8, dur:2},	{x: -12, y: -16, w:16, h:8, dur:2},	{x: -12, y: -8, w:8, h:16, dur:2}],
-			  [{x: 0, y: -16, w:16, h:8, dur:2},	{x: -12, y: -16, w:16, h:8, dur:2},	{x: -12, y: -8, w:8, h:16, dur:2}],
-			  [{x: -8, y: +8, w:16, h:8, dur:2},	{x: +4, y: +8, w:16, h:8, dur:2},		{x: +12, y: -8, w:8, h:16, dur:2}],
-			  [{x: -12, y: -16, w:16, h:8, dur:2},	{x: 0, y: -16, w:16, h:8, dur:2},		{x: +12, y: -8, w:8, h:16, dur:2}],
-			 ],
+		aoe: [
+			[{x: 0, y: -16, w:16, h:8, dur:2},	{x: -12, y: -16, w:16, h:8, dur:2},	{x: -12, y: -8, w:8, h:16, dur:2}],
+			[{x: 0, y: -16, w:16, h:8, dur:2},	{x: -12, y: -16, w:16, h:8, dur:2},	{x: -12, y: -8, w:8, h:16, dur:2}],
+			[{x: -8, y: +8, w:16, h:8, dur:2},	{x: +4, y: +8, w:16, h:8, dur:2},	{x: +12, y: -8, w:8, h:16, dur:2}],
+			[{x: -12, y: -16, w:16, h:8, dur:2},{x: 0, y: -16, w:16, h:8, dur:2},	{x: +12, y: -8, w:8, h:16, dur:2}],
+		],
 		animations: [
 			[{x:0,y:0,w:32,h:32},{x:32,y:0,w:32,h:32},{x:64,y:0,w:32,h:32}],
 			[{x:0,y:32,w:32,h:32},{x:32,y:32,w:32,h:32},{x:64,y:32,w:32,h:32}],
@@ -2371,6 +2377,9 @@ function menuSystem() {
 		}
 	}
 	rctx.fillText(']',screenWidth-50+(10+5.5)*2,screenHeight-10);
+	
+	rctx.fillStyle = 'red';
+	rctx.fillText(player.currSpeed, 20,20);
 }
 
 //main loop
