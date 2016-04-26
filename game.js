@@ -39,6 +39,7 @@ var availWalls = 5;                 //number of available wall tile sets
 var currPal;                        //holds the current color palette
 var spriteSheet = new Image();	    //Sheet of sprite images
 var seed;
+var base_seed;
 spriteSheet.src = 'assets/char_sheet.png';
 
 var playerSheet = new Image();      //sheet of player sprites
@@ -1269,7 +1270,7 @@ var mobs = [//(considered a subtype of room entities and therefore must have all
 		animations:{
 			
 		},
-		damage: 1,
+		damage: 1*cycle,
 		cursePenalty: .25,
 		aiIndex:0,
 		ai: ais[1].behavoir,
@@ -1454,6 +1455,7 @@ function buildLevel(size, prev) {
 	if (seed == null) {			//gen a seed if needed
 		seed = Math.floor(Math.random()*1000000);
 	}
+	base_seed = seed;
 	console.log('Seed: '+seed);	
 	var emptList = [];          //holds the list of "empty" rooms needing to be expanded from
 	var rand;                   //for RNG
@@ -1898,7 +1900,7 @@ function buildLevel(size, prev) {
 	minimap.update();
 	player.x = 9*tileSize;
 	player.y = 8*tileSize;
-	
+	bannerCounter = 0;
 	loadRoom(map[mapLoc.y][mapLoc.x].map);
 	lvlComplete = false;
 }
@@ -2240,7 +2242,7 @@ function menuSystem() {
 		rctx.fillRect(0, 0, 64, 8);
 		
 		rctx.fillStyle = 'white';
-		rctx.fillText('Cycle: '+cycle, 2, 6);
+		rctx.fillText('Seed: '+base_seed, 2, 6);
 	}
 	
 	//pause screen
@@ -2266,7 +2268,7 @@ function menuSystem() {
 		//spd crs
 		//hp  sp
 		rctx.fillStyle = 'white';
-		rctx.fillText('cycle:  '+cycle,Math.floor(screenWidth/2)+5,menuHeight+20);
+		rctx.fillText('seed:  '+base_seed,Math.floor(screenWidth/2)+5,menuHeight+20);
 		
 		rctx.fillRect(Math.floor(screenWidth/2)+3,menuHeight+23, 75, 26);
 		rctx.fillStyle = 'black';
@@ -2380,6 +2382,209 @@ function menuSystem() {
 
 }
 
+//check for room transitions
+function roomTransition() {
+	
+	if (Math.floor(player.y-player.speed) <= 1 && mapLoc.y-1 > 0) {
+		rTransition = 0;
+		roomDrawY = 0-screenHeight+16;
+		mapLoc.y--;
+		loadRoom(map[mapLoc.y][mapLoc.x].map);
+		minimap.update();
+	}
+	if (Math.ceil(player.y+8+player.speed) >= screenHeight-16 && mapLoc.y+1 < map.length-1) {
+		rTransition = 2;
+		roomDrawY = screenHeight-16;
+		mapLoc.y++;
+		loadRoom(map[mapLoc.y][mapLoc.x].map);
+		minimap.update();
+	}
+	if (Math.floor(player.x-player.speed) <= 1 && mapLoc.x-1 > 0) {
+		rTransition = 1;
+		roomDrawX = 0-screenWidth;
+		mapLoc.x--;
+		loadRoom(map[mapLoc.y][mapLoc.x].map);
+		minimap.update();
+	}
+	if (Math.ceil(player.x+8+player.speed) >= screenWidth && mapLoc.x+1 < map[mapLoc.y].length-1) {
+		rTransition = 3;
+		roomDrawX = screenWidth;
+		mapLoc.x++;
+		loadRoom(map[mapLoc.y][mapLoc.x].map);
+		minimap.update();
+	}
+	
+	if (rTransition != -1) {
+		if (rTransition == 0) {
+			player.y =  player.y +10;
+			roomDrawY = roomDrawY+10;
+			if (player.y >= screenHeight-28) {
+				player.y = screenHeight-28;
+			}
+			if (roomDrawY >=0) {
+				roomDrawY = 0;
+			}
+			if (roomDrawY == 0 && player.y == screenHeight-28){
+				rTransition = -1;
+			}
+		}
+		if (rTransition == 2) {
+			player.y =  player.y -10;
+			roomDrawY = roomDrawY-10;
+			if (player.y <= 9+player.speed) {
+				player.y = 9+player.speed;
+			}
+			if (roomDrawY <=0) {
+				roomDrawY = 0;
+			}
+			if (roomDrawY == 0 && player.y == 9+player.speed){
+				rTransition = -1;
+			}
+		}
+		if (rTransition == 1) {
+			player.x =  player.x +10;
+			roomDrawX = roomDrawX+10;
+			if (player.x >= screenWidth-9-player.speed) {
+				player.x = screenWidth-9-player.speed;
+			}
+			if (roomDrawX >= 0) {
+				roomDrawX = 0;
+			}
+			if (roomDrawX == 0 && player.x == screenWidth-9-player.speed) {
+				rTransition = -1;
+			}
+		}
+		if (rTransition == 3) {
+			player.x =  player.x -10;
+			roomDrawX = roomDrawX-10;
+			if (player.x <= 9+player.speed) {
+				player.x = 9+player.speed;
+			}
+			if (roomDrawX <= 0) {
+				roomDrawX = 0;
+			}
+			if (roomDrawX == 0 && player.x == 9+player.speed) {
+				rTransition = -1;
+			}
+		}
+		if (rTransition == 4) {
+			//player.y =  player.y +10;
+			roomDrawY = roomDrawY+10;
+			if (player.y >= screenHeight-28) {
+				player.y = screenHeight-28;
+			}
+			if (roomDrawY >=0) {
+				roomDrawY = 0;
+			}
+			if (roomDrawY == 0){
+				rTransition = -1;
+			}
+		}
+	}
+}
+
+
+function renderLvl() {
+	//render background layer
+	for (var i=0; i<currLvl[0].length; i++) {
+		for (var j=0; j<currLvl[0][i].length; j++) {
+			//background layer
+			if (currLvl[0][i][j] !=0) {
+				drawSprite(currLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+			}
+			
+			
+			if (rTransition != -1) {
+				//prev background
+				if (prevLvl[0][i][j] !=0) {
+					if (rTransition == 0) {
+						drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+					}
+					if (rTransition == 1) {
+						drawSprite(prevLvl[0][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+					}
+					if (rTransition == 2) {
+						drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+					}
+					if (rTransition == 3) {
+						drawSprite(prevLvl[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+					}
+				}
+				
+			}    
+		}
+	}
+	
+	//render collision layer
+	for (var i=0; i<currLvl[1].length; i++) {
+		for (var j=0; j<currLvl[1][i].length; j++) {
+			//collision layer
+			if (currLvl[1][i][j] !=0) {
+				drawSprite(currLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+			}
+			//prev collision
+			if (prevLvl[1][i][j] !=0) {
+				if (rTransition == 0) {
+					drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+				}
+				if (rTransition == 1) {
+					drawSprite(prevLvl[1][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+				}
+				if (rTransition == 2) {
+					drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+				}
+				if (rTransition == 3) {
+					drawSprite(prevLvl[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+				}
+			}
+		}
+	}
+	
+	//update the player and room contents
+	if (paused == false && rTransition == -1) {	
+		//update contents of room
+		for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
+			map[mapLoc.y][mapLoc.x].contents[i].update();
+		}
+		
+		player.update();    
+	}
+	
+	//draw the contents of the room
+	if (rTransition == -1) {
+		for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
+			map[mapLoc.y][mapLoc.x].contents[i].draw();
+		}
+	}
+				
+	//ctx.fillStyle = 'red';
+	//ctx.fillRect(player.x,player.y,8,8);
+	player.draw();
+	
+	//curr room overlap
+	for (var i=0; i<currLvl[2].length; i++) {
+		for (var j=0; j<currLvl[2][i].length; j++) {
+			if (currLvl[2][i][j] !=0) {
+				drawSprite(currLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+			}
+			if (prevLvl[2][i][j] !=0 && rTransition != -1) {
+				if (rTransition == 0) {
+					drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
+				}
+				if (rTransition == 1) {
+					drawSprite(prevLvl[2][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+				}
+				if (rTransition == 2) {
+					drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
+				}
+				if (rTransition == 3) {
+					drawSprite(prevLvl[2][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
+				}
+			}
+		}
+	}
+}
+
 //main loop
 function mainLoop() {
 	frames++;
@@ -2408,206 +2613,13 @@ function mainLoop() {
 	
 	if (lvlComplete == false) {
 		
-		//check for room transitions
-		if (Math.floor(player.y-player.speed) <= 1 && mapLoc.y-1 > 0) {
-			rTransition = 0;
-			roomDrawY = 0-screenHeight+16;
-			mapLoc.y--;
-			loadRoom(map[mapLoc.y][mapLoc.x].map);
-			minimap.update();
-		}
-		if (Math.ceil(player.y+8+player.speed) >= screenHeight-16 && mapLoc.y+1 < map.length-1) {
-			rTransition = 2;
-			roomDrawY = screenHeight-16;
-			mapLoc.y++;
-			loadRoom(map[mapLoc.y][mapLoc.x].map);
-			minimap.update();
-		}
-		if (Math.floor(player.x-player.speed) <= 1 && mapLoc.x-1 > 0) {
-			rTransition = 1;
-			roomDrawX = 0-screenWidth;
-			mapLoc.x--;
-			loadRoom(map[mapLoc.y][mapLoc.x].map);
-			minimap.update();
-		}
-		if (Math.ceil(player.x+8+player.speed) >= screenWidth && mapLoc.x+1 < map[mapLoc.y].length-1) {
-			rTransition = 3;
-			roomDrawX = screenWidth;
-			mapLoc.x++;
-			loadRoom(map[mapLoc.y][mapLoc.x].map);
-			minimap.update();
-		}
-		
-		if (rTransition != -1) {
-			if (rTransition == 0) {
-				player.y =  player.y +10;
-				roomDrawY = roomDrawY+10;
-				if (player.y >= screenHeight-28) {
-					player.y = screenHeight-28;
-				}
-				if (roomDrawY >=0) {
-					roomDrawY = 0;
-				}
-				if (roomDrawY == 0 && player.y == screenHeight-28){
-					rTransition = -1;
-				}
-			}
-			if (rTransition == 2) {
-				player.y =  player.y -10;
-				roomDrawY = roomDrawY-10;
-				if (player.y <= 9+player.speed) {
-					player.y = 9+player.speed;
-				}
-				if (roomDrawY <=0) {
-					roomDrawY = 0;
-				}
-				if (roomDrawY == 0 && player.y == 9+player.speed){
-					rTransition = -1;
-				}
-			}
-			if (rTransition == 1) {
-				player.x =  player.x +10;
-				roomDrawX = roomDrawX+10;
-				if (player.x >= screenWidth-9-player.speed) {
-					player.x = screenWidth-9-player.speed;
-				}
-				if (roomDrawX >= 0) {
-					roomDrawX = 0;
-				}
-				if (roomDrawX == 0 && player.x == screenWidth-9-player.speed) {
-					rTransition = -1;
-				}
-			}
-			if (rTransition == 3) {
-				player.x =  player.x -10;
-				roomDrawX = roomDrawX-10;
-				if (player.x <= 9+player.speed) {
-					player.x = 9+player.speed;
-				}
-				if (roomDrawX <= 0) {
-					roomDrawX = 0;
-				}
-				if (roomDrawX == 0 && player.x == 9+player.speed) {
-					rTransition = -1;
-				}
-			}
-			if (rTransition == 4) {
-				//player.y =  player.y +10;
-				roomDrawY = roomDrawY+10;
-				if (player.y >= screenHeight-28) {
-					player.y = screenHeight-28;
-				}
-				if (roomDrawY >=0) {
-					roomDrawY = 0;
-				}
-				if (roomDrawY == 0){
-					rTransition = -1;
-				}
-			}
-		}
+		roomTransition();
 		
 		ctx.fillStyle = '#F1F1F1';
 		//ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,screenWidth,screenHeight-16);
 		
-		//render background layer
-		for (var i=0; i<currLvl[0].length; i++) {
-			for (var j=0; j<currLvl[0][i].length; j++) {
-				//background layer
-				if (currLvl[0][i][j] !=0) {
-					drawSprite(currLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-				}
-				
-				
-				if (rTransition != -1) {
-					//prev background
-					if (prevLvl[0][i][j] !=0) {
-						if (rTransition == 0) {
-							drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
-						}
-						if (rTransition == 1) {
-							drawSprite(prevLvl[0][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-						}
-						if (rTransition == 2) {
-							drawSprite(prevLvl[0][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
-						}
-						if (rTransition == 3) {
-							drawSprite(prevLvl[0][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-						}
-					}
-					
-				}    
-			}
-		}
-		
-		//render collision layer
-		for (var i=0; i<currLvl[1].length; i++) {
-			for (var j=0; j<currLvl[1][i].length; j++) {
-				//collision layer
-				if (currLvl[1][i][j] !=0) {
-					drawSprite(currLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-				}
-				//prev collision
-				if (prevLvl[1][i][j] !=0) {
-					if (rTransition == 0) {
-						drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
-					}
-					if (rTransition == 1) {
-						drawSprite(prevLvl[1][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-					}
-					if (rTransition == 2) {
-						drawSprite(prevLvl[1][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
-					}
-					if (rTransition == 3) {
-						drawSprite(prevLvl[1][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-					}
-				}
-			}
-		}
-		
-		//update the player and room contents
-		if (paused == false && rTransition == -1) {	
-			//update contents of room
-			for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
-				map[mapLoc.y][mapLoc.x].contents[i].update();
-			}
-			
-			player.update();    
-		}
-		
-		//draw the contents of the room
-		if (rTransition == -1) {
-			for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
-				map[mapLoc.y][mapLoc.x].contents[i].draw();
-			}
-		}
-					
-		//ctx.fillStyle = 'red';
-		//ctx.fillRect(player.x,player.y,8,8);
-		player.draw();
-		
-		//curr room overlap
-		for (var i=0; i<currLvl[2].length; i++) {
-			for (var j=0; j<currLvl[2][i].length; j++) {
-				if (currLvl[2][i][j] !=0) {
-					drawSprite(currLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-				}
-				if (prevLvl[2][i][j] !=0 && rTransition != -1) {
-					if (rTransition == 0) {
-						drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY+screenHeight-16+Math.floor((i*8)));
-					}
-					if (rTransition == 1) {
-						drawSprite(prevLvl[2][i][j],roomDrawX+screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-					}
-					if (rTransition == 2) {
-						drawSprite(prevLvl[2][i][j],roomDrawX+Math.floor((j*8)),roomDrawY-screenHeight+16+Math.floor((i*8)));
-					}
-					if (rTransition == 3) {
-						drawSprite(prevLvl[2][i][j],roomDrawX-screenWidth+Math.floor((j*8)),roomDrawY+Math.floor((i*8)));
-					}
-				}
-			}
-		}
+		renderLvl();
 			
 	} else {
 		//render game over screen
@@ -2647,12 +2659,12 @@ function mainLoop() {
 					img.data[i+1] = currPal[1][1];
 					img.data[i+2] = currPal[1][2];
 				}
-				if (img.data[i] == pals[0][2][0] && img.data[i+1] == pals[0][2][1] && img.data[i+2] == pals[0][2][2]) {
+				/*if (img.data[i] == pals[0][2][0] && img.data[i+1] == pals[0][2][1] && img.data[i+2] == pals[0][2][2]) {
 				
 					img.data[i] = currPal[2][0];
 					img.data[i+1] = currPal[2][1];
 					img.data[i+2] = currPal[2][2];
-				}
+				}*/
 				/*if (img.data[i] == pals[0][3][0] && img.data[i+1] == pals[0][3][1] && img.data[i+2] == pals[0][3][2]) {
 				
 					img.data[i] = currPal[3][0];
