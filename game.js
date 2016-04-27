@@ -1027,7 +1027,7 @@ player.weapons.push(weps[0]);       //default the weapon for testing purposes
 			if (player.x <= (this.loc.x)+4 && player.x > (this.loc.x)-4 && 
 				player.y <= (this.loc.y)+4 && player.y > (this.loc.y)-4 &&
 				this.collected == false) {
-				player.health = player.health+4;
+				player.health = player.health+1;
 				player.newStatus = 999;
 				player.statusCount = 50;
 				this.collected = true;
@@ -1270,11 +1270,13 @@ var mobs = [//(considered a subtype of room entities and therefore must have all
 		animations:{
 			
 		},
-		damage: 1*cycle,
+		damage: 1,
 		cursePenalty: .25,
 		aiIndex:0,
 		ai: ais[1].behavoir,
 		update:	function() {   
+			this.damage = 1*(cycle+1);
+			this.cursePenalty = .25*(cycle+1);
 			if (this.alive == true) {
 				if (this.health <= 0) {
 					player.exp = player.exp+this.exp_reward;
@@ -1889,8 +1891,9 @@ function buildLevel(size, prev) {
 		for (j=0; j<map[i].length; j++) {
 			if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
 				rand = Math.floor(sRandom()*configs.length);
-				if (configs[rand].name != 'config_goal' && configs[rand].name != 'config_item' && configs[rand].name !='config_6') {
+				if (configs[rand].name != 'config_goal' && configs[rand].name != 'config_item' /*&& configs[rand].name !='config_6'*/) {
 					map[i][j].obs = buildConfig('config_'+rand);
+					console.log('config_'+rand);
 				}
 				
 			}
@@ -2276,7 +2279,7 @@ function menuSystem() {
 		rctx.fillStyle = 'white';
 		
 		rctx.fillText('lvl:    '+player.lvl,Math.floor(screenWidth/2)+5,menuHeight+30);
-		rctx.fillText('dmg: '+(player.base_damage).toFixed(2),Math.floor(screenWidth/2)+5,menuHeight+35);
+		rctx.fillText('dmg: '+(player.base_damage).toFixed(2)+'+'+player.weapons[0].damage,Math.floor(screenWidth/2)+5,menuHeight+35);
 		rctx.fillText('def: '+(player.base_defense).toFixed(2),Math.floor(screenWidth/2)+45,menuHeight+35);
 		rctx.fillText('spd: '+(player.speed).toFixed(2),Math.floor(screenWidth/2)+5,menuHeight+40);
 		rctx.fillText('crs: '+(player.curse).toFixed(2),Math.floor(screenWidth/2)+45,menuHeight+40);
