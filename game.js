@@ -575,6 +575,11 @@ var player={
 				this.exp = 0;
 				this.lvl = 0;
 				
+				var set = Math.floor(Math.random()*4)*32;
+				
+				this.bodySet = set;
+				this.headSet = set;
+				
 				this.augments = [];
 				this.keys = [];
 				
@@ -1392,6 +1397,14 @@ document.addEventListener('keyup', function(event) {
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 
+console.log('EVERYTHING IS CLIENT-SIDE\nWhich means you all can invoke functions and do other fancy things');
+console.log('"player" is the player object\n"map[mapLoc.x][mapLoc.y]" will get you the current room');
+console.log('"buildLevel(size,[map])" generates a new level.\nsize determines how big the level is. All the normally generated levels are of size 1.\nex: "buildLevel(1,map);" will expand the current map by a factor of 1.\nThe levels are generated from a seed. Set it with "seed=YOURSEEDHERE;" ONLY USE NUMBERS!!');
+console.log('You can access the SUPER NOT FINISHED hub level with "buildHub();"\nBe warned that it is so unfinished, that trying to access certain rooms will cause a crash :D');
+console.log('You can give yourself power ups with "player.augments.push(augs[POWERUPNUMBER])" (0-5)\nand then "player.augments[POWERUPINDEX].onPickup();" POWERUPINDEX refers to the list of power ups the player has.');
+console.log('have fun!; Break things');
+
+
 init(0);                             //initialize the game
 
 //kick off EVERYTHING
@@ -1483,7 +1496,7 @@ function buildLevel(size, prev) {
 	}				
 	floorPal.push(286+Math.floor(sRandom()*3));			//pick an animated tile
 	walls = Math.floor(sRandom()*availWalls)*4;			//pick a tile set for the walls
-	lvlPal = Math.floor(sRandom()*pals.length);			//pick a color pallette			
+	lvlPal = Math.floor(sRandom()*pals.length-1)+1;			//pick a color pallette			
 	
 	
 	function expandMap(y, x) {	//expands the map
@@ -1821,7 +1834,7 @@ function buildLevel(size, prev) {
 	rand = Math.floor(sRandom()*rList.length);
 	map[rList[rand].y][rList[rand].x].contents.push($.extend(true, {}, ent_aug));
 	map[rList[rand].y][rList[rand].x].obs = buildConfig('config_item');
-	map[rList[rand].y][rList[rand].x].palette = 0;
+	//map[rList[rand].y][rList[rand].x].palette = 0;
 	map[rList[rand].y][rList[rand].x].contents[map[rList[rand].y][rList[rand].x].contents.length-1].aug = Math.floor(sRandom()*augments.length);
 	rList.splice(rand,1);
 	
@@ -1891,9 +1904,8 @@ function buildLevel(size, prev) {
 		for (j=0; j<map[i].length; j++) {
 			if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
 				rand = Math.floor(sRandom()*configs.length);
-				if (configs[rand].name != 'config_goal' && configs[rand].name != 'config_item' /*&& configs[rand].name !='config_6'*/) {
-					map[i][j].obs = buildConfig('config_'+rand);
-					console.log('config_'+rand);
+				if (configs[rand].name != 'config_goal' && configs[rand].name != 'config_item') {
+					map[i][j].obs = buildConfig(configs[rand].name);
 				}
 				
 			}

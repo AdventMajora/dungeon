@@ -5,17 +5,17 @@
  </tileset>
  <layer name="Background" width="20" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC9vHwMCwjwCGAULq0NVTCkbNG3zmDXYw2MNv1DzKzaNmeQUAirYfUgAFAAA=
+   H4sIAAAAAAAAC62UUQrAMAhD3f3v1KO1Y7CM11RpPyb4MUmjRl2LiPazj9fjWv2Jd2B64Q9WfPomZ0/i5CZGTj7Hsj7yDcPyDfnYk3J7XR5TXLkz/RbuxLwPYcXHenZcYZru+p3mUlilJ/v1Gez4pNtJfRNvYr4nzufacqZVr9nOOh9nUs2F++E7w/m6tpM2tCRvdh/ZPX4OLr9J7izr87tl/ko7r/X0/yM7wd7M+TG+AAUAAA==
   </data>
  </layer>
  <layer name="Collision" width="20" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgwARRjBCMCxCSp6V584DqdkHxAix6CMmjg31ANQ1AnADEB7Co3weV249DHpd5uNTDzMNlHy7zGvCYh88+dHAPqOY+FD/Aop6Q/CgYBcMJAAAHDXrCAAUAAA==
+   H4sIAAAAAAAAC72TSQrAMAhF0/uvk+YmiUfpbepGEHGoBvrhLwSHhzFwtQaKO3qgb/RUYq0GgvyF3uhHxN68zXpT/lctpV7OycraA83JKtpDRbyH7F8R73HCp73xCZ+sBeP2Klx8f1lGjYti709l2aYzx+L02Kz9WZxRXi/e2596AbPym9sABQAA
   </data>
  </layer>
  <layer name="Overlap" width="20" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBSMgpEJAGWdw/wABQAA
+   H4sIAAAAAAAAC9XSQQ6AIAwEQHxklY9geb57kMuGtkq92GQPTQqdBHQrpSMNORG9+6h4fvSC7MiB1Af3cPH5t67ImfWxMetjY8bHZyXpm71xXTDOXKP/8u+ps8dyerbq7LGcnq0bOyxnNCfGDssZzbXF//vnugBrJmeLAAUAAA==
   </data>
  </layer>
 </map>
