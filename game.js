@@ -1,5 +1,6 @@
 //music url http://www.beepbox.co/#5s6k6l00e0ftaa7g0fj7i0r0w1111f0000d1111c0000h0060v0003o3210b000w8h4h4g0h4i4zcP8x8y8y4h8y8h8h4x800i4w018p22-FBO9cd6gFO0V6j8Rj3Apllg5cKh9xwQQV0siN2hGMoIOSD83ApdteyCNd3HqTqWwkOV4C6z8kV0sz9AqGqfuPnjIp5dehjAQQwmo589wngChmNmRhJr5rl6QVwhmYnBulZltunI2XR2TvgHKXU_cPcHKXHKXM3dgggA444aXKY-O0Xi7dQrmlhhthhJkm0
 //http://www.beepbox.co/#5s6k6l00e0ftaa7g0fj7i0r0w1111f0000d1111c0000h0060v0003o3210b000w8j514g0h4i4zcN8x8y8y4h8y8h8h4x800i4w018p23AFBO9cd6gFO0V6j8Rj3ApllmImjnjA1OaGGEaKC1LFVoI3wqsMetpvlj8QOs1m5cKh9xwQQV0siN2hGMoIOSD83ApdteyCNd3HqTqWwkOV4C6z8kV0sz9AqGqfuPnjIp5dehjAQQwmo589wngChmNmRhJr5rl6QVwhmYnBulZltunI2XR2TvgHKXU_cPcHKXHKXM3dgggA444aXKY-O0Xi7dQrmlhhthhJkm0
+
 var blink = true;			        //state of blink
 var frames = 0;				        //A frame count
 var goalTile = {x:-1,y:-1};	        //Exit Tile	
@@ -40,6 +41,8 @@ var currPal;                        //holds the current color palette
 var spriteSheet = new Image();	    //Sheet of sprite images
 var seed;
 var base_seed;
+var blink_sprites = [[286,318],[287,319],[288,320],[352,384],[438,470],[283,315],[284,316],[285,317]];
+
 spriteSheet.src = 'assets/char_sheet.png';
 
 var playerSheet = new Image();      //sheet of player sprites
@@ -62,7 +65,6 @@ ctx.imageSmoothingEnabled = false;
 //inititate render canvas
 var rendCanvas = document.getElementById("rendCanvas");
 var rctx = rendCanvas.getContext("2d");
-
 
 //////////////////////////////////////////////////////////////////////////
 //                                                                      //
@@ -193,10 +195,10 @@ var player={
 		}
 		
 		//progress curse
-		this.curse+=this.curseGen;
+		/*this.curse+=this.curseGen;
 		if (this.curse > this.maxCurse) {
 			this.curse = this.maxCurse;
-		}
+		}*/
 		
 		//check on level progression
 		if (this.exp == this.newLvl) {
@@ -217,9 +219,10 @@ var player={
 		
 		//check if/where the player should be facing
 		if (pressedKeys.indexOf('J') > -1) {
-			if (this.state.indexOf('strafe') < 0) {
+			/*if (this.state.indexOf('strafe') < 0) {
 				this.state.push('strafe');
-			}
+			}*/
+			abilities[0].action();
 		} else {
 			if (this.state.indexOf('strafe') > -1) {
 				this.state.splice(this.state.indexOf('strafe'), 1);
@@ -239,7 +242,6 @@ var player={
 		}
 		
 		//input actions
-		
 		if (pressedKeys.indexOf('W') > -1 || pressedKeys.indexOf('A')>-1||
 			pressedKeys.indexOf('S') > -1 || pressedKeys.indexOf('D') > -1) {
 			
@@ -313,6 +315,7 @@ var player={
 				this.state.splice(this.state.indexOf('moving'),1);
 			}
 		}
+		
 		//use weapon or regen spirit
 		if (this.state.indexOf('attacking') > -1) {
 			if (this.moveWhileAttacking == false) {
@@ -362,6 +365,18 @@ var player={
 		
 		if (this.state.indexOf('moving') < 0 && this.state.indexOf('attacking') < 0 && this.state.indexOf('idle') < 0) {
 			this.state.push('idle');
+		}
+		
+		if (this.health <=0 || this.curse >=10) {
+			lvlComplete = true;
+			this.health = 0;
+			this.spirit = 0;
+			this.curse = 0;
+			this.keys = [];
+			this.x = 0;
+			this.y = 0;
+			this.exp = 0;
+			this.lvl = 0;
 		}
 	},
 	move:   function (dir) {
@@ -474,7 +489,6 @@ var player={
 				}
 			}
 		}
-		
 	},
 	draw:   function(){  
 		this.selected_state = 'idle';
@@ -552,47 +566,49 @@ var player={
 		}
 	},
 	init: 	function() {
-				this.health = 10;
-				this.maxHealth = 10;
-				this.spirit = 10;
-				this.maxSpirit = 10;
-				this.curse = 0;
-				this.moveWhileAttacking = false;
-				
-				this.x = 9*tileSize;
-				this.y = 8*tileSize;
-				this.dir = 2;
-				this.strafe = false;
-				this.moving = false;
-				this.attacking = false;
-				this.speed = 1;
-				this.base_damage = 1;
-				this.base_defense = 1;
+		this.health = 10;
+		this.maxHealth = 10;
+		this.spirit = 10;
+		this.maxSpirit = 10;
+		this.curse = 0;
+		this.moveWhileAttacking = false;
+		
+		this.x = 9*tileSize;
+		this.y = 8*tileSize;
+		this.dir = 2;
+		this.strafe = false;
+		this.moving = false;
+		this.attacking = false;
+		this.speed = 1;
+		this.base_damage = 1;
+		this.base_defense = 1;
 
-				this.healthGen = 0;
-				this.spiritGen = .1;
-				this.curseGen = .0001;
-				this.exp = 0;
-				this.lvl = 0;
-				
-				var set = Math.floor(Math.random()*4)*32;
-				
-				this.bodySet = set;
-				this.headSet = set;
-				
-				this.augments = [];
-				this.keys = [];
-				
-				this.b_anim_index = 0;
-				this.b_animCounter = -1;
-				
-				this.wepIndex = 0;
-				this.b_currAnim = this.animations.b_iD_anim;
-			}, 
+		this.healthGen = 0;
+		this.spiritGen = .1;
+		this.curseGen = .0001;
+		this.exp = 0;
+		this.lvl = 0;
+		
+		var set = Math.floor(Math.random()*4)*32;
+		
+		this.bodySet = set;
+		this.headSet = set;
+		
+		this.augments = [];
+		this.keys = [];
+		
+		this.b_anim_index = 0;
+		this.b_animCounter = -1;
+		
+		this.wepIndex = 0;
+		this.b_currAnim = this.animations.b_iD_anim;
+	}, 
 	keys:[],
 	wepIndex: 0,
 	weapons:[],
-	maxWeps: 5
+	maxWeps: 5,
+	abilities:[],
+	maxAbilities:1
 };
 
 ////////////////////////////////augments//////////////////////////////////
@@ -871,100 +887,135 @@ var augments = [
 ////////////////////////////////weapons///////////////////////////////////
 var weps = [
 	{   name:'wep_test',
-		init_cost: 3,
-		cont: false,
-		swung: false,
-		use_cost: .1,
-		knockback: 8,
-		curseScale: 0,
-		aoe: [
+		init_cost: 3,	//cost to start using the weapon
+		cont: false,	//does this weapon work continuosly?
+		swung: false,	//has this weapon been swung?
+		use_cost: .1,	//cost to continue using the weapon
+		knockback: 8,	//how far does this weapon push the enemeis back?
+		curseScale: 0,	//does using this weapon afflict curse?
+		aoe: [	//areas of effect per animation (relative x,y, height and width of hitbox, duration of hitbox)
 			[{x: 0, y: -16, w:16, h:8, dur:2},	{x: -12, y: -16, w:16, h:8, dur:2},	{x: -12, y: -8, w:8, h:16, dur:2}],
 			[{x: 0, y: -16, w:16, h:8, dur:2},	{x: -12, y: -16, w:16, h:8, dur:2},	{x: -12, y: -8, w:8, h:16, dur:2}],
 			[{x: -8, y: +8, w:16, h:8, dur:2},	{x: +4, y: +8, w:16, h:8, dur:2},	{x: +12, y: -8, w:8, h:16, dur:2}],
 			[{x: -12, y: -16, w:16, h:8, dur:2},{x: 0, y: -16, w:16, h:8, dur:2},	{x: +12, y: -8, w:8, h:16, dur:2}],
 		],
-		animations: [
-			[{x:0,y:0,w:32,h:32},{x:32,y:0,w:32,h:32},{x:64,y:0,w:32,h:32}],
-			[{x:0,y:32,w:32,h:32},{x:32,y:32,w:32,h:32},{x:64,y:32,w:32,h:32}],
-			[{x:0,y:64,w:32,h:32},{x:32,y:64,w:32,h:32},{x:64,y:64,w:32,h:32}],
-			[{x:0,y:96,w:32,h:32},{x:32,y:96,w:32,h:32},{x:64,y:96,w:32,h:32}]
+		animations: [//image coordinate from sheet
+			[{x:0,y:0,w:32,h:32},	{x:32,y:0,w:32,h:32},	{x:64,y:0,w:32,h:32}],
+			[{x:0,y:32,w:32,h:32},	{x:32,y:32,w:32,h:32},	{x:64,y:32,w:32,h:32}],
+			[{x:0,y:64,w:32,h:32},	{x:32,y:64,w:32,h:32},	{x:64,y:64,w:32,h:32}],
+			[{x:0,y:96,w:32,h:32},	{x:32,y:96,w:32,h:32},	{x:64,y:96,w:32,h:32}]
 		],
-		damage: 1,
-		durCount:0,
-		atkIndex:0,
-		actioning: false,
+		damage: 1,	//damage this weapon deals
+		durCount:0,	//how long has this weapon been in use?
+		atkIndex:0,	//frame of attack we are in
+		actioning: false,	//is the weapon in use?
 		update: function() {
 					
-					if (this.actioning == true) {
-						this.durCount++;
+			if (this.actioning == true) {
+				this.durCount++;
+				
+				ctx.drawImage(
+					wepSheet, 
+					this.animations[player.dir][this.atkIndex].x, this.animations[player.dir][this.atkIndex].y, 
+					this.animations[player.dir][this.atkIndex].w, this.animations[player.dir][this.atkIndex].h,
+					player.x-12, player.y-16, 
+					this.animations[player.dir][this.atkIndex].w, this.animations[player.dir][this.atkIndex].h
+				);
+				//loop through the active mobs and see if we're hitting anything
+				for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
+					if (map[mapLoc.y][mapLoc.x].contents[i].type == 'mob') {
 						
-						//drawSprite(this.aoe[player.dir][this.atkIndex].sprite, player.x+this.aoe[player.dir][this.atkIndex].x, player.y+this.aoe[player.dir][this.atkIndex].y);
-						ctx.drawImage(wepSheet, this.animations[player.dir][this.atkIndex].x, this.animations[player.dir][this.atkIndex].y, 
-												this.animations[player.dir][this.atkIndex].w, this.animations[player.dir][this.atkIndex].h,
-												player.x-12, player.y-16, 
-												this.animations[player.dir][this.atkIndex].w, this.animations[player.dir][this.atkIndex].h);
-						/*ctx.fillStyle = 'red';
-						ctx.fillRect(player.x+this.aoe[player.dir][this.atkIndex].x, player.y+this.aoe[player.dir][this.atkIndex].y, 
-									this.aoe[player.dir][this.atkIndex].w,this.aoe[player.dir][this.atkIndex].h);*/
-						for (var i=0; i<map[mapLoc.y][mapLoc.x].contents.length; i++) {
-							if (map[mapLoc.y][mapLoc.x].contents[i].type == 'mob') {
-								
-								if (map[mapLoc.y][mapLoc.x].contents[i].alive == true &&
-									((map[mapLoc.y][mapLoc.x].contents[i].loc.x+8 >= player.x+this.aoe[player.dir][this.atkIndex].x && 
-									map[mapLoc.y][mapLoc.x].contents[i].loc.x+8 < player.x+this.aoe[player.dir][this.atkIndex].x+this.aoe[player.dir][this.atkIndex].w) ||
-									(map[mapLoc.y][mapLoc.x].contents[i].loc.x >= player.x+this.aoe[player.dir][this.atkIndex].x && 
-									map[mapLoc.y][mapLoc.x].contents[i].loc.x < player.x+this.aoe[player.dir][this.atkIndex].x+this.aoe[player.dir][this.atkIndex].w)) &&
-									((map[mapLoc.y][mapLoc.x].contents[i].loc.y+8 >= player.y+this.aoe[player.dir][this.atkIndex].y && 
-									map[mapLoc.y][mapLoc.x].contents[i].loc.y+8 < player.y+this.aoe[player.dir][this.atkIndex].y+this.aoe[player.dir][this.atkIndex].h) ||
-									(map[mapLoc.y][mapLoc.x].contents[i].loc.y >= player.y+this.aoe[player.dir][this.atkIndex].y && 
-									map[mapLoc.y][mapLoc.x].contents[i].loc.y < player.y+this.aoe[player.dir][this.atkIndex].y+this.aoe[player.dir][this.atkIndex].h))) {
-									
-									map[mapLoc.y][mapLoc.x].contents[i].health = map[mapLoc.y][mapLoc.x].contents[i].health-((player.base_damage+this.damage)+player.curse*this.curseScale);
-									ctx.fillStyle = 'red';
-									ctx.fillRect(map[mapLoc.y][mapLoc.x].contents[i].loc.x, map[mapLoc.y][mapLoc.x].contents[i].loc.y, tileSize, tileSize);
-									
-									if (player.dir == 0 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
-										map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y-this.knockback;
-									}
-									if (player.dir == 1 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4-this.knockback)/tileSize)] == 0) {
-										map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x-this.knockback;
-									}
-									if (player.dir == 2 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4+this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
-										map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y+this.knockback;
-									}
-									if (player.dir == 3 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4+this.knockback)/tileSize)] == 0) {
-										map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x+this.knockback;
-									}
-								}
+						if (map[mapLoc.y][mapLoc.x].contents[i].alive == true &&	//if mob isn't dead
+							((map[mapLoc.y][mapLoc.x].contents[i].loc.x+8 >= player.x+this.aoe[player.dir][this.atkIndex].x &&
+							map[mapLoc.y][mapLoc.x].contents[i].loc.x+8 < player.x+this.aoe[player.dir][this.atkIndex].x+this.aoe[player.dir][this.atkIndex].w) ||
+							(map[mapLoc.y][mapLoc.x].contents[i].loc.x >= player.x+this.aoe[player.dir][this.atkIndex].x && 
+							map[mapLoc.y][mapLoc.x].contents[i].loc.x < player.x+this.aoe[player.dir][this.atkIndex].x+this.aoe[player.dir][this.atkIndex].w)) &&
+							((map[mapLoc.y][mapLoc.x].contents[i].loc.y+8 >= player.y+this.aoe[player.dir][this.atkIndex].y && 
+							map[mapLoc.y][mapLoc.x].contents[i].loc.y+8 < player.y+this.aoe[player.dir][this.atkIndex].y+this.aoe[player.dir][this.atkIndex].h) ||
+							(map[mapLoc.y][mapLoc.x].contents[i].loc.y >= player.y+this.aoe[player.dir][this.atkIndex].y && 
+							map[mapLoc.y][mapLoc.x].contents[i].loc.y < player.y+this.aoe[player.dir][this.atkIndex].y+this.aoe[player.dir][this.atkIndex].h))) {
+							
+							//apply damage to enemy
+							map[mapLoc.y][mapLoc.x].contents[i].health = map[mapLoc.y][mapLoc.x].contents[i].health-((player.base_damage+this.damage)+player.curse*this.curseScale);
+							
+							//hit flash
+							ctx.fillStyle = 'red';
+							ctx.fillRect(map[mapLoc.y][mapLoc.x].contents[i].loc.x, map[mapLoc.y][mapLoc.x].contents[i].loc.y, tileSize, tileSize);
+							
+							//knock the enemy back
+							if (player.dir == 0 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4-this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
+								map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y-this.knockback;
+							}
+							if (player.dir == 1 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4-this.knockback)/tileSize)] == 0) {
+								map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x-this.knockback;
+							}
+							if (player.dir == 2 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4+this.knockback)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4)/tileSize)] == 0) {
+								map[mapLoc.y][mapLoc.x].contents[i].loc.y = map[mapLoc.y][mapLoc.x].contents[i].loc.y+this.knockback;
+							}
+							if (player.dir == 3 && currLvl[1][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.y+4)/tileSize)][Math.floor((map[mapLoc.y][mapLoc.x].contents[i].loc.x+4+this.knockback)/tileSize)] == 0) {
+								map[mapLoc.y][mapLoc.x].contents[i].loc.x = map[mapLoc.y][mapLoc.x].contents[i].loc.x+this.knockback;
 							}
 						}
-						//player.attacking = false;
-						
-						if (this.durCount > this.aoe[player.dir][this.atkIndex].dur) {
-							this.durCount = 0;
-							this.atkIndex++;
-							if (this.atkIndex >= this.aoe[player.dir].length) {
-								this.atkIndex = 0;
-								this.actioning = false;
-								if (this.cont == false) {
-									if (player.state.indexOf('attacking') > -1) {
-										player.state.splice(player.state.indexOf('attacking'),1);
-									}
-								}
-							}
-						}
-					}
-				},
-		action:	function() {
-					if (this.actioning == false) {
-						this.actioning = true;
-						this.swung = true;
-						this.durCount = 0;
 					}
 				}
+				//simulate the moving hitbox
+				if (this.durCount > this.aoe[player.dir][this.atkIndex].dur) {
+					this.durCount = 0;
+					this.atkIndex++;
+					if (this.atkIndex >= this.aoe[player.dir].length) {
+						this.atkIndex = 0;
+						this.actioning = false;
+						if (this.cont == false) {
+							if (player.state.indexOf('attacking') > -1) {
+								player.state.splice(player.state.indexOf('attacking'),1);
+							}
+						}
+					}
+				}
+			}
+		},
+		action:	function() {
+			if (this.actioning == false) {
+				this.actioning = true;
+				this.swung = true;
+				this.durCount = 0;
+			}
+		}
 	}
 ];
 player.weapons.push(weps[0]);       //default the weapon for testing purposes
+
+var abilities = [
+	{
+		name:'blink',
+		blink_distance: 32,
+		max_blink_distance: 32,
+		action: function() {
+			switch(player.dir) {
+				case 0:	if (player.spirit > 5) {
+							player.spirit = 0;
+							player.y -=this.blink_distance;
+							break;
+						}
+				case 1:	if (player.spirit > 5) {
+							player.spirit = 0;
+							player.x -=this.blink_distance;
+							break;
+						}
+				case 2:	if (player.spirit > 5) {
+							player.spirit = 0;
+							player.y +=this.blink_distance;
+							break;
+						}
+				case 3:	if (player.spirit > 5) {
+							player.spirit = 0;
+							player.x +=this.blink_distance;
+							break;
+						}
+			}
+		}
+	}
+];
 
 ////////////////////////////////room entities/////////////////////////////
 {
@@ -1276,12 +1327,11 @@ var mobs = [//(considered a subtype of room entities and therefore must have all
 			
 		},
 		damage: 1,
-		cursePenalty: .25,
+		cursePenalty: 0,
 		aiIndex:0,
 		ai: ais[1].behavoir,
 		update:	function() {   
 			this.damage = 1*(cycle+1);
-			this.cursePenalty = .25*(cycle+1);
 			if (this.alive == true) {
 				if (this.health <= 0) {
 					player.exp = player.exp+this.exp_reward;
@@ -1397,14 +1447,6 @@ document.addEventListener('keyup', function(event) {
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 
-console.log('EVERYTHING IS CLIENT-SIDE\nWhich means you all can invoke functions and do other fancy things');
-console.log('"player" is the player object\n"map[mapLoc.x][mapLoc.y]" will get you the current room');
-console.log('"buildLevel(size,[map])" generates a new level.\nsize determines how big the level is. All the normally generated levels are of size 1.\nex: "buildLevel(1,map);" will expand the current map by a factor of 1.\nThe levels are generated from a seed. Set it with "seed=YOURSEEDHERE;" ONLY USE NUMBERS!!');
-console.log('You can access the SUPER NOT FINISHED hub level with "buildHub();"\nBe warned that it is so unfinished, that trying to access certain rooms will cause a crash :D');
-console.log('You can give yourself power ups with "player.augments.push(augs[POWERUPNUMBER])" (0-5)\nand then "player.augments[POWERUPINDEX].onPickup();" POWERUPINDEX refers to the list of power ups the player has.');
-console.log('have fun!; Break things');
-
-
 init(0);                             //initialize the game
 
 //kick off EVERYTHING
@@ -1413,7 +1455,7 @@ function init(type, game_over) {
 	bgm.play();                     //start the bgm
 	player.init();                  //initialize the player
 	cycle = -1;                     //default the cycle counter
-	expansionFactor = 1;            //default the expansion factor
+	expansionFactor = 2;            //default the expansion factor
 	if (type != null) {
 		buildLevel(expansionFactor);    //build the first cycle
 	} else {
@@ -1433,21 +1475,20 @@ function init(type, game_over) {
 }
 
 //fetch a room config
-function buildConfig(config_name) {
+function buildConfig(config_name, list) {
 	var formattedConfig = [[],[],[]];
 	var layer = [];
-	for (var i=0; i<configs.length; i++) {
-		if (config_name == configs[i].name) {
+	for (var i=0; i<list.length; i++) {
+		if (config_name == list[i].name) {
 			for (var l=0; l<3; l++) {
 				for (var j=0; j<16; j++) {
 					layer = [];
 					for (var k=0; k<20; k++) {
-						layer.push(configs[i].map[l][(j*20)+k]);
+						layer.push(list[i].map[l][(j*20)+k]);
 					}
 					formattedConfig[l].push(layer);
 				}
 			}
-			
 			return formattedConfig;
 		}
 	}
@@ -1535,7 +1576,8 @@ function buildLevel(size, prev) {
 		}
 	} 
 	
-	function genFloor(y, x) {	//generates a floor
+	function genFloor(y, x, style) {	//generates a floor
+		
 		var floorRow = [];
 		var floorRand;
 		for (var k=0; k<16; k++) {
@@ -1559,6 +1601,262 @@ function buildLevel(size, prev) {
 			}
 			map[y][x].map[0][k] = (JSON.parse(JSON.stringify(floorRow)));
 		}
+	}
+	
+	function genRoom(y, x) {
+		
+		var claimed_spots = [];
+		var expansion_points = [];
+		var starting_spots = [];
+		
+		//init room
+		if (map[y][x].open == false) {
+			for (var c=2; c <18; c++) {
+				for (var d=2; d<14; d++) {
+					map[y][x].map[1][d][c] = 441;
+				}
+			}
+		} else {
+			for (var c=1; c <19; c++) {
+				for (var d=1; d<15; d++) {
+					map[y][x].map[1][d][c] = 441;
+				}
+			}
+		}
+		
+		if (map[y][x].open == false) {
+			if (map[y][x].config[0].length == 2) {
+				clear_area(y,x,2,8,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:8,y:2}));
+				starting_spots.push({x:8,y:2});
+			}
+			if (map[y][x].config[1].length == 2) {
+				clear_area(y,x,6,2,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:2,y:6}));
+				starting_spots.push({x:2,y:6});
+			}
+			if (map[y][x].config[2].length == 2) {
+				clear_area(y,x,10,8,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:8,y:10}));
+				starting_spots.push({x:8,y:10});
+			}
+			if (map[y][x].config[3].length == 2) {
+				clear_area(y,x,6,14,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:14,y:6}));
+				starting_spots.push({x:14,y:6});
+			}
+		} else {
+			if (map[y][x].config[0].length == 2) {
+				clear_area(y,x,1,8,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:8,y:1}));
+				starting_spots.push({x:8,y:1});
+			}
+			if (map[y][x].config[1].length == 2) {
+				clear_area(y,x,6,1,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:1,y:6}));
+				starting_spots.push({x:1,y:6});
+			}
+			if (map[y][x].config[2].length == 2) {
+				clear_area(y,x,11,8,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:8,y:11}));
+				starting_spots.push({x:8,y:11});
+			}
+			if (map[y][x].config[3].length == 2) {
+				clear_area(y,x,6,15,4,4,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:15,y:6}));
+				starting_spots.push({x:15,y:6});
+			}
+			
+			if (map[y][x].config[0].length > 2) {
+				clear_area(y,x,1,1,2,18,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:1,y:1}));
+				starting_spots.push({x:1,y:1});
+			}
+			if (map[y][x].config[1].length > 2) {
+				clear_area(y,x,1,1,14,2,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:1,y:1}));
+				starting_spots.push({x:1,y:1});
+			}
+			if (map[y][x].config[2].length > 2) {
+				clear_area(y,x,13,1,2,18,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:1,y:13}));
+				starting_spots.push({x:1,y:13});
+			}
+			if (map[y][x].config[3].length > 2) {
+				clear_area(y,x,1,17,14,2,claimed_spots);
+				claimed_spots.push(JSON.stringify({x:17,y:1}));
+				starting_spots.push({x:17,y:1});
+			}
+		}
+		
+		var min_expansions = 8;
+		
+		while (!check_connection(y,x,starting_spots) || min_expansions > 0) {
+			//var expansion_radius = Math.floor((sRandom()*3)+2);
+			var expansion_radius = 2;
+			for (var c=0; c<claimed_spots.length; c++) {
+				expansion_points = expansion_points.concat(get_expansions(JSON.parse(claimed_spots[c]),expansion_radius));
+			}
+			//thin out selection
+			for (var c=0; c<expansion_points.length; c++) {
+				if (expansion_points.indexOf(expansion_points[c]) != c || claimed_spots.indexOf(expansion_points[c]) >= 0 || map[y][x].map[1][JSON.parse(expansion_points[c]).y][JSON.parse(expansion_points[c]).x] == 0) {
+					expansion_points.splice(c,1);
+					c--;
+				}
+			}
+			if (expansion_points.length < 1) {
+				break;
+			}
+			var rand_spot = Math.floor(sRandom()*expansion_points.length);
+			var expansion_size = Math.floor((sRandom()*3)+2);
+			claimed_spots.push(expansion_points[rand_spot]);
+			clear_area(y,x,JSON.parse(expansion_points[rand_spot]).y,JSON.parse(expansion_points[rand_spot]).x,expansion_size,expansion_size, claimed_spots);
+			min_expansions--;
+		}
+		
+		if (map[y][x].open == false) {
+			for (var c=2; c <17; c++) {
+				for (var d=2; d<14; d++) {
+					if (map[y][x].map[1][d][c] == 441 && map[y][x].map[1][d][c+1] == 441 && Math.floor(sRandom()*3) == 0) {
+						/*map[y][x].map[1][d][c] = 391;
+						map[y][x].map[1][d][c+1] = 392;
+						if (d-1 >= 2) {
+							map[y][x].map[2][d-1][c] = 359;
+							map[y][x].map[2][d-1][c+1] = 360;
+						}
+						if (d-2 >= 2) {
+							map[y][x].map[2][d-2][c] = 327;
+							map[y][x].map[2][d-2][c+1] = 328;
+						}
+						if (d-3 >= 2) {
+							map[y][x].map[2][d-3][c] = 295;
+							map[y][x].map[2][d-3][c+1] = 295;
+						}*/						
+					}
+				}
+			}
+		} else {
+			for (var c=1; c <18; c++) {
+				for (var d=1; d<15; d++) {
+					if (map[y][x].map[1][d][c] == 441 && map[y][x].map[1][d][c+1] == 441 && Math.floor(sRandom()*3) == 0) {
+						/*map[y][x].map[1][d][c] = 391;
+						map[y][x].map[1][d][c+1] = 392;
+						if (d-1 >= 1) {
+							map[y][x].map[2][d-1][c] = 359;
+							map[y][x].map[2][d-1][c+1] = 360;
+						}
+						if (d-2 >= 1) {
+							map[y][x].map[2][d-2][c] = 327;
+							map[y][x].map[2][d-2][c+1] = 328;
+						}
+						if (d-3 >= 1) {
+							map[y][x].map[2][d-3][c] = 295;
+							map[y][x].map[2][d-3][c+1] = 295;
+						}*/
+					}
+				}
+			}
+		}
+	}
+	
+	function clear_area(map_y,map_x,room_y,room_x, width, length, claimed) {
+		
+		for (var c=0; c<width; c++) {
+			for (var d=0; d<length; d++) {
+				if (room_y+c <16 && room_x+d<20 && room_y+c>=0 && room_x+d>=0) {
+					if (map[map_y][map_x].map[1][room_y+c][room_x+d] == 441) {
+						map[map_y][map_x].map[1][room_y+c][room_x+d] = 0;
+						claimed.push(JSON.stringify({x: room_x+d,y: room_y+c}));
+					}
+				}
+			}
+		}
+	}
+	
+	function check_connection(map_y, map_x, starting_points) {
+		var congruent_spots = [];
+		var spots_to_check = [];
+		
+		var rand_start = Math.floor(sRandom()*starting_points.length);
+		
+		spots_to_check.push(JSON.stringify(starting_points[rand_start]));
+		
+		while(spots_to_check.length != 0) {
+			var found_points = [];
+			var spot_to_check = JSON.parse(spots_to_check[0]);
+			if (spot_to_check.y-1 >=1) {
+				if (map[map_y][map_x].map[1][spot_to_check.y-1][spot_to_check.x] == 0 && 
+					congruent_spots.indexOf(JSON.stringify({x:spot_to_check.x,y:spot_to_check.y-1})) < 0 && 
+					spots_to_check.indexOf(JSON.stringify({x:spot_to_check.x,y:spot_to_check.y-1})) < 0) {
+					
+					spots_to_check.push(JSON.stringify({x:spot_to_check.x,y:spot_to_check.y-1}));
+				}
+			}
+			if (spot_to_check.x-1 >=1) {
+				if (map[map_y][map_x].map[1][spot_to_check.y][spot_to_check.x-1] == 0 && 
+					congruent_spots.indexOf(JSON.stringify({x:spot_to_check.x-1,y:spot_to_check.y})) < 0 &&
+					spots_to_check.indexOf(JSON.stringify({x:spot_to_check.x-1,y:spot_to_check.y})) < 0) {
+					
+					spots_to_check.push(JSON.stringify({x:spot_to_check.x-1,y:spot_to_check.y}));
+				}
+			}
+			if (spot_to_check.y+1 <=14) {
+				if (map[map_y][map_x].map[1][spot_to_check.y+1][spot_to_check.x] == 0 && 
+					congruent_spots.indexOf(JSON.stringify({x:spot_to_check.x,y:spot_to_check.y+1})) < 0 &&
+					spots_to_check.indexOf(JSON.stringify({x:spot_to_check.x,y:spot_to_check.y+1})) < 0) {
+					
+					spots_to_check.push(JSON.stringify({x:spot_to_check.x,y:spot_to_check.y+1}));
+				}
+			}
+			if (spot_to_check.x+1 <=18) {
+				if (map[map_y][map_x].map[1][spot_to_check.y][spot_to_check.x+1] == 0 && 
+					congruent_spots.indexOf(JSON.stringify({x:spot_to_check.x+1,y:spot_to_check.y})) < 0 &&
+					spots_to_check.indexOf(JSON.stringify({x:spot_to_check.x+1,y:spot_to_check.y})) < 0) {
+					
+					spots_to_check.push(JSON.stringify({x:spot_to_check.x+1,y:spot_to_check.y}));
+				}
+			}
+			congruent_spots.push(spots_to_check[0]);
+			spots_to_check.splice(0,1);
+			
+			//console.log("C:");
+			//console.log(congruent_spots);
+			//console.log("S:");
+			//console.log(spots_to_check);
+		}
+		
+		var connected = true;
+		for (var c=0; c<starting_points.length; c++) {
+			if (congruent_spots.indexOf(JSON.stringify(starting_points[c])) < 0) {
+				connected = false
+			}
+		}
+		return connected;
+	}
+	
+	function get_expansions(point, radius) {
+		var points = [];
+		for (var c=-(radius-2); c<(radius-1); c++) {
+			if (point.x+c <18 && point.x+c >= 2) {
+				if (point.y+(radius-1) < 14) {
+					points.push(JSON.stringify({x:point.x+c,y:point.y+(radius-1)}));
+				}
+				if (point.y-(radius-1) >=2) {
+					points.push(JSON.stringify({x:point.x+c,y:point.y-(radius-1)}));
+				}
+			}
+		}
+		for (var c=-(radius-2); c<(radius-1); c++) {
+			if (point.y+c <14 && point.y+c >= 2) {
+				if (point.x+(radius-1) < 18) {
+					points.push(JSON.stringify({x:point.x+(radius-1),y:point.y+c}));
+				}
+				if (point.x-(radius-1) >=2) {
+					points.push(JSON.stringify({x:point.x-(radius-1),y:point.y+c}));
+				}
+			}
+		}
+		return points;
 	}
 	
 	for (i=0; i<size; i++) {
@@ -1614,7 +1912,10 @@ function buildLevel(size, prev) {
 					(JSON.stringify(rooms[k].config[1]) == JSON.stringify(matchConfig[1]) || matchConfig[1] == 2) &&
 					(JSON.stringify(rooms[k].config[2]) == JSON.stringify(matchConfig[2]) || matchConfig[2] == 2) &&
 					(JSON.stringify(rooms[k].config[3]) == JSON.stringify(matchConfig[3]) || matchConfig[3] == 2)) {
-					appList.push(JSON.parse(JSON.stringify(rooms[k])));
+					
+					//if (rooms[k].open == false) 
+						appList.push(JSON.parse(JSON.stringify(rooms[k])));
+					
 				}
 			}
 			
@@ -1810,9 +2111,54 @@ function buildLevel(size, prev) {
 		}
 	}
 	
+	//apply styling to room
+	for (i=0; i<map.length; i++) {
+		for (j=0; j<map[i].length; j++) {
+			
+			if (map[i][j] != 0) {
+				//apply floor style
+				for (var k=0; k<map[i][j].map[0].length; k++) {
+					for (var l=0; l<map[i][j].map[0][k].length; l++) {
+						if (map[i][j].map[0][k][l] != 0) {
+							if (map[i][j].open == false) {
+								map[i][j].map[0][k][l] = map[i][j].map[0][k][l]-3;
+							} else {
+								map[i][j].map[0][k][l] = map[i][j].map[0][k][l]-map[i][j].floorStyle;
+							}
+							
+						}
+					}
+				}
+
+				//apply wall style
+				for (var k=0; k<map[i][j].map[1].length; k++) {
+					for (var l=0; l<map[i][j].map[1][k].length; l++) {
+						if (map[i][j].map[1][k][l] != 0) {
+							map[i][j].map[1][k][l] = map[i][j].map[1][k][l]-map[i][j].wallStyle;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	//put goal in map
 	map[mapLoc.y][mapLoc.x].contents.push(Object.assign({}, ent_goal));
-	map[mapLoc.y][mapLoc.x].obs = buildConfig('config_goal');
+	map[mapLoc.y][mapLoc.x].obs = buildConfig('config_goal',configs);
+	var new_obs = buildConfig('config_goal',configs);
+	for (var k=0; k<map[mapLoc.y][mapLoc.x].map.length; k++) {	//layer
+		for (var l=0; l<map[mapLoc.y][mapLoc.x].map[k].length; l++) {
+			for (var m=0; m<map[mapLoc.y][mapLoc.x].map[k][l].length; m++) {
+				if (new_obs[k][l][m] !=0) {
+					if (k==0) {
+						map[mapLoc.y][mapLoc.x].map[k][l][m] = new_obs[k][l][m];
+					} else if (map[mapLoc.y][mapLoc.x].map[k][l][m] == 0) {
+						map[mapLoc.y][mapLoc.x].map[k][l][m] = new_obs[k][l][m];
+					}
+				}
+			}
+		}
+	}
 	//map[mapLoc.y][mapLoc.x].palette = 0;
 	map[mapLoc.y][mapLoc.x].contents[0].diff = Math.ceil((rList.length-1)/2);
 	goalTile.x = parseInt(mapLoc.x);
@@ -1833,7 +2179,21 @@ function buildLevel(size, prev) {
 	//ensure at least one power up in the level
 	rand = Math.floor(sRandom()*rList.length);
 	map[rList[rand].y][rList[rand].x].contents.push($.extend(true, {}, ent_aug));
-	map[rList[rand].y][rList[rand].x].obs = buildConfig('config_item');
+	map[rList[rand].y][rList[rand].x].obs = buildConfig('config_item',configs);
+	var new_obs = buildConfig('config_item',configs);
+	for (var k=0; k<map[rList[rand].y][rList[rand].x].map.length; k++) {	//layer
+		for (var l=0; l<map[rList[rand].y][rList[rand].x].map[k].length; l++) {
+			for (var m=0; m<map[rList[rand].y][rList[rand].x].map[k][l].length; m++) {
+				if (new_obs[k][l][m] !=0) {
+					if (k==0) {
+						map[rList[rand].y][rList[rand].x].map[k][l][m] = new_obs[k][l][m];
+					} else if (map[rList[rand].y][rList[rand].x].map[k][l][m] == 0) {
+						map[rList[rand].y][rList[rand].x].map[k][l][m] = new_obs[k][l][m];
+					}
+				}
+			}
+		}
+	}
 	//map[rList[rand].y][rList[rand].x].palette = 0;
 	map[rList[rand].y][rList[rand].x].contents[map[rList[rand].y][rList[rand].x].contents.length-1].aug = Math.floor(sRandom()*augments.length);
 	rList.splice(rand,1);
@@ -1902,16 +2262,40 @@ function buildLevel(size, prev) {
 	//assign obstacle configs
 	for (i=0; i<map.length; i++) {
 		for (j=0; j<map[i].length; j++) {
-			if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
-				rand = Math.floor(sRandom()*configs.length);
-				if (configs[rand].name != 'config_goal' && configs[rand].name != 'config_item') {
-					map[i][j].obs = buildConfig(configs[rand].name);
+			
+			if (Math.floor(sRandom()*8) > 0) {	//generate obsticles
+				if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x) /*&& map[i][j].open == false*/) {
+					genRoom(i,j);
 				}
+			} else {	//or use a pre made one
+				if (map[i][j] != 0 && map[i][j].obs == -1 && !(i == mapLoc.y && j == mapLoc.x)) {
 				
+					var config_list;
+					if (map[i][j].open == false) {
+						var new_obs = buildConfig(inside_configs[Math.floor(sRandom()*inside_configs.length)].name, inside_configs);
+					} else {
+						var new_obs = buildConfig(outside_configs[Math.floor(sRandom()*outside_configs.length)].name, outside_configs);
+					}
+					
+					for (var k=0; k<map[i][j].map.length; k++) {	//layer
+						for (var l=0; l<map[i][j].map[k].length; l++) {
+							for (var m=0; m<map[i][j].map[k][l].length; m++) {
+								if (new_obs[k][l][m] !=0) {
+									if (k==0) {
+										map[i][j].map[k][l][m] = new_obs[k][l][m];
+									} else if (map[i][j].map[k][l][m] == 0) {
+										map[i][j].map[k][l][m] = new_obs[k][l][m];
+									}
+								}
+							}
+						}
+					}
+					
+				}
 			}
 		}
 	}
-
+	
 	minimap.update();
 	player.x = 9*tileSize;
 	player.y = 8*tileSize;
@@ -2071,49 +2455,12 @@ function buildHub() {
 //loads a level
 function loadRoom(level) {
 	var rand;
-	moves = 0;
 	
 	map[mapLoc.y][mapLoc.x].discovered = true;
 	
 	//apply room pallette
 	currPal = pals[map[mapLoc.y][mapLoc.x].palette];
-	
-	//apply floor style
-	for (var i=0; i<map[mapLoc.y][mapLoc.x].map[0].length; i++) {
-		for (var j=0; j<map[mapLoc.y][mapLoc.x].map[0][i].length; j++) {
-			if (map[mapLoc.y][mapLoc.x].map[0][i][j] != 0) {
-				map[mapLoc.y][mapLoc.x].map[0][i][j] = map[mapLoc.y][mapLoc.x].map[0][i][j]-map[mapLoc.y][mapLoc.x].floorStyle;
-			}
-		}
-	}
-	
-	//apply wall style
-	for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
-		for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
-			if (map[mapLoc.y][mapLoc.x].map[1][i][j] != 0) {
-				map[mapLoc.y][mapLoc.x].map[1][i][j] = map[mapLoc.y][mapLoc.x].map[1][i][j]-map[mapLoc.y][mapLoc.x].wallStyle;
-			}
-		}
-	}
 
-	//insert the obstacle config
-	if (map[mapLoc.y][mapLoc.x].obs) {
-		if (map[mapLoc.y][mapLoc.x].obs != -1) {
-			for (var k=0; k<3; k++) {
-				for (var i=0; i<level[k].length; i++) {
-					for (var j=0; j<level[k][i].length; j++) {
-						if (map[mapLoc.y][mapLoc.x].obs[k][i][j] !=0) {
-							if (k==0) {
-								map[mapLoc.y][mapLoc.x].map[k][i][j] = map[mapLoc.y][mapLoc.x].obs[k][i][j];
-							} else if (map[mapLoc.y][mapLoc.x].map[k][i][j] == 0) {
-								map[mapLoc.y][mapLoc.x].map[k][i][j] = map[mapLoc.y][mapLoc.x].obs[k][i][j];
-							}
-						}
-					}
-				}
-			}
-		}
-	}
 	//build list of placeable spots
 	var placeList = [];
 	for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
@@ -2154,56 +2501,25 @@ function loadRoom(level) {
 			}
 		}
 	}
+	
 	if (currLvl!=null) {
 		prevLvl = JSON.parse(JSON.stringify(currLvl));
 	}
 	currLvl = JSON.parse(JSON.stringify(level));
 	
-	//undo wall styling
-	for (var i=0; i<map[mapLoc.y][mapLoc.x].map[1].length; i++) {
-		for (var j=0; j<map[mapLoc.y][mapLoc.x].map[1][i].length; j++) {
-			if (map[mapLoc.y][mapLoc.x].map[1][i][j] != 0) {
-				map[mapLoc.y][mapLoc.x].map[1][i][j] = map[mapLoc.y][mapLoc.x].map[1][i][j]+map[mapLoc.y][mapLoc.x].wallStyle;
-			}
-		}
-	}
-	
-	//undo wall styling
-	for (var i=0; i<map[mapLoc.y][mapLoc.x].map[0].length; i++) {
-		for (var j=0; j<map[mapLoc.y][mapLoc.x].map[0][i].length; j++) {
-			if (map[mapLoc.y][mapLoc.x].map[0][i][j] != 0) {
-				map[mapLoc.y][mapLoc.x].map[0][i][j] = map[mapLoc.y][mapLoc.x].map[0][i][j]+map[mapLoc.y][mapLoc.x].floorStyle;
-			}
-		}
-	}
+	//console.log("\n");
+	//console.log(JSON.stringify(currLvl));
 }
 
 //draw a sprite
 function drawSprite(sprite,x,y) {
-	draws++;
-	if (sprite == 286 && blink == true) {
-		sprite = 318;
-	}
-	if (sprite == 287 && blink == true) {
-		sprite = 319;
-	}
-	if (sprite == 288 && blink == true) {
-		sprite = 320;
-	}
-	if (sprite == 352 && blink == false) {
-		sprite = 384;
-	}
-	if (sprite == 438 && blink == false) {
-		sprite = 470;
-	}
-	if (sprite == 283 && blink == true) {
-		sprite = 315;
-	}
-	if (sprite == 284 && blink == true) {
-		sprite = 316;
-	}
-	if (sprite == 285 && blink == true) {
-		sprite = 317;
+	//draws++;
+	
+	for (var i=0; i<blink_sprites.length; i++) {
+		if (sprite == blink_sprites[i][0] && blink == true) {
+			sprite = blink_sprites[i][1];
+			i = blink_sprites.length;
+		}
 	}
 	if (sprite == 468 && blink == false && 
 		(player.x+4 > x && player.x+4 <= x+8) && 
@@ -2309,7 +2625,7 @@ function menuSystem() {
 		for (var i=0; i<minimap.map.length; i++) {
 			for(var j=0; j<minimap.map[i].length; j++) {
 				
-				if (map[i][j].discovered == true) {
+				//if (map[i][j].discovered == true) {
 					sX = Math.floor((minimap.map[i][j]-1)/(sheetWidth/8))*8;
 					sY = ((minimap.map[i][j]-1)%(sheetWidth/8))*8;
 					rctx.drawImage(spriteSheet, sY,sX,8,8,(8*j)+(4*8)-(mapLoc.x*8),menuHeight+(8*i)+(8*8)-(mapLoc.y*8),8,8);
@@ -2326,7 +2642,7 @@ function menuSystem() {
 						rctx.drawImage(spriteSheet, sY,sX,8,8,4*8,menuHeight+(8*8),8,8);
 						//drawSprite(758, 4*8,menuHeight+(8*8));
 					}
-				}
+				//}
 			}
 		}
 	}
@@ -2384,17 +2700,6 @@ function menuSystem() {
 		}
 	}
 	rctx.fillText(']: '+player.lvl,screenWidth-50+(10+5.5)*2,screenHeight-2);
-	
-	rctx.fillText('CR[',screenWidth-50,screenHeight-10);
-	for (var i=0; i<10; i++) {
-		if (i<player.curse) {
-			rctx.fillText('|',screenWidth-50+(i+5)*2,screenHeight-10);
-		} else {
-			rctx.fillText(' ',screenWidth-50+(i+5)*2,screenHeight-10);
-		}
-	}
-	rctx.fillText(']',screenWidth-50+(10+5.5)*2,screenHeight-10);
-
 }
 
 //check for room transitions
@@ -2472,13 +2777,13 @@ function roomTransition() {
 		if (rTransition == 3) {
 			player.x =  player.x -10;
 			roomDrawX = roomDrawX-10;
-			if (player.x <= 9+player.speed) {
-				player.x = 9+player.speed;
+			if (player.x <= 4+player.speed) {
+				player.x = 4+player.speed;
 			}
 			if (roomDrawX <= 0) {
 				roomDrawX = 0;
 			}
-			if (roomDrawX == 0 && player.x == 9+player.speed) {
+			if (roomDrawX == 0 && player.x == 4+player.speed) {
 				rTransition = -1;
 			}
 		}
@@ -2498,7 +2803,7 @@ function roomTransition() {
 	}
 }
 
-
+//render the current room
 function renderLvl() {
 	//render background layer
 	for (var i=0; i<currLvl[0].length; i++) {
@@ -2614,20 +2919,9 @@ function mainLoop() {
 		}
 	}
 	
-	if (player.health <=0 || player.curse >=10) {
-		lvlComplete = true;
-		player.health = 0;
-		player.spirit = 0;
-		player.curse = 0;
-		player.keys = [];
-		player.x = 0;
-		player.y = 0;
-		player.exp = 0;
-		player.lvl = 0;
-	}
-	
 	if (lvlComplete == false) {
 		
+		//check if we need to t=change rooms
 		roomTransition();
 		
 		ctx.fillStyle = '#F1F1F1';
